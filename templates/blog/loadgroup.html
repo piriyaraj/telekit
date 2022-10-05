@@ -1,0 +1,92 @@
+{% load static %}
+
+<div id="results">
+    <div id="showlatest">
+        <section id="loadermain" style="display: none;">
+            <svg class="pl" viewBox="0 0 200 200" width="200" height="200"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle class="pl__ring" cx="100" cy="100" r="82" fill="none" stroke="url(#pl-grad1)"
+                    stroke-width="36" stroke-dasharray="0 257 1 257" stroke-dashoffset="0.01"
+                    stroke-linecap="round" transform="rotate(-90,100,100)"></circle>
+                <line class="pl__ball" stroke="url(#pl-grad2)" x1="100" y1="18" x2="100.01" y2="182"
+                    stroke-width="36" stroke-dasharray="1 165" stroke-linecap="round"></line>
+            </svg>
+        </section>
+        {% for link in links %}
+        <div class="maindiv">
+            <div>
+                <a style="color: #5a5a5a" target="_blank" href="/join/{{link.linkId}}"
+                    title="Telegram group invite link: {{link.name}}">
+                    <span>
+                        <img src="{{link.imgUrl}}" onerror="imgError(this);"
+                            title="{{link.name}} telegram group and channel join link" class="image"
+                            alt="{{link.name}} telegram Group link">
+                    </span>
+                </a>
+                <a style="color: #5a5a5a;font-family: fantasy;" target="_blank" href="/join/{{link.linkId}}"
+                    title="{{link.name}} telegram Group invite link">
+                    <h2>{{link.name}}</h2>
+                </a>
+            </div>
+            <div class="block2">
+                <div class="post-basic-info">
+                    <span><img src="{% static 'images/category.png' %}" class="icon"><a
+                            href="/category/{{link.category.slug}}"
+                            title="{{link.category.name}} telegram invite link">{{link.category.name}}
+                        </a></span>
+                    <span><img src="{% static 'images/country.png' %}" class="icon"><a
+                            href="/country/{{link.country.slug}}" title="{{link.country.name}} telegram  link">
+                            {{link.country.name}} </a></span>
+                    <span><img src="{% static 'images/language.png' %}" class="icon"><a
+                            href="/language/{{link.language.slug}}" title="{{link.language.name}} Telegram join links">
+                            {{link.language.name}} </a></span>
+                    <div style="color:#0088cc;">
+                        <a style="font-weight: 600;" href="{{link.link}}"
+                            title="{{link.name}} telegram {{link.type}} join link"
+                            target="_blank">@{{link.linkId}}</a>
+                    </div>
+                    <span style="padding-right:20px;">Category: {{link.type}}</span>
+                    <span>
+                        {%if link.type == "Channel"%}
+                        {{"Subscribers : "}}
+                        {% else %}
+                        {{"members : "}}
+                        {% endif %}
+
+                        {{link.noOfMembers}}</span>
+                    <p class="descri" style="margin-bottom: 0px">{{link.description}}</p>
+                    <div style="margin-bottom: 5px;">
+                        {% for tag in link.tag.all %}
+                        <a class="innertag" href="/tag/{{tag.slug}}"
+                            title=" {{tag.name}} telegram {{link.type}} invite link"> {{tag.name}} </a>
+                        {% endfor %}
+                    </div>
+                    <div class="post-info-rate-share"> <span class="joinbtn"><a class="joinbtn"
+                                href="{{link.link}}" target="_blank"
+                                title="Click here to join {{link.name}} Telegram group" rel="nofollow">Join
+                                group</a></span>
+                        <div class="post-share">
+                            <div>
+
+                                <a class="joinbtn" style="vertical-align:top"
+                                    href="whatsapp://send?text=Follow this link to Join my Telegram group : {{link.link}} %0A %0AFind more Telegram group at: https://telelinking.link/ "
+                                    data-action="share/whatsapp/share" rel="nofollow">Share on</a>
+                                <a href="whatsapp://send?text=Follow this link to Join my Telegram group : https://www.telelinking.link/"
+                                    data-action="share/whatsapp/share">
+                                    <img src="{% static 'images/whatsapp.png' %}" width="24" height="24"
+                                        alt="Share on Whatsapp" title="Share on Whatsapp"
+                                        rel="nofollow"></a>
+
+                                <a href="https://twitter.com/intent/tweet?text=Follow this link to Join my Telegram group : &amp;url=https://www.telelinking.link/"
+                                    target="_blank" rel="nofollow">
+                                    <img src="{% static 'images/twitter.jpg' %}" width="24" height="24"
+                                        alt="Share on Twitter" title="Share on Twitter"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

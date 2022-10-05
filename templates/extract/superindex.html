@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+    <div class="wrap">
+        <div id="main" role="main">
+            <div style="margin-top: 30px; margin-bottom: 30px">
+            </div>
+
+            <div style="margin-top: 30px; margin-bottom: 30px">
+            </div>
+            {% if request.user.is_superuser %}
+                <form method="post" action="/superuser/extract/" >
+                {% csrf_token %}
+
+                    <div class="contact-form">
+                        <div class="contact-to">
+                            <input type="url" name="postUrl" class="text" placeholder="Enter page Link..."
+                                required>
+    
+                            <div class="text3">
+                                <select name="category" required>
+                                    <option value="">Select Group Category</option>
+                                    {% include "components/category.html" %}
+                                </select>
+                            </div>
+                            <div class="text3">
+                                <select name="country" required>
+                                    <option value="">Select Group Country</option>
+                                    {% include "components/country.html" %}
+                                </select>
+                            </div>
+                            <div class="text3">
+                                <select name="language" required>
+                                    <option value="">Select Group Language</option>
+                                    {% include "components/language.html" %}
+                                </select>
+                            </div>
+                            <input type="text" maxlength="100" name="gtags" class="text"
+                                placeholder="Enter Tags by Comma (,) Separated (Optional) ">
+                            <p style="font-size: 12px">Ex:- Funny, Jokes, City, State (Up to 100 Words)</p>
+    
+                        </div>
+    
+                        <b style="font-size: 14px;margin-bottom: 10px">Note:- Your group is visible to public world
+                            wide(Everyone).</b>
+                        <span><input type="submit" value="Extract" class="addbtn"></span>
+                        <div class="clear"></div>
+                    </div>
+                </form>
+            {% else %}
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            {% endif %}
+
+            <!-- End of grid blocks -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

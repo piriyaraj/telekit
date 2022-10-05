@@ -1,0 +1,16 @@
+{% if links.has_next %}
+<div style="margin-top: 10px"> 
+<a 
+    hx-get="?page={{links.next_page_number}}"
+    hx-trigger="click"
+    hx-target="#groupresult"
+    hx-swap="beforeend"
+class="addbtn" name="load_more" id="load_more" style="cursor: pointer; display: inline;">Load more group</a>
+</div>
+{% else %}
+<div id="no" style="color: #555">No More groups</div>
+{% endif %}
+<div style="margin-top: 10px">
+</div>
+
+<div style="padding-top: 50px"></div>

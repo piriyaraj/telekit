@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US">
+    
+<head>
+        <!-- seo tags -->
+        {% include "components/seo.html" %}
+        <!-- end of seo -->
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="{% static 'images/fav1.ico' %}" />
+
+
+
+
+
+        <!----webfonts---->
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!----start-dropdown--->
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                $('#box').animate({'top': '-700px'}, 500);
+                //Hide (Collapse) the toggle containers on load
+                $(".toggle_container").hide();
+                //Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+                $(".trigger").click(function () {
+                    $(this).toggleClass("active").next().slideToggle("slow");
+                    return false; //Prevent the browser jump to the link anchor
+                });
+            });
+
+            var $ = jQuery.noConflict();
+            $(function () {
+                $('#activator').click(function () {
+                    $('#box').animate({'top': '0px'}, 500);
+                });
+                $('#boxclose').click(function () {
+                    $('#box').animate({'top': '-700px'}, 500);
+                });
+            });
+        </script>
+
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/my.css' %}"/>
+        <script src="{% static 'js/my.js' %}"></script>
+        <script src="{% static 'js/htmx.min.js' %}"></script>
+</head>
+<body onload="">
+    {% include "header.html" %}
+    {% block content %}{% endblock %}
+
+
+<!--//wookmark-scripts-->
+<!--start-footer--->
+<div style="position: fixed;
+     bottom: 10px;
+     right: 10px;">
+    <a class="addbtn" href="/group/addgroup" title="Add New Telegram Group">+ Add Telegram Group</a>
+</div>
+
+
+
+<!--//End-footer-->
+<!--//End-wrap--->
+
+
+</body>
+</html>

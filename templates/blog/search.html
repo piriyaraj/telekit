@@ -1,0 +1,21 @@
+<form method="get" action="/group/find">
+    <select class="selectbtn" name="category">
+        <option value="">Any Category</option>
+        {% include "components/category.html" %}
+    </select>
+    <select class="selectbtn" name="country">
+        <option value="">Any Country</option>
+        {% include "components/country.html" %}
+    </select>
+    <select class="selectbtn" name="language">
+        <option value="">Any Language</option>
+        {% include "components/language.html" %}
+    </select>
+    <input type="submit" class="serbtn" value="Find group">
+</form>
+{% if results|length %}
+<div>
+    <span>Result for :</span>
+    <span> {{results}} </span>
+</div>
+{% endif %}

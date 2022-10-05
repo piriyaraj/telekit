@@ -1,0 +1,71 @@
+{% load static %}
+
+<div class="header">
+    <div class="wrap">
+        <div class="logo">
+            <a href="/"><img src="{% static 'images/newlogo.png' %}" height="52" width="154" title="Telekit" /></a>
+
+        </div>
+
+        <div class="nav-icon">
+            <a href="#" class="right_bt" id="activator"><span> </span> </a>
+        </div>
+        <div class="box" id="box">
+            <div class="box_content">        					                         
+                <div class="box_content_center">
+                    <div class="form_content">
+                        <div class="menu_box_list">
+                            <ul>
+                                <li><a href="/"><span>Home</span></a></li>
+                                <li><a href="/group/addgroup" title="Add New Whatsapp Group"><span>Add Group</span></a></li>
+                                <li><a href="/doc/terms"><span>Terms</span></a></li>
+                                <li><a href="/doc/privacy"><span>Privacy</span></a></li>
+                                <li><a href="/doc/disclaimer"><span>Disc</span></a></li>
+                                <li><a href="/doc/contact"><span>Contact</span></a></li>
+                                {% if request.user.is_authenticated %}
+                                <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{request.user.username}}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    
+                                    <a class="dropdown-item" href="{% url 'profile' %}">My Profile</a>
+    
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                                
+                                </div>
+                                </li>
+                                {% else %}
+                                <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                </li>
+                                {% endif %}
+                                <div class="clear"> </div>
+                            </ul>
+                        </div>
+                        <a class="boxclose" id="boxclose"> <span> </span></a>
+                    </div>                                  
+                </div> 	
+            </div> 
+        </div>       	  
+        <div class="top-searchbar">
+
+            <form action="/search" method="get">
+                <input type="text" name="keyword" placeholder="Type Keywords to Search" required/><input type="submit" value="" />
+            </form>
+        </div>
+
+        
+
+            <div style="position: fixed; top: 200px; left: 0px; ">
+                                                                    <a href="whatsapp://send?text=Telekit - Enjoy Unlimited Telegram Group Links Invite to Join. Follow this link : {{ request.get_host }}{{request.path}}" data-action="share/telegram/share">
+                        <img src="{% static 'images/whatsapp.png' %}" width='26' height='26'alt="Share on Whatsapp" title="Share on Whatsapp" rel='nofollow'/></a><br>
+                    <a href='https://twitter.com/intent/tweet?text=Telekit%20-%20Enjoy%20Unlimited%20Telegram%20Group%20Links%20Invite%20to%20Join.%20Follow%20this%20link%20:%20&amp;url={{ request.get_host }}{{request.path}}' target='_blank' rel='nofollow'>
+                        <img src="{% static 'images/twitter.jpg' %}" width='26' height='26' alt="Share on Twitter"  title="Share on Twitter"/></a> <br>
+                                    </div>
+
+        
+
+
+    </div>
+</div>

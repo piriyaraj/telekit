@@ -1,0 +1,18 @@
+{% load static %}
+
+<title>{{seo.title}}</title>
+<meta name="description" content="{{seo.description}}" />
+<meta property="og:description" content="{{seo.description}}"/>
+<meta property="og:title" content="{{seo.title}}"/>
+<meta property="og:image" content="{% static 'images/whatsapp.png' %}"/>
+
+<meta name="robots" content="{{seo.robots}}" />
+
+<meta property="og:site_name" content="{{ request.get_host }}"/>
+<meta property="og:url" content="{{ request.get_host }}{{ request.path }}"/>
+<link rel="canonical" href="{{ request.get_host }}{{ request.path }}" />
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="website" />
+<meta charset="UTF-8">

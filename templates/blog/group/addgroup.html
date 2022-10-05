@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!---start-content---->
+<!---start-content---->
+<div class="content">
+    <div class="wrap">
+        <div class="contact-info">
+            <h1 style="font-weight: bolder">Add Telegram Group,Channel, and Bot</h1>
+            <br>
+            <form method="post" action="/addgroup">
+                {% csrf_token %}
+                <div class="contact-form">
+                    <div class="contact-to">
+                        <input type="url" name="glink" class="text" placeholder="Enter Telegram Invite Link..."
+                            required>
+                        <p style="font-size: 12px;word-wrap: break-word">Ex:- https://t.me/example123</p>
+
+                        <div class="text3">
+                            <select name="category" required>
+                                <option value="">Select Group Category</option>
+                                {% include "components/category.html" %}
+                            </select>
+                        </div>
+                        <div class="text3">
+                            <select name="country" required>
+                                <option value="">Select Group Country</option>
+                                {% include "components/country.html" %}
+                            </select>
+                        </div>
+                        <div class="text3">
+                            <select name="language" required>
+                                <option value="">Select Group Language</option>
+                                {% include "components/language.html" %}
+                            </select>
+                        </div>
+                        <input type="text" maxlength="100" name="gtags" class="text"
+                            placeholder="Enter Tags by Comma (,) Separated (Optional) ">
+                        <p style="font-size: 12px">Ex:- Funny, Jokes, City, State (Up to 100 Words)</p>
+
+                    </div>
+
+                    <b style="font-size: 14px;margin-bottom: 10px">Note:- Your group is visible to public world
+                        wide(Everyone).</b>
+                    <span><input type="submit" value="Submit" class="addbtn"></span>
+                    <div class="clear"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
