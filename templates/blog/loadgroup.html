@@ -18,13 +18,13 @@
                 <a style="color: #5a5a5a" target="_blank" href="/join/{{link.linkId}}"
                     title="Telegram group invite link: {{link.name}}">
                     <span>
-                        <img src="{{link.imgUrl}}" onerror="imgError(this);"
+                        <img src="{{link.image_file.url}}" onerror="imgError(this);"
                             title="{{link.name}} telegram group and channel join link" class="image"
                             alt="{{link.name}} telegram Group link">
                     </span>
                 </a>
                 <a style="color: #5a5a5a;font-family: fantasy;" target="_blank" href="/join/{{link.linkId}}"
-                    title="{{link.name}} telegram Group invite link">
+                    title="{{link.name}} telegram {{link.type}} invite link">
                     <h2>{{link.name}}</h2>
                 </a>
             </div>

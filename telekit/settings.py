@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*coo(8h)0sl4n*z2%n6b#dl^ka%2*34xupw-ufyvp*o^xr=(7m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'blog',
     'user_profile',
     'extract',
-    'django_htmx'
+    'django_htmx',
+    'star_ratings'
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,9 @@ MEDIA_URL="/media/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user_profile.User'
+
+
+# rating setting 
+STAR_RATINGS_ANONYMOUS = True
+STAR_RATINGS_CLEARABLE = True
+STAR_RATINGS_RERATE = False

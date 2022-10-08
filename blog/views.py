@@ -1,4 +1,5 @@
 from ast import keyword
+from email import message
 from multiprocessing import context
 from os import link
 from re import L
@@ -11,6 +12,7 @@ from django.db.models import Q
 from blog.models import Category, Company, Country, Language, Link, Tag
 from . import tools
 from django.core.paginator import Paginator
+from datetime import date
 
 def pagination(request,obj):
     paginator = Paginator(obj, 6) # Show 25 contacts per page.
@@ -18,17 +20,23 @@ def pagination(request,obj):
     linka = paginator.get_page(page_number)
     return linka
 
-def links(request,path):
+def links(request,path,message={}):
     postLink=Link.objects.filter(linkId=path)[0]
     country=postLink.country
     language=postLink.language
     category=postLink.category
     relatedLink=Link.objects.filter(country=country,language=language,category=category)
-    
+    seo = {
+        'title': postLink.name+" telegram "+postLink.type+" invite link "+str(date.today().year),
+        "description": postLink.name+" telegram "+postLink.type+": Are you searching for the best telegram channels for "+postLink.name+" then check out this blog and join the group. Join Now",
+        "robots": "index, follow"
+    }
     context={
         "post":postLink,
-        "links":relatedLink
+        "links":relatedLink,
+        'seo':seo
     }
+    context.update(message)
     return render(request,"links.html",context)
 
 def index(request):
@@ -48,7 +56,7 @@ def index(request):
     linka=pagination(request,link)
     context={
       'links':linka,
-      'seo':seo
+      'seo':seo,
     }
     return render(request, "index.html",context)
     
@@ -79,10 +87,10 @@ def category(request,path):
         'links':linka,
         }
         return render(request,"loadmore.html",context)
-    seo={
-        'title':"Telekit - Enjoy Unlimited Telegram Group and channel Links Invite to Join",
-        "description":"Enjoy Unlimited Telegram groups and channel invite link to join Telegram gorup and channel. Here you can find verious type of Telegram join links.",
-        "robots":"index, follow"
+    seo = {
+        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        "robots": "index, follow"
     }
     context={
         "links":pagination(request,postLink),
@@ -99,8 +107,14 @@ def country(request,path):
         'links':linka,
         }
         return render(request,"loadmore.html",context)
+    seo = {
+        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        "robots": "index, follow"
+    }
     context={
-        "links":pagination(request,postLink)
+        "links":pagination(request,postLink),
+        'seo':seo
     }
     return render(request,"index.html",context)
 
@@ -113,8 +127,14 @@ def language(request,path):
         'links':linka,
         }
         return render(request,"loadmore.html",context)
+    seo = {
+        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        "robots": "index, follow"
+    }
     context={
-        "links":pagination(request,postLink)
+        "links":pagination(request,postLink),
+        'seo':seo
     }
     return render(request,"index.html",context)
 
@@ -127,24 +147,40 @@ def tag(request,path):
         'links':linka,
         }
         return render(request,"loadmore.html",context)
-    context={
-        "links":pagination(request,postLink)
+    seo = {
+        'title': tag.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": tag.name+" telegram groups and channels: Are you searching for the best telegram channels for "+tag.name+" then check out this blog and join the group. Join Now",
+        "robots": "index, follow"
     }
+    context={
+        "links":pagination(request,postLink),
+        'seo':seo
+    }
+
     return render(request,"index.html",context)
 
 def search(request):
     keyword=request.GET['keyword']
     tag=Tag.objects.filter(Q(name__contains=keyword))
-    postLink=Link.objects.filter(Q(name__contains=keyword)|Q(description__contains=keyword)|Q(tag__in=tag))
-    # postLink+=Link.objects.filter(description__contains=keyword)
+    coun = Country.objects.filter(Q(name__contains=keyword))
+    cate = Category.objects.filter(Q(name__contains=keyword))
+    lang = Language.objects.filter(Q(name__contains=keyword))
+    postLink=Link.objects.filter(Q(name__contains=keyword)|Q(description__contains=keyword)|Q(tag__in=tag)|Q(country__in=coun)|Q(category__in=cate)|Q(language__in=lang))
+    postLink=list(set(postLink))
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
         'links':linka,
         }
         return render(request,"loadmore.html",context)
+    seo = {
+        'title': keyword+" telegram groups and channels invite links "+str(date.today().year),
+        "description": keyword+" telegram groups and channels: Are you searching for the best telegram channels for "+keyword+" then check out this blog and join the group. Join Now",
+        "robots": "noindex, follow"
+    }
     context={
-        "links":pagination(request,postLink)
+        "links":pagination(request,postLink),
+        'seo':seo
     }
     return render(request,"index.html",context)
 
@@ -160,7 +196,12 @@ def addgroup(request):
     # print(groupName, groupCount, groupLogo, groupDescri, groupType)
 
     if(len(Link.objects.filter(linkId=linkId))>0):
-        return redirect("/join/"+linkId)
+        message={
+            "alertmsgbgcolor": '#f44336',
+            "alertmsg":"This link already added"
+        }
+        return links(request, linkId,message=message)
+
 
     
     postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
@@ -175,14 +216,17 @@ def addgroup(request):
     context={
         "results":"result"
     }
-    return redirect("/join/"+linkId,context)
+    message = {
+        "alertmsgbgcolor": '#04AA6D',
+        "alertmsg": "Your link Successfully added"
+    }
+    return links(request, linkId, message=message)
 
 
 def find(request):
     categoryId=request.GET.get('category')
     countryId=request.GET.get('country')
     languageId=request.GET.get('language')
-    print((categoryId,categoryId,languageId))
     result=""
     postLink={}
     filter_kwargs = {}
@@ -211,9 +255,14 @@ def find(request):
         'links':linka,
         }
         return render(request,"loadmore.html",context)
-
+    seo = {
+        'title': result+" telegram groups and channels invite links "+str(date.today().year),
+        "description": result+" telegram groups and channels: Are you searching for the best telegram channels for "+result+" then check out this blog and join the group. Join Now",
+        "robots": "noindex, follow"
+    }
     context={
         "links":pagination(request,postLink),
-        "results":result
+        "results":result,
+        'seo':seo
     }
     return render(request,"index.html",context)

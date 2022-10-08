@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user_profile.urls')),
     path('superuser/', include('extract.urls')),
+    path('ratings/', include('star_ratings.urls', namespace='ratings')),
 
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

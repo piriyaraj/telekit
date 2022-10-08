@@ -34,9 +34,12 @@ def login_user(request):
                 return redirect('profile')
             else:
                 messages.warning(request, "Wrong credentials")
-
+    seo = {
+        "robots": "noindex, nofollow"
+    }
     context = {
-        "form": form
+        "form": form,
+        "seo":seo
     }
     return render(request, 'login.html', context)
 
@@ -59,9 +62,12 @@ def register_user(request):
             user.save()
             messages.success(request, "Registration sucessful")
             return redirect('login')
-
+    seo = {
+        "robots": "noindex, nofollow"
+    }
     context = {
-        "form": form
+        "form": form,
+        'seo':seo
     }
     return render(request, 'registration.html', context)
 
@@ -82,10 +88,13 @@ def profile(request):
             return redirect('profile')
         else:
             print(form.errors)
-
+    seo = {
+        "robots": "noindex, nofollow"
+    }
     context = {
         "account": account,
-        "form": form
+        "form": form,
+        'seo':seo
     }
     return render(request, 'profile.html', context)
 
@@ -135,12 +144,16 @@ def view_user_information(request, username):
             muted = True
         else:
             muted = False
-
+    seo = {
+        "robots": "noindex, nofollow"
+    }
     context = {
         "account": account,
         "following": following,
-        "muted": muted
+        "muted": muted,
+        'seo':seo
     }
+
     return render(request, "user_information.html", context)
 
 

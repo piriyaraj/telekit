@@ -7,7 +7,13 @@ from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 
 def index(request):
-    return render(request,'superindex.html')
+    seo={
+        "robots": "noindex, nofollow"
+    }
+    context = {
+        'seo':seo
+    }
+    return render(request,'superindex.html',context)
 
 
 @user_passes_test(lambda u: u.is_superuser)

@@ -2,18 +2,20 @@
     color: #039be5;
     font-weight: 700
 }
+
 .post-info-rate-share {
     border-top: 1px solid rgba(183, 181, 181, .36);
     padding-top: 2px;
     text-align-last: auto;
 }
-.descri {
 
+.descri {
     background-color: #fff;
     color: #7f7f7f;
     overflow-wrap: break-word
-}.post-basic-info span a {
+}
 
+.post-basic-info span a {
     color: #acaaaa;
     font-size: .9em
 }
@@ -37,7 +39,6 @@
     display: grid;
     place-items: center;
 }
-
 
 .pl {
     display: block;
@@ -115,7 +116,10 @@
     margin-bottom: 10px;
     border: 1px solid #0088cc;
 }
+
+
 /* ======== */
+
 
 /*
     DEMO STYLE
@@ -124,15 +128,11 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    background: #e5e9e6;
 }
 
 p {
-    font-family: 'Poppins', sans-serif;
     font-size: 1.1em;
-    font-weight: 300;
-    line-height: 1.7em;
-    color: #999;
 }
 
 a,
@@ -164,6 +164,7 @@ a:focus {
     border-bottom: 1px dashed #ddd;
     margin: 40px 0;
 }
+
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -260,6 +261,7 @@ a.article:hover {
     color: #fff !important;
 }
 
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
@@ -270,6 +272,7 @@ a.article:hover {
     min-height: 100vh;
     transition: all 0.3s;
 }
+
 
 /* ---------------------------------------------------
     MEDIAQUERIES
@@ -285,4 +288,38 @@ a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+.alertmsg {
+    color: white;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: rgb(0, 0, 0);
+}
+
+h1 {
+    color: #4289da;
+    font-family: arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 1px;
 }

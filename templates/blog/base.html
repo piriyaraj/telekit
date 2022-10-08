@@ -22,7 +22,7 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <!----start-dropdown--->
+        <!--start-dropdown-->
         <script type="text/javascript">
 
             $(document).ready(function () {
@@ -51,16 +51,24 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/my.css' %}"/>
+        <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+        <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
         <script src="{% static 'js/my.js' %}"></script>
         <script src="{% static 'js/htmx.min.js' %}"></script>
 </head>
 <body onload="">
     {% include "header.html" %}
+    {% if alertmsg%}
+    <div class='alertmsg' style="background-color: {{alertmsgbgcolor}};">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            {{alertmsg}}
+    </div>
+    {% endif %}
     {% block content %}{% endblock %}
 
 
 <!--//wookmark-scripts-->
-<!--start-footer--->
+<!--start-footer-->
 <div style="position: fixed;
      bottom: 10px;
      right: 10px;">
@@ -70,7 +78,7 @@
 
 
 <!--//End-footer-->
-<!--//End-wrap--->
+<!--//End-wrap-->
 
 
 </body>

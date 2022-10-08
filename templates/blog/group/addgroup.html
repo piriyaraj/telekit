@@ -8,13 +8,13 @@
         <div class="contact-info">
             <h1 style="font-weight: bolder">Add Telegram Group,Channel, and Bot</h1>
             <br>
-            <form method="post" action="/addgroup">
+            <form method="post" action="/addgroup" style="width: fit-content;margin: 0 auto;">
                 {% csrf_token %}
                 <div class="contact-form">
                     <div class="contact-to">
                         <input type="url" name="glink" class="text" placeholder="Enter Telegram Invite Link..."
-                            required>
-                        <p style="font-size: 12px;word-wrap: break-word">Ex:- https://t.me/example123</p>
+                            required><br/>
+                        <p style="font-size: 12px">Ex:- https://t.me/example123</p>
 
                         <div class="text3">
                             <select name="category" required>

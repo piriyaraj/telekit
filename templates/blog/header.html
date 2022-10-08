@@ -3,7 +3,7 @@
 <div class="header">
     <div class="wrap">
         <div class="logo">
-            <a href="/"><img src="{% static 'images/newlogo.png' %}" height="52" width="154" title="Telekit" /></a>
+            <a href="/"><img src="{% static 'images/telelinking.png' %}" height="52" width="154" title="Telekit" /></a>
 
         </div>
 
@@ -22,24 +22,7 @@
                                 <li><a href="/doc/privacy"><span>Privacy</span></a></li>
                                 <li><a href="/doc/disclaimer"><span>Disc</span></a></li>
                                 <li><a href="/doc/contact"><span>Contact</span></a></li>
-                                {% if request.user.is_authenticated %}
-                                <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{request.user.username}}
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    
-                                    <a class="dropdown-item" href="{% url 'profile' %}">My Profile</a>
-    
-                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                                
-                                </div>
-                                </li>
-                                {% else %}
-                                <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}">Login</a>
-                                </li>
-                                {% endif %}
+
                                 <div class="clear"> </div>
                             </ul>
                         </div>

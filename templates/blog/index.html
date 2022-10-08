@@ -11,38 +11,31 @@
 
 
             <!-- These are our grid blocks -->
-            <div id="groupresult">
-                {% include "loadgroup.html" %}
-                
-            </div>
-            {% if links.has_next %}
-                <div style="margin-top: 10px"> 
-                    <a 
-                        hx-get="?page={{ links.next_page_number }}"
-                        hx-trigger="intersect"
-                        hx-target="#groupresult"
-                        hx-swap="beforeend"
-                    class="addbtn" name="load_more" id="load_more" style="cursor: pointer; display: inline;">next</a>
+            <div class="row">
+                <div class="col-sm-9">
+                    <div id="groupresult">
+                        {% include "loadgroup.html" %}
+                        
+                    </div>
+                    {% if links.has_next %}
+                        <div style="margin-top: 10px"> 
+                            <a 
+                                hx-get="?page={{ links.next_page_number }}"
+                                hx-trigger="intersect"
+                                hx-target="#groupresult"
+                                hx-swap="beforeend"
+                            class="addbtn" name="load_more" id="load_more" style="cursor: pointer; display: inline;">next</a>
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-            
-
-
-            <div id="report" style="display: none"><img src="{% static 'images/loader.gif' %}"
-                    style="height: 40px;margin-top: 10px"></div>
-
-            
-            <script type="text/javascript">
-                $(document).ready(function () {
-
-                    $(document).on('click', '#load_more', function () {
-                        $("#load_more").attr("hx-get","?page=3");
-            
-            
-                    });
-                });
-            </script>
-
+                <div class='col-sm-3'>
+                    {% if request.path == '/' %}
+                        {% include 'teleintro.html'%}
+                    {% else %}
+                        {% include 'sidebar.html' %}
+                    {% endif %}
+                </div>
+            </div>
             <!-- End of grid blocks -->
         </div>
     </div>

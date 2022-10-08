@@ -1,6 +1,9 @@
+from django.core.files import File
 from pyexpat import model
+from tempfile import NamedTemporaryFile
 from unicodedata import category
 from unittest.util import _MAX_LENGTH
+from urllib.request import urlopen
 from django.db import models
 from django.utils.text import slugify
 
@@ -98,5 +101,16 @@ class Link(models.Model):
     company=models.ForeignKey("Company",on_delete=models.DO_NOTHING,blank=True, null=True,)
     type=models.CharField(choices=linkTypes,max_length=20)
     linkId=models.CharField(max_length=100)
+    image_file = models.ImageField(upload_to='images')
+
+    def save(self, *args, **kwargs):
+        if self.imgUrl and not self.image_file:
+            img_temp = NamedTemporaryFile(delete=True)
+            img_temp.write(urlopen(self.imgUrl).read())
+            img_temp.flush()
+            self.image_file.save(f"image_{self.linkId}", File(img_temp))
+        try:
+            super(Link, self).save(*args, **kwargs)
+        except:pass
 
 
