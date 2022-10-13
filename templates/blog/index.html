@@ -12,6 +12,13 @@
 
             <!-- These are our grid blocks -->
             <div class="row">
+                <div class='col-sm-3'>
+                    {% if request.path == '/' %}
+                        {% include 'teleintro.html'%}
+                    {% else %}
+                        {% include 'sidebar.html' %}
+                    {% endif %}
+                </div>
                 <div class="col-sm-9">
                     <div id="groupresult">
                         {% include "loadgroup.html" %}
@@ -28,13 +35,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class='col-sm-3'>
-                    {% if request.path == '/' %}
-                        {% include 'teleintro.html'%}
-                    {% else %}
-                        {% include 'sidebar.html' %}
-                    {% endif %}
-                </div>
+
             </div>
             <!-- End of grid blocks -->
         </div>
