@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from blog.sitemap import countrySitemap, categorySitemap, languageSitemap,linkSitemap
+from blog.sitemap import countrySitemap, categorySitemap, languageSitemap, linkSitemap, StaticViewSitemap
 from django.contrib.sitemaps.views import sitemap
 
 
@@ -24,6 +24,7 @@ sitemapUrls=[
     path("category-sitemap.xml", sitemap, {'sitemaps': {"blog": categorySitemap}}),
     path("language-sitemap.xml", sitemap, {'sitemaps': {"blog": languageSitemap}}),
     path("link-sitemap.xml", sitemap, {'sitemaps': {"blog": linkSitemap}}),
+    path("static-sitemap.xml", sitemap, {'sitemaps': {"blog": StaticViewSitemap}}),
 ]
 
 urlpatterns+=sitemapUrls
