@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.core.files import File
 from pyexpat import model
 from tempfile import NamedTemporaryFile
@@ -19,6 +20,10 @@ class Country(models.Model):
     def __str__(self) -> str:
         return self.name    
 
+    def get_absolute_url(self):
+        return reverse("country", args=[self.slug])
+        # return f'/{self.slug}/'
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
@@ -30,7 +35,11 @@ class Category(models.Model):
     created_date = models.DateField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.name    
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("category", args=[self.slug])
+        # return f'/{self.slug}/'
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -45,6 +54,10 @@ class Language(models.Model):
 
     def __str__(self) -> str:
         return self.name    
+
+    def get_absolute_url(self):
+        return reverse("language", args=[self.slug])
+        # return f'/{self.slug}/'
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -71,8 +84,13 @@ class Company(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     slug = models.SlugField(null=True, blank=False,unique=True)
 
+    def get_absolute_url(self):
+        # return reverse("post/", args=[self.slug])
+        print(self.slug)
+        return f'/{self.slug}/'
+
     def __str__(self) -> str:
-        return self.name    
+        return self.title
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -102,6 +120,10 @@ class Link(models.Model):
     type=models.CharField(choices=linkTypes,max_length=20)
     linkId=models.CharField(max_length=100)
     image_file = models.ImageField(upload_to='images')
+
+    def get_absolute_url(self):
+        return reverse("links", args=[self.linkId])
+        # return f'/{self.linkId}/'
 
     def save(self, *args, **kwargs):
         if self.imgUrl and not self.image_file:
