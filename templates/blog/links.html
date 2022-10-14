@@ -22,13 +22,13 @@
                         <b style="font-size: 22px;word-wrap: normal">{{post.name}}</b>
                     </div>
                     <div>
-                        <span><img src="{% static 'images/category.png' %}" class="icon"><a
+                        <span><img src="{% static 'images/category.png' %}" alt="Telekit Category" class="icon"><a
                                 href="/category/{{post.category.slug}}"
                                 title="{{post.category.name}} Telegram {{post.type}} invite link">{{post.category.name}} </a></span>
-                        <span><img src="{% static 'images/country.png' %}" class="icon"><a
+                        <span><img src="{% static 'images/country.png' %}" alt="Telekit country" class="icon"><a
                                 href="/country/{{post.country.slug}}" title="{{post.country.name}} telegram {{post.type}} link">
                                 {{post.country.name}} </a></span>
-                        <span><img src="{% static 'images/language.png' %}" class="icon"><a
+                        <span><img src="{% static 'images/language.png' %}" alt="Telekit language" class="icon"><a
                                 href="/language/{{post.language.slug}}"
                                 title="{{post.language.name}} Telegram {{post.type}} join links"> {{post.language.name}} </a></span>
                     </div>
