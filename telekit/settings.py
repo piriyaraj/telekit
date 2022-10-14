@@ -149,3 +149,17 @@ AUTH_USER_MODEL = 'user_profile.User'
 STAR_RATINGS_ANONYMOUS = True
 STAR_RATINGS_CLEARABLE = True
 STAR_RATINGS_RERATE = False
+
+
+# robots sitemaps
+
+ROBOTS_SITEMAP_URLS = [
+    'https://telekit.link/link-sitemap.xml',
+    'https://telekit.link/country-sitemap.xml',
+    'https://telekit.link/language-sitemap.xml',
+    'https://telekit.link/category-sitemap.xml',
+    'https://telekit.link/static-sitemap.xml',
+
+]
+
+ROBOTS_USE_HOST = False
