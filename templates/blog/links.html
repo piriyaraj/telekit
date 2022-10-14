@@ -17,9 +17,10 @@
 
                 <div style="text-align: center">
 
-                    <img class="proimg" src="{{post.image_file.url}}" onerror="imgError(this);">
+                    <img class="proimg" src="{{post.image_file.url}}" onerror="imgError(this);" title="{{post.name}} telegram group and channel join link" class="image"
+                            alt="{{post.name}} telegram Group link">
                     <div>
-                        <b style="font-size: 22px;word-wrap: normal">{{post.name}}</b>
+                        <h1 style="font-size: 22px;word-wrap: normal">{{post.name}}</h1>
                     </div>
                     <div>
                         <span><img src="{% static 'images/category.png' %}" alt="Telekit Category" class="icon"><a
@@ -34,7 +35,7 @@
                     </div>
 
                     <div style="height: 30px">
-                        <img src="{% static 'images/date.png' %}" class="icon"><span class="cate">
+                        <img src="{% static 'images/date.png' %}" class="icon" alt="{{post.name}} added date"><span class="cate">
                             {{post.added}} <span>
                     </div>
 
@@ -80,8 +81,6 @@
     </div>
 </div>
 
-<div id="loder" style="display: none"><img src="https://groupsor.link/assets/images/loader.gif"
-        style="height: 40px;margin-top: 10px"></div>
 <div style="margin-top: 10px">
     <a class="addbtn" name="load_more" id="load_more" style="cursor: pointer;">Load more group</a>
 </div>
