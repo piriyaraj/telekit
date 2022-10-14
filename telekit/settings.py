@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import sys
 import os
 from pathlib import Path
 
@@ -125,7 +126,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/"),
 )
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+if sys.argv[1] != 'runserver':
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 
 
