@@ -26,9 +26,16 @@ def links(request,path,message={}):
     country=postLink.country
     language=postLink.language
     category=postLink.category
-    relatedLink = Link.objects.filter(
-        country=country, language=language, category=category).order_by("-id")
-    print(postLink.image_file.url)
+    relatedLink = Link.objects.filter(country=country, language=language, category=category).order_by("-id")
+    relatedLink=relatedLink.exclude(id=postLink.id)
+    if(request.GET.get('page')):
+        linka = pagination(request, relatedLink)
+        context = {
+            'links': linka,
+        }
+        return render(request, "loadmore.html", context)
+
+    linka = pagination(request, relatedLink)
     seo = {
         'title': postLink.name+" telegram "+postLink.type+" invite link "+str(date.today().year),
         "description": postLink.name+" telegram "+postLink.type+": Are you searching for the best telegram channels for "+postLink.name+" then check out this blog and join the group. Join Now",
@@ -37,7 +44,7 @@ def links(request,path,message={}):
     }
     context={
         "post":postLink,
-        "links":relatedLink,
+        "links": linka,
         'seo':seo
     }
     context.update(message)
