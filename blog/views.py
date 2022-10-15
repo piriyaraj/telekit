@@ -25,7 +25,8 @@ def links(request,path,message={}):
     country=postLink.country
     language=postLink.language
     category=postLink.category
-    relatedLink=Link.objects.filter(country=country,language=language,category=category)
+    relatedLink = Link.objects.filter(
+        country=country, language=language, category=category).order_by("-id")
     seo = {
         'title': postLink.name+" telegram "+postLink.type+" invite link "+str(date.today().year),
         "description": postLink.name+" telegram "+postLink.type+": Are you searching for the best telegram channels for "+postLink.name+" then check out this blog and join the group. Join Now",
@@ -81,7 +82,7 @@ def groupfiles(request, path, message={}):
 
 def category(request,path):
     cate=Category.objects.get(slug=path)
-    postLink=Link.objects.filter(category=cate)
+    postLink = Link.objects.filter(category=cate).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -101,7 +102,7 @@ def category(request,path):
 
 def country(request,path):
     cate=Country.objects.get(slug=path)
-    postLink=Link.objects.filter(country=cate) 
+    postLink = Link.objects.filter(country=cate).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -121,7 +122,7 @@ def country(request,path):
 
 def language(request,path):
     cate=Language.objects.get(slug=path)
-    postLink=Link.objects.filter(language=cate) 
+    postLink = Link.objects.filter(language=cate).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -141,7 +142,7 @@ def language(request,path):
 
 def tag(request,path):
     tag=Tag.objects.get(slug=path)
-    postLink=Link.objects.filter(tag=tag) 
+    postLink = Link.objects.filter(tag=tag).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -166,7 +167,8 @@ def search(request):
     coun = Country.objects.filter(Q(name__contains=keyword))
     cate = Category.objects.filter(Q(name__contains=keyword))
     lang = Language.objects.filter(Q(name__contains=keyword))
-    postLink=Link.objects.filter(Q(name__contains=keyword)|Q(description__contains=keyword)|Q(tag__in=tag)|Q(country__in=coun)|Q(category__in=cate)|Q(language__in=lang))
+    postLink = Link.objects.filter(Q(name__contains=keyword) | Q(description__contains=keyword) | Q(
+        tag__in=tag) | Q(country__in=coun) | Q(category__in=cate) | Q(language__in=lang)).order_by("-id")
     postLink=list(set(postLink))
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
@@ -257,7 +259,7 @@ def find(request):
         filter_kwargs['language'] = lang
         result+=lang.name+", "
 
-    postLink=Link.objects.filter(**filter_kwargs)
+    postLink = Link.objects.filter(**filter_kwargs).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
