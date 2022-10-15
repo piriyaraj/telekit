@@ -72,10 +72,11 @@ def docfiles(request,path):
     file="doc/"+path+".html"
     return render(request,file)
 
-def groupfiles(request,path):
+
+def groupfiles(request, path, message={}):
 
     file="group/"+path+".html"
-    return render(request,file)
+    return render(request, file, message)
 
 
 def category(request,path):
@@ -193,8 +194,13 @@ def addgroup(request):
     gtags=[]
     groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(groupLink)
     groupCount=int(str(groupCount).replace(" ",""))
-    # print(groupName, groupCount, groupLogo, groupDescri, groupType)
-
+    print(groupName, groupCount, groupLogo, groupDescri, groupType, linkId)
+    if(groupLogo==0):
+        message={
+            "alertmsgbgcolor": '#f44336',
+            "alertmsg":"This link is not acceptable!"
+        }
+        return groupfiles(request, "addgroup", message=message)
     if(len(Link.objects.filter(linkId=linkId))>0):
         message={
             "alertmsgbgcolor": '#f44336',
@@ -205,7 +211,10 @@ def addgroup(request):
 
     
     postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
-    for i in tags.split(","):
+    spTags = tags.split(",")
+    spTags.remove("")
+    for i in spTags:
+        print("tags:",i)
         try:
             tempTag=Tag.objects.create(name=i)
             gtags.append(tempTag)
