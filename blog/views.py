@@ -38,7 +38,7 @@ def links(request,path,message={}):
     linka = pagination(request, relatedLink)
     seo = {
         'title': postLink.name+" telegram "+postLink.type+" invite link "+str(date.today().year),
-        "description": postLink.name+" telegram "+postLink.type+": Are you searching for the best telegram channels for "+postLink.name+" then check out this blog and join the group. Join Now",
+        "description": postLink.name+" telegram "+postLink.type+" invite link Are you searching for active "+postLink.name+" telegram invite link then check out this blog and join the "+postLink.type,
         "robots": "index, follow",
         "ogimage": postLink.image_file.url
     }
