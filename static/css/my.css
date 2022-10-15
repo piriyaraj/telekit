@@ -1,6 +1,9 @@
 .joinbtn {
-    color: #039be5;
-    font-weight: 700
+    color: #ffffff;
+    font-weight: 700;
+    background-color: #039be5;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .post-info-rate-share {
@@ -15,14 +18,15 @@
     overflow-wrap: break-word
 }
 
-.post-basic-info span a {
+
+/* .post-basic-info span a {
     color: #acaaaa;
     font-size: .9em
 }
 
 .post-basic-info span a:hover {
     color: #b9cb41
-}
+} */
 
 .post-basic-info p {
     font-size: .875em;

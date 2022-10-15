@@ -530,10 +530,11 @@ a.boxclose {
     color: #B9CB41;
 }
 
-.post-basic-info span a {
+
+/* .post-basic-info span a {
     color: #ACAAAA;
     font-size: 0.9em;
-}
+} */
 
 .post-basic-info span a label {
     height: 12px;

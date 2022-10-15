@@ -56,10 +56,13 @@
                         {{link.noOfMembers}}</span>
                     <p class="descri" style="margin-bottom: 0px">{{link.description}}</p>
                     <div style="margin-bottom: 5px;">
-                        {% for tag in link.tag.all %}
-                        <a class="innertag" href="/tag/{{tag.slug}}"
-                            title=" {{tag.name}} telegram {{link.type}} invite link"> {{tag.name}} </a>
-                        {% endfor %}
+                        {% comment %} {{link.tag.all is " "}} {% endcomment %}
+                        {% if link.tag.all is not "" %}
+                            {% for tag in link.tag.all %}
+                            <a class="innertag" href="/tag/{{tag.slug}}"
+                                title=" {{tag.name}} telegram {{link.type}} invite link"> {{tag.name}} </a>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                     <div class="post-info-rate-share"> <span class="joinbtn"><a class="joinbtn"
                                 href="{{link.link}}" target="_blank"
