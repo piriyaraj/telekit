@@ -170,7 +170,7 @@ def search(request):
     lang = Language.objects.filter(Q(name__contains=keyword))
     postLink = Link.objects.filter(Q(name__contains=keyword) | Q(description__contains=keyword) | Q(
         tag__in=tag) | Q(country__in=coun) | Q(category__in=cate) | Q(language__in=lang)).order_by("-id")
-    postLink=list(set(postLink))
+    # postLink=list(set(postLink))
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
