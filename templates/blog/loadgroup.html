@@ -41,9 +41,9 @@
                             href="/language/{{link.language.slug}}" title="{{link.language.name}} Telegram join links">
                             {{link.language.name}} </a></span>
                     <div style="color:#0088cc;">
-                        <a style="font-weight: 600;" href="{{link.link}}"
+                        <a style="font-weight: 600;" href="/join/{{link.linkId}}"
                             title="{{link.name}} telegram {{link.type}} join link"
-                            target="_blank" rel="nofollow">@{{link.linkId}}</a>
+                            target="_blank">@{{link.linkId}}</a>
                     </div>
                     <span style="padding-right:20px;">Category: {{link.type}}</span>
                     <span>
@@ -65,7 +65,7 @@
                         {% endif %}
                     </div>
                     <div class="post-info-rate-share"> <span class="joinbtn"><a class="joinbtn"
-                                href="{{link.link}}" target="_blank"
+                                href="/join/{{link.linkId}}" target="_blank"
                                 title="Click here to join {{link.name}} Telegram group" rel="nofollow">Join
                                 {{link.type}}</a></span>
                         <div class="post-share">
