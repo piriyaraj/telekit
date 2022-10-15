@@ -6,6 +6,7 @@ from re import L
 import re
 from unicodedata import category
 from unittest import result
+from wsgiref.util import request_uri
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.db.models import Q
@@ -174,6 +175,7 @@ def search(request):
         linka=pagination(request,postLink)
         context={
         'links':linka,
+            "keyword": keyword
         }
         return render(request,"loadmore.html",context)
     seo = {
@@ -183,7 +185,8 @@ def search(request):
     }
     context={
         "links":pagination(request,postLink),
-        'seo':seo
+        'seo':seo,
+        "keyword":keyword
     }
     return render(request,"index.html",context)
 

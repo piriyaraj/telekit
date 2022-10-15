@@ -81,8 +81,13 @@
         <p>summa</p>
     {% endif %}
 <div style="margin-top: 10px"> 
+    
     <a 
-        hx-get="?page={{ links.next_page_number }}"
+        {% if keyword|length %}
+            hx-get="?page={{ links.next_page_number }}&keyword={{keyword}}"
+        {% else %}
+             hx-get="?page={{ links.next_page_number }}"
+        {% endif %}
         hx-trigger="intersect   "
         hx-target="#groupresult"
         hx-swap="beforeend"
