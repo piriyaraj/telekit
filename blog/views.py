@@ -194,7 +194,7 @@ def addgroup(request):
     gtags=[]
     groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(groupLink)
     groupCount=int(str(groupCount).replace(" ",""))
-    print(groupName, groupCount, groupLogo, groupDescri, groupType, linkId)
+    # print(groupName, groupCount, groupLogo, groupDescri, groupType, linkId)
     if(groupLogo==0):
         message={
             "alertmsgbgcolor": '#f44336',
