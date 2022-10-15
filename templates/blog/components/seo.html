@@ -4,8 +4,11 @@
 <meta name="description" content="{{seo.description}}" />
 <meta property="og:description" content="{{seo.description}}"/>
 <meta property="og:title" content="{{seo.title}}"/>
-<meta property="og:image" content="{% static 'images/whatsapp.png' %}"/>
-
+{% if seo.ogimage|length %}
+<meta property="og:image" content="{{seo.ogimage}}"/>
+{% else %}
+<meta property="og:image" content="{% static 'images/logo.logo.png' %}"/>
+{% endif %}
 <meta name="robots" content="{{seo.robots}}" />
 
 <meta property="og:site_name" content="{{ request.get_host }}"/>

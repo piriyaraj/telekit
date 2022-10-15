@@ -9,74 +9,85 @@
             <div style="margin-bottom: 2px;text-align: center">
                 {% include "search.html" %}
             </div>
-            <div class="contact-info" style="margin-top:30px ;">
+            <div class='row'>
+                <div class='col-sm-3' style="padding-top:10px">
+                    {% if request.path == '/' %}
+                        {% include 'teleintro.html'%}
+                    {% else %}
+                        {% include 'sidebar.html' %}
+                    {% endif %}
+                </div></div></div>
+                <div class="col-sm-9">
+                    <div class="contact-info" style="margin-top:30px ;">
 
-                <div style="margin-top: 30px; margin-bottom: 30px">
+                        <div style="margin-top: 30px; margin-bottom: 30px">
 
-                </div>
+                        </div>
 
-                <div style="text-align: center">
+                        <div style="text-align: center">
 
-                    <img class="proimg" src="{{post.image_file.url}}" onerror="imgError(this);" title="{{post.name}} telegram group and channel join link" class="image"
-                            alt="{{post.name}} telegram Group link">
-                    <div>
-                        <h1 style="font-size: 22px;word-wrap: normal">{{post.name}}</h1>
+                            <img class="proimg" src="{{post.image_file.url}}" onerror="imgError(this);" title="{{post.name}} telegram group and channel join link" class="image"
+                                    alt="{{post.name}} telegram Group link">
+                            <div>
+                                <h2 style="font-size: 22px;word-wrap: normal">{{post.name}}</h2>
+                            </div>
+                            <div>
+                                <span><img src="{% static 'images/category.png' %}" alt="Telekit Category" class="icon"><a
+                                        href="/category/{{post.category.slug}}"
+                                        title="{{post.category.name}} Telegram {{post.type}} invite link">{{post.category.name}} </a></span>
+                                <span><img src="{% static 'images/country.png' %}" alt="Telekit country" class="icon"><a
+                                        href="/country/{{post.country.slug}}" title="{{post.country.name}} telegram {{post.type}} link">
+                                        {{post.country.name}} </a></span>
+                                <span><img src="{% static 'images/language.png' %}" alt="Telekit language" class="icon"><a
+                                        href="/language/{{post.language.slug}}"
+                                        title="{{post.language.name}} Telegram {{post.type}} join links"> {{post.language.name}} </a></span>
+                            </div>
+
+                            <div style="height: 30px">
+                                <img src="{% static 'images/date.png' %}" class="icon" alt="{{post.name}} added date"><span class="cate">
+                                    {{post.added}} <span>
+                            </div>
+
+                            <pre class="predesc">{{post.description}}</pre>
+
+
+
+                            <div style="margin-bottom: 20px">
+                                {% for tag in post.tag.all %}
+                                <a class="innertag" href="/tag/{{tag.slug}}"
+                                    title=" {{tag.name}} telegram {{link.type}} invite link"> {{tag.name}} </a>
+                                {% endfor %}
+                            </div>
+
+                            <div>
+                                <a href=" {{post.link}} " target="_blank" class="btn"
+                                    rel="nofollow">Join group</a>
+                                <a class="btn"
+                                    href="whatsapp://send?text=Follow this link to Join my Telegram group :{{ request.get_host }}{{ request.path}} %0A %0AFind more Telegram Channels and Group at: {{ request.get_host }} "
+                                    data-action="share/whatsapp/share" rel="nofollow">Share group</a>
+                            </div>
+                            <div style="padding-top: 15px">
+                                <a href="whatsapp://send?text=Follow this link to Join my Telegram {{post.link}} : {{ request.get_host }}{{ request.path }} %0A %0AFind more Telegram {{post.link}} at: {{ request.get_host }} "
+                                    data-action="share/whatsapp/share" rel="nofollow">
+                                    <img src="{% static 'images/whatsapp.png' %}" width="32" height="32" alt="Share on Whatsapp"
+                                        title="Share on Whatsapp" rel="nofollow"></a>
+                                <a href="https://twitter.com/intent/tweet?text=Follow this link to Join my Telegram {{post.link}} :&amp;url={{ request.get_host }}{{ request.path }}"
+                                    target="_blank" rel="nofollow">
+                                    <img src="{% static 'images/twitter.jpg' %}" width="32" height="32" alt="Share on Twitter"
+                                        title="Share on Twitter"></a>
+                            </div>
+                            <br>
+                        </div>
+                        <div style="margin-top: 30px; margin-bottom: 30px">
+                        </div>
                     </div>
-                    <div>
-                        <span><img src="{% static 'images/category.png' %}" alt="Telekit Category" class="icon"><a
-                                href="/category/{{post.category.slug}}"
-                                title="{{post.category.name}} Telegram {{post.type}} invite link">{{post.category.name}} </a></span>
-                        <span><img src="{% static 'images/country.png' %}" alt="Telekit country" class="icon"><a
-                                href="/country/{{post.country.slug}}" title="{{post.country.name}} telegram {{post.type}} link">
-                                {{post.country.name}} </a></span>
-                        <span><img src="{% static 'images/language.png' %}" alt="Telekit language" class="icon"><a
-                                href="/language/{{post.language.slug}}"
-                                title="{{post.language.name}} Telegram {{post.type}} join links"> {{post.language.name}} </a></span>
-                    </div>
-
-                    <div style="height: 30px">
-                        <img src="{% static 'images/date.png' %}" class="icon" alt="{{post.name}} added date"><span class="cate">
-                            {{post.added}} <span>
-                    </div>
-
-                    <pre class="predesc">{{post.description}}</pre>
-
-
-
-                    <div style="margin-bottom: 20px">
-                        {% for tag in post.tag.all %}
-                        <a class="innertag" href="/tag/{{tag.slug}}"
-                            title=" {{tag.name}} telegram {{link.type}} invite link"> {{tag.name}} </a>
-                        {% endfor %}
-                    </div>
-
-                    <div>
-                        <a href=" {{post.link}} " target="_blank" class="btn"
-                            rel="nofollow">Join group</a>
-                        <a class="btn"
-                            href="whatsapp://send?text=Follow this link to Join my Telegram group :{{ request.get_host }}{{ request.path}} %0A %0AFind more Telegram Channels and Group at: {{ request.get_host }} "
-                            data-action="share/whatsapp/share" rel="nofollow">Share group</a>
-                    </div>
-                    <div style="padding-top: 15px">
-                        <a href="whatsapp://send?text=Follow this link to Join my Telegram {{post.link}} : {{ request.get_host }}{{ request.path }} %0A %0AFind more Telegram {{post.link}} at: {{ request.get_host }} "
-                            data-action="share/whatsapp/share" rel="nofollow">
-                            <img src="{% static 'images/whatsapp.png' %}" width="32" height="32" alt="Share on Whatsapp"
-                                title="Share on Whatsapp" rel="nofollow"></a>
-                        <a href="https://twitter.com/intent/tweet?text=Follow this link to Join my Telegram {{post.link}} :&amp;url={{ request.get_host }}{{ request.path }}"
-                            target="_blank" rel="nofollow">
-                            <img src="{% static 'images/twitter.jpg' %}" width="32" height="32" alt="Share on Twitter"
-                                title="Share on Twitter"></a>
-                    </div>
-                    <br>
-                </div>
-                <div style="margin-top: 30px; margin-bottom: 30px">
+                    <h2 style="font: 400 30px/28px 'Open Sans', sans-serif;
+                    color: #363636;
+                    text-align: left;
+                    padding: 1em 0 0.5em">Related telegram groups and channels for {{post.country.name}}, {{post.language.name}}, and {{post.category.name}}</h2>
+                    {% include "loadgroup.html" %}
                 </div>
             </div>
-            <h2 style="font: 400 30px/28px 'Open Sans', sans-serif;
-            color: #363636;
-            text-align: left;
-            padding: 1em 0 0.5em">Related telegram groups and channels for {{post.country.name}}, {{post.language.name}}, and {{post.category.name}}</h2>
-            {% include "loadgroup.html" %}
         </div>
     </div>
 </div>

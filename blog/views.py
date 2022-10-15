@@ -28,10 +28,12 @@ def links(request,path,message={}):
     category=postLink.category
     relatedLink = Link.objects.filter(
         country=country, language=language, category=category).order_by("-id")
+    print(postLink.image_file.url)
     seo = {
         'title': postLink.name+" telegram "+postLink.type+" invite link "+str(date.today().year),
         "description": postLink.name+" telegram "+postLink.type+": Are you searching for the best telegram channels for "+postLink.name+" then check out this blog and join the group. Join Now",
-        "robots": "index, follow"
+        "robots": "index, follow",
+        "ogimage": postLink.image_file.url
     }
     context={
         "post":postLink,
@@ -91,8 +93,8 @@ def category(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" category telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" category telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -111,8 +113,8 @@ def country(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" country telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" country telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -131,8 +133,8 @@ def language(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" language telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" language telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
