@@ -4,4 +4,3 @@ function imgError(image) {
     image.src = "/static/images/nopic.jpg";
     return true;
 }
-
