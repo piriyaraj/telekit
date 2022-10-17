@@ -4,6 +4,11 @@ from django.shortcuts import reverse
 from .models import Category,Country,Language,Link
 from blog.models import Category,Country,Language,Link
 
+def printHtml(obj):
+    for i in list(obj):
+        tag = "<a href='link' title='descri'>title</a>"
+        tag=tag.replace("title",i.name).replace("link","/category/"+i.slug).replace('descri',i.name+" telegram invite links")
+        print(tag)
 
 class StaticViewSitemap(Sitemap):
     priority = 0.5
