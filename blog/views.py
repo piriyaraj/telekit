@@ -81,13 +81,26 @@ def loadmore(request):
 
 def docfiles(request,path):
     file="doc/"+path+".html"
-    return render(request,file)
+    seo = {
+        'title': "Telekit "+path+" page",
+        "description": "Telekit "+path+" provide all information about "+path+".",
+        "robots": "index, nofollow"
+    }
+    return render(request,file,{"seo":seo})
 
 
 def groupfiles(request, path, message={}):
-
+    seo = {
+        'title': "Telekit "+path+" page",
+        "description": "Telekit "+path+" provide all information about "+path+".",
+        "robots": "index, nofollow"
+    }
     file="group/"+path+".html"
-    return render(request, file, message)
+    context={
+        "seo":seo
+    }
+    context.update(message)
+    return render(request, file, context)
 
 
 def category(request,path):
