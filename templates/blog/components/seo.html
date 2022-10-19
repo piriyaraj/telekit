@@ -4,8 +4,13 @@
 <meta name="description" content="{{seo.description}}" />
 <meta property="og:description" content="{{seo.description}}"/>
 <meta property="og:title" content="{{seo.title}}"/>
-<meta property="og:image" content="{% static 'images/whatsapp.png' %}"/>
-
+{% if seo.ogimage|length %}
+<meta property="og:image" content="{{seo.ogimage}}"/>
+<meta name="twitter:image" content="{{seo.ogimage}}">
+{% else %}
+<meta property="og:image" content="{% static 'images/logo.logo.png' %}"/>
+<meta name="twitter:image" content="{% static 'images/logo.logo.png' %}">
+{% endif %}
 <meta name="robots" content="{{seo.robots}}" />
 
 <meta property="og:site_name" content="{{ request.get_host }}"/>
@@ -16,3 +21,8 @@
 <meta property="og:locale" content="en_US" />
 <meta property="og:type" content="website" />
 <meta charset="UTF-8">
+
+<meta name="twitter:card" content="summary_large_image">
+{% comment %} <meta name="twitter:site" content="@nytimes"> {% endcomment %}
+<meta name="twitter:title" content="{{seo.title}}">
+<meta name="twitter:description" content="{{seo.description}}">

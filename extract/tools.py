@@ -69,7 +69,9 @@ def addTeleLink(postUrl,categoryId,countryId,languageId,extractData,tags):
 
     gtags=[]
     postLink=Link.objects.create(name=groupName,link=postUrl,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
-    for i in tags.split(","):
+    spTags = tags.split(",")
+    spTags.remove("")
+    for i in spTags:
         try:
             tempTag=Tag.objects.create(name=i)
             gtags.append(tempTag)

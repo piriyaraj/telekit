@@ -1,6 +1,9 @@
 .joinbtn {
-    color: #039be5;
-    font-weight: 700
+    color: #ffffff;
+    font-weight: 700;
+    background-color: #039be5;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .post-info-rate-share {
@@ -15,14 +18,15 @@
     overflow-wrap: break-word
 }
 
-.post-basic-info span a {
+
+/* .post-basic-info span a {
     color: #acaaaa;
     font-size: .9em
 }
 
 .post-basic-info span a:hover {
     color: #b9cb41
-}
+} */
 
 .post-basic-info p {
     font-size: .875em;
@@ -322,4 +326,111 @@ h1 {
     font-weight: bold;
     margin-top: 0px;
     margin-bottom: 1px;
+}
+
+
+/* dropdown */
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: rgb(44, 170, 219);
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+    background-color: rgb(66, 123, 197);
+    color: white;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #eefeff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    max-height: 250px;
+    /* you can change as you need it */
+    overflow: auto;
+    /* to get scroll */
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.subnav {
+    float: left;
+    overflow: hidden;
+}
+
+.subnav .subnavbtn {
+    font-size: 16px;
+    border: none;
+    background-color: inherit;
+    font-family: inherit;
+}
+
+.navbar a:hover,
+.subnav:hover .subnavbtn {
+    background-color: rgb(65, 89, 126);
+}
+
+.subnav-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(220, 251, 255);
+    z-index: 1;
+}
+
+.subnav-content a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+.subnav-content a:hover {
+    background-color: #eee;
+    color: black;
+}
+
+.subnav:hover .subnav-content {
+    display: block;
 }

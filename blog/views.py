@@ -6,6 +6,7 @@ from re import L
 import re
 from unicodedata import category
 from unittest import result
+from wsgiref.util import request_uri
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.db.models import Q
@@ -25,15 +26,25 @@ def links(request,path,message={}):
     country=postLink.country
     language=postLink.language
     category=postLink.category
-    relatedLink=Link.objects.filter(country=country,language=language,category=category)
+    relatedLink = Link.objects.filter(country=country, language=language, category=category).order_by("-id")
+    relatedLink=relatedLink.exclude(id=postLink.id)
+    if(request.GET.get('page')):
+        linka = pagination(request, relatedLink)
+        context = {
+            'links': linka,
+        }
+        return render(request, "loadmore.html", context)
+
+    linka = pagination(request, relatedLink)
     seo = {
         'title': postLink.name+" telegram "+postLink.type+" invite link "+str(date.today().year),
-        "description": postLink.name+" telegram "+postLink.type+": Are you searching for the best telegram channels for "+postLink.name+" then check out this blog and join the group. Join Now",
-        "robots": "index, follow"
+        "description": postLink.name+" telegram "+postLink.type+" invite link Are you searching for active "+postLink.name+" telegram invite link then check out this blog and join the "+postLink.type,
+        "robots": "index, follow",
+        "ogimage": postLink.image_file.url
     }
     context={
         "post":postLink,
-        "links":relatedLink,
+        "links": linka,
         'seo':seo
     }
     context.update(message)
@@ -70,17 +81,31 @@ def loadmore(request):
 
 def docfiles(request,path):
     file="doc/"+path+".html"
-    return render(request,file)
+    seo = {
+        'title': "Telekit "+path+" page",
+        "description": "Telekit "+path+" provide all information about "+path+".",
+        "robots": "index, nofollow"
+    }
+    return render(request,file,{"seo":seo})
 
-def groupfiles(request,path):
 
+def groupfiles(request, path, message={}):
+    seo = {
+        'title': "Telekit "+path+" page",
+        "description": "Telekit "+path+" provide all information about "+path+".",
+        "robots": "index, nofollow"
+    }
     file="group/"+path+".html"
-    return render(request,file)
+    context={
+        "seo":seo
+    }
+    context.update(message)
+    return render(request, file, context)
 
 
 def category(request,path):
     cate=Category.objects.get(slug=path)
-    postLink=Link.objects.filter(category=cate)
+    postLink = Link.objects.filter(category=cate).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -88,8 +113,8 @@ def category(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" category telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" category telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -100,7 +125,7 @@ def category(request,path):
 
 def country(request,path):
     cate=Country.objects.get(slug=path)
-    postLink=Link.objects.filter(country=cate) 
+    postLink = Link.objects.filter(country=cate).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -108,8 +133,8 @@ def country(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" country telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" country telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -120,7 +145,7 @@ def country(request,path):
 
 def language(request,path):
     cate=Language.objects.get(slug=path)
-    postLink=Link.objects.filter(language=cate) 
+    postLink = Link.objects.filter(language=cate).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -128,8 +153,8 @@ def language(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" language telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" language telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -140,7 +165,7 @@ def language(request,path):
 
 def tag(request,path):
     tag=Tag.objects.get(slug=path)
-    postLink=Link.objects.filter(tag=tag) 
+    postLink = Link.objects.filter(tag=tag).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -165,12 +190,14 @@ def search(request):
     coun = Country.objects.filter(Q(name__contains=keyword))
     cate = Category.objects.filter(Q(name__contains=keyword))
     lang = Language.objects.filter(Q(name__contains=keyword))
-    postLink=Link.objects.filter(Q(name__contains=keyword)|Q(description__contains=keyword)|Q(tag__in=tag)|Q(country__in=coun)|Q(category__in=cate)|Q(language__in=lang))
-    postLink=list(set(postLink))
+    postLink = Link.objects.filter(Q(name__contains=keyword) | Q(description__contains=keyword) | Q(
+        tag__in=tag) | Q(country__in=coun) | Q(category__in=cate) | Q(language__in=lang)).order_by("-id")
+    # postLink=list(set(postLink))
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
         'links':linka,
+            "keyword": keyword
         }
         return render(request,"loadmore.html",context)
     seo = {
@@ -180,7 +207,8 @@ def search(request):
     }
     context={
         "links":pagination(request,postLink),
-        'seo':seo
+        'seo':seo,
+        "keyword":keyword
     }
     return render(request,"index.html",context)
 
@@ -193,8 +221,13 @@ def addgroup(request):
     gtags=[]
     groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(groupLink)
     groupCount=int(str(groupCount).replace(" ",""))
-    # print(groupName, groupCount, groupLogo, groupDescri, groupType)
-
+    # print(groupName, groupCount, groupLogo, groupDescri, groupType, linkId)
+    if(groupLogo==0):
+        message={
+            "alertmsgbgcolor": '#f44336',
+            "alertmsg":"This link is not acceptable!"
+        }
+        return groupfiles(request, "addgroup", message=message)
     if(len(Link.objects.filter(linkId=linkId))>0):
         message={
             "alertmsgbgcolor": '#f44336',
@@ -205,7 +238,10 @@ def addgroup(request):
 
     
     postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
-    for i in tags.split(","):
+    spTags = tags.split(",")
+    spTags.remove("")
+    for i in spTags:
+        print("tags:",i)
         try:
             tempTag=Tag.objects.create(name=i)
             gtags.append(tempTag)
@@ -248,7 +284,7 @@ def find(request):
         filter_kwargs['language'] = lang
         result+=lang.name+", "
 
-    postLink=Link.objects.filter(**filter_kwargs)
+    postLink = Link.objects.filter(**filter_kwargs).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={

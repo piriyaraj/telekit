@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'blog',
     'user_profile',
     'extract',
-    'robots'
+    'robots',
+    'django_cleanup.apps.CleanupConfig', #keep it last
 ]
 SITE_ID = 1
 MIDDLEWARE = [

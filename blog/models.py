@@ -134,5 +134,14 @@ class Link(models.Model):
         try:
             super(Link, self).save(*args, **kwargs)
         except:pass
+ 
 
+    def delete(self, using=None, keep_parents=False):
+        # assuming that you use same storage for all files in this model:
+        storage = self.image_file.storage
+        print("delete called")
+        if storage.exists(self.image_file.name):
+            storage.delete(self.image_file.name)
+
+        super().delete()
 
