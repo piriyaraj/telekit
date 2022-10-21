@@ -4,6 +4,7 @@ from multiprocessing import context
 from os import link
 from re import L
 import re
+from turtle import title
 from unicodedata import category
 from unittest import result
 from wsgiref.util import request_uri
@@ -11,6 +12,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.db.models import Q
 from blog.models import Category, Company, Country, Language, Link, Tag
+from extract.models import Notification
 from . import tools
 from django.core.paginator import Paginator
 from datetime import date
@@ -238,6 +240,7 @@ def addgroup(request):
 
     
     postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
+    Notification.objects.create(name="New group added",link=postLink)
     spTags = tags.split(",")
     spTags.remove("")
     for i in spTags:
