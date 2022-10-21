@@ -88,7 +88,7 @@ def extractUrls(postUrl,categoryId,countryId,languageId,tags):
         extractData=check(i)
         if(extractData==(0,0,0,0,0,0)):
             continue
-        print(extractData[0] )
+        # print(extractData[0] )
         addTeleLink(i,categoryId,countryId,languageId,extractData,tags)
 
 
