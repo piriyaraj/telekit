@@ -143,5 +143,5 @@ class Link(models.Model):
         if storage.exists(self.image_file.name):
             storage.delete(self.image_file.name)
 
-        super().delete()
+        super().delete() 
 
