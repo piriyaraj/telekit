@@ -12,7 +12,7 @@ def findAllUrls(link):
         href=i.attrs['href']
         if(href.find('.me')>0):
             teleLinks.append(href)
-            print(href)
+            # print(href)
     return teleLinks
 
 def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
@@ -70,7 +70,9 @@ def addTeleLink(postUrl,categoryId,countryId,languageId,extractData,tags):
     gtags=[]
     postLink=Link.objects.create(name=groupName,link=postUrl,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
     spTags = tags.split(",")
-    spTags.remove("")
+    try:
+        spTags.remove("")
+    except:pass
     for i in spTags:
         try:
             tempTag=Tag.objects.create(name=i)
@@ -86,6 +88,7 @@ def extractUrls(postUrl,categoryId,countryId,languageId,tags):
         extractData=check(i)
         if(extractData==(0,0,0,0,0,0)):
             continue
+        print(extractData[0] )
         addTeleLink(i,categoryId,countryId,languageId,extractData,tags)
 
 
