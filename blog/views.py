@@ -114,8 +114,8 @@ def category(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" category telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" category telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -134,8 +134,8 @@ def country(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" country telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" country telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -154,8 +154,8 @@ def language(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" language telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" language telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
