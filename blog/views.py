@@ -304,3 +304,19 @@ def find(request):
         'seo':seo
     }
     return render(request,"index.html",context)
+
+
+def unlimited(request,path):
+
+    postLink=Link.objects.filter(type=path.capitalize())
+    seo = {
+        'title': "unlimited telegram "+str(path)+" invite links "+str(date.today().year),
+        "description":"unlimited telegram "+str(path)+" invite links "+str(date.today().year),
+        "robots": "index, follow"
+    }
+    context={
+        'links':postLink,
+        'seo':seo
+    }
+
+    return render(request,'unlimited.html',context)

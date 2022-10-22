@@ -17,6 +17,7 @@ urlpatterns = [
     path('tag/<str:path>',views.tag,name='tag'),
     path('search/',views.search,name='search'),
     path('addgroup',views.addgroup,name='search'),
+    path('unlimited/<str:path>',views.unlimited,name='unlimited')
 ]   
 
 sitemapUrls=[
