@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from blog.sitemap import countrySitemap, categorySitemap, languageSitemap, linkSitemap, StaticViewSitemap
+from blog.sitemap import countrySitemap, categorySitemap, languageSitemap, linkSitemap, StaticViewSitemap, tagSitemap
 from django.contrib.sitemaps.views import sitemap
 
 
@@ -16,7 +16,7 @@ urlpatterns = [
     path('language/<str:path>',views.language,name='language'),
     path('tag/<str:path>',views.tag,name='tag'),
     path('search/',views.search,name='search'),
-    path('addgroup',views.addgroup,name='search'),
+    path('addgroup',views.addgroup,name='addgroup'),
     path('unlimited/<str:path>',views.unlimited,name='unlimited')
 ]   
 
@@ -26,6 +26,7 @@ sitemapUrls=[
     path("language-sitemap.xml", sitemap, {'sitemaps': {"blog": languageSitemap}}),
     path("link-sitemap.xml", sitemap, {'sitemaps': {"blog": linkSitemap}}),
     path("static-sitemap.xml", sitemap, {'sitemaps': {"blog": StaticViewSitemap}}),
+    path("tag-sitemap.xml", sitemap, {'sitemaps': {"blog": tagSitemap}}),
 ]
 
 urlpatterns+=sitemapUrls

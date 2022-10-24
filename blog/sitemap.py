@@ -1,7 +1,7 @@
 from unittest import result
 from django.contrib.sitemaps import Sitemap
 from django.shortcuts import reverse
-from .models import Category,Country,Language,Link
+from .models import Category,Country,Language,Link, Tag
 from blog.models import Category,Country,Language,Link
 
 def printHtml(obj):
@@ -15,7 +15,7 @@ class StaticViewSitemap(Sitemap):
     changefreq = 'daily'
 
     def items(self):
-        return ['index']
+        return ['index','addgroup']
 
     def location(self, item):
         return reverse(item)
@@ -40,6 +40,11 @@ class languageSitemap(Sitemap):
     def items(self):
         return Language.objects.all()
 
+class tagSitemap(Sitemap):
+    priority = 0.5
+    changefreq = 'daily'
+    def items(self):
+        return Tag.objects.all()
 
 class linkSitemap(Sitemap):
     priority = 0.5
