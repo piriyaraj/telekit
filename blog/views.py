@@ -241,7 +241,9 @@ def addgroup(request):
     postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
     Notification.objects.create(name="New group added",link=postLink)
     spTags = tags.split(",")
-    spTags.remove("")
+    try:
+        spTags.remove("")
+    except:pass
     for i in spTags:
         print("tags:",i)
         try:
