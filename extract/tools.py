@@ -9,7 +9,9 @@ def findAllUrls(link):
     soup = BeautifulSoup(reqs.text, 'html.parser')
     atags=soup.find_all("a")
     for i in atags:
-        href=i.attrs['href']
+        try:
+            href=i.attrs['href']
+        except:continue
         if(href.find('.me')>0):
             teleLinks.append(href)
             # print(href)
