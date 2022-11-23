@@ -71,6 +71,8 @@ class Tag(models.Model):
 
     def __str__(self) -> str:
         return self.name    
+    def get_absolute_url(self):
+        return reverse("tag", args=[self.slug])
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -143,5 +145,5 @@ class Link(models.Model):
         if storage.exists(self.image_file.name):
             storage.delete(self.image_file.name)
 
-        super().delete()
+        super().delete() 
 
