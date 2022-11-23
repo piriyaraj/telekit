@@ -47,7 +47,18 @@
                                 <img src="{% static 'images/date.png' %}" class="icon" alt="{{post.name}} added date"><span class="cate">
                                     {{post.added}} <span>
                             </div>
+                            
+                            <span style="padding-right:20px;">Category: {{post.type}}</span>
+                            <span>
+                                {%if post.type == "Channel"%}
+                                {{"Subscribers : "}}
+                                {% else %}
+                                {{"members : "}}
+                                {% endif %}
 
+                                {{post.noOfMembers}}
+                            </span>
+                            
                             <pre class="predesc">{{post.description}}</pre>
 
 
