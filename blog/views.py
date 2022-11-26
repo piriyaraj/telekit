@@ -62,7 +62,7 @@ def index(request):
         return render(request,"loadmore.html",context)
     seo={
         'title': "Telekit - Unlimited Telegram Group and channel invite links",
-        "description": "Enjoy Unlimited Telegram groups and channel invites links to join Telegram group and channel. Here you can find various types of Telegram join links.",
+        "description": "Enjoy Unlimited Telegram groups and channel invites links to join Telegram group and channel. Here you can find various types of Telegram join links on Telekit",
         "robots":"index, follow"
     }
     linka=pagination(request,link)
