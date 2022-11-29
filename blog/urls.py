@@ -1,4 +1,6 @@
 from django.urls import path
+
+from blog.feeds import LatestLinksFeed
 from . import views
 from blog.sitemap import countrySitemap, categorySitemap, languageSitemap, linkSitemap, StaticViewSitemap, tagSitemap
 from django.contrib.sitemaps.views import sitemap
@@ -17,7 +19,8 @@ urlpatterns = [
     path('tag/<str:path>',views.tag,name='tag'),
     path('search/',views.search,name='search'),
     path('addgroup',views.addgroup,name='addgroup'),
-    path('unlimited/<str:path>',views.unlimited,name='unlimited')
+    path('unlimited/<str:path>',views.unlimited,name='unlimited'),
+    path('feed',LatestLinksFeed())
 ]   
 
 sitemapUrls=[
