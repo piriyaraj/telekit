@@ -20,10 +20,10 @@
         hx-swap="beforeend"
         hx-swap-oob="true"
     class="addbtn" name="load_more" id="load_more" style="cursor: pointer; display: inline;">
-    <img href="{% static 'images/loader01.gif' %}"/></a>
     {% if not adsshow %}
         {% include "ads/hori_respon.html" %}
     {% endif %}
+    <img class='center' src="{% static 'images/loader.gif' %}" alt="load more telegram links" /></a>
 </div>
 {% else %}
 <p style="display: inline;">No more invite links</p>

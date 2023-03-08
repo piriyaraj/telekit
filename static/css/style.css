@@ -1741,3 +1741,9 @@ input[type="url"]:hover {
 
 
 /*--//End-media Quries for 320px-monitors-*/
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

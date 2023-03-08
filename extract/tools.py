@@ -9,7 +9,9 @@ def findAllUrls(link):
     soup = BeautifulSoup(reqs.text, 'html.parser')
     atags=soup.find_all("a")
     for i in atags:
-        href=i.attrs['href']
+        try:
+            href=i.attrs['href']
+        except:continue
         if(href.find('.me')>0):
             teleLinks.append(href)
             # print(href)
@@ -88,10 +90,17 @@ def extractUrls(postUrl,categoryId,countryId,languageId,tags):
         extractData=check(i)
         if(extractData==(0,0,0,0,0,0)):
             continue
-        print(extractData[0] )
+        # print(extractData[0] )
         addTeleLink(i,categoryId,countryId,languageId,extractData,tags)
 
 
+def extractFromGroupSor():
+    link = "https://groupsorlink.com/telegram/group/loadresult"
+    reqs = requests.get(link)
+    soup = BeautifulSoup(reqs.text, 'html.parser')
+    inviteBoxs = soup.find_all('div', class_="maindiv")
+    print(len(inviteBoxs))
 if __name__=="__main__":
-    link="https://www.telegram-groups.com/sinhala-telegram-group/"
-    findAllUrls(link)
+    # link="https://www.telegram-groups.com/sinhala-telegram-group/"
+    # findAllUrls(link)
+    extractFromGroupSor()
