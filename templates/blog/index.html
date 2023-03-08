@@ -5,10 +5,15 @@
 <div class="content">
     <div class="wrap">
         <div id="main" role="main">
+            {% if not adsshow %}
+                {% include "ads/hori_respon.html" %}
+            {% endif %}
             <div style="margin-bottom: 10px;text-align: center">
                 {% include "search.html" %}
             </div>
-
+            {% if not adsshow %}
+                {% include "ads/hori_respon.html" %}
+            {% endif %}
 
             <!-- These are our grid blocks -->
             <div class="row">

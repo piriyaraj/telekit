@@ -16,6 +16,7 @@ from . import tools
 from django.core.paginator import Paginator
 from datetime import date
 
+
 def pagination(request,obj):
     paginator = Paginator(obj, 6) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -27,13 +28,17 @@ def links(request,path,message={}):
     country=postLink.country
     language=postLink.language
     category=postLink.category
-    relatedLink = Link.objects.filter(country=country, language=language, category=category).order_by("-id")
+    relatedLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),country=country, language=language, category=category).order_by("-id")
     relatedLink=relatedLink.exclude(id=postLink.id)
+    showAds=postLink.category.name=="Adult/18+/Hot"
+    
     if(request.GET.get('page')):
         linka = pagination(request, relatedLink)
         context = {
             'links': linka,
         }
+        if(showAds):
+            context["adsshow"]=True
         return render(request, "loadmore.html", context)
 
     linka = pagination(request, relatedLink)
@@ -48,12 +53,13 @@ def links(request,path,message={}):
         "links": linka,
         'seo':seo
     }
+    if(showAds):
+        context["adsshow"]=True
     context.update(message)
     return render(request,"links.html",context)
 
 def index(request):
-    link=Link.objects.order_by("-id")
-
+    link=Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,link)
         context={
@@ -66,6 +72,7 @@ def index(request):
         "robots":"index, follow"
     }
     linka=pagination(request,link)
+    
     context={
       'links':linka,
       'seo':seo,
@@ -105,13 +112,22 @@ def groupfiles(request, path, message={}):
 
 
 def category(request,path):
+    showAds=True
     cate=Category.objects.get(slug=path)
-    postLink = Link.objects.filter(category=cate).order_by("-id")
+    if(cate.name!="Adult/18+/Hot"):
+        postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),category=cate).order_by("-id")
+    else:
+        postLink = Link.objects.filter(Q(published=True),category=cate).order_by("-id")
+        showAds=False
+    if(not showAds):
+        print("its 18+")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
         'links':linka,
         }
+        if(not showAds):
+            context["adsshow"]=True
         return render(request,"loadmore.html",context)
     seo = {
         'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
@@ -122,11 +138,13 @@ def category(request,path):
         "links":pagination(request,postLink),
         "seo":seo
     }
+    if(not showAds):
+        context["adsshow"]=True
     return render(request,"index.html",context)
 
 def country(request,path):
     cate=Country.objects.get(slug=path)
-    postLink = Link.objects.filter(country=cate).order_by("-id")
+    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot") & Q(country__slug=path)).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -146,7 +164,7 @@ def country(request,path):
 
 def language(request,path):
     cate=Language.objects.get(slug=path)
-    postLink = Link.objects.filter(language=cate).order_by("-id")
+    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(language__slug=path)).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -166,7 +184,7 @@ def language(request,path):
 
 def tag(request,path):
     tag=Tag.objects.get(slug=path)
-    postLink = Link.objects.filter(tag=tag).order_by("-id")
+    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(tag__slug=path)).order_by("-id")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -187,6 +205,7 @@ def tag(request,path):
 
 def search(request):
     keyword=request.GET['keyword']
+    
     tag=Tag.objects.filter(Q(name__contains=keyword))
     coun = Country.objects.filter(Q(name__contains=keyword))
     cate = Category.objects.filter(Q(name__contains=keyword))
@@ -194,6 +213,9 @@ def search(request):
     postLink = Link.objects.filter(Q(name__contains=keyword) | Q(description__contains=keyword) | Q(
         tag__in=tag) | Q(country__in=coun) | Q(category__in=cate) | Q(language__in=lang)).order_by("-id")
     # postLink=list(set(postLink))
+    postLink=postLink.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"))
+    
+    postLink=list(set(postLink))
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -267,15 +289,19 @@ def find(request):
     categoryId=request.GET.get('category')
     countryId=request.GET.get('country')
     languageId=request.GET.get('language')
+    print("Country id: ",countryId)
+    query="category="+categoryId+"&country="+countryId+"&language="+languageId
     result=""
     postLink={}
     filter_kwargs = {}
 
-
+    is18plus=False
     if(categoryId!=""):
         cate=Category.objects.get(id=categoryId)
         filter_kwargs['category'] = cate
         result+=cate.name+", "
+        if(cate.name=="Adult/18+/Hot"):
+            is18plus=True
 
 
     if(countryId!=""):
@@ -289,11 +315,16 @@ def find(request):
         result+=lang.name+", "
 
     postLink = Link.objects.filter(**filter_kwargs).order_by("-id")
+    if(not is18plus):
+        postLink=postLink.filter(~Q(category__name="Adult/18+/Hot"))
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
         'links':linka,
+        'keyword':query,
         }
+        if(is18plus):
+            context["adsshow"]=True
         return render(request,"loadmore.html",context)
     seo = {
         'title': result+" telegram groups and channels invite links "+str(date.today().year),
@@ -303,8 +334,12 @@ def find(request):
     context={
         "links":pagination(request,postLink),
         "results":result,
-        'seo':seo
+        'seo':seo,
+        'keyword':query,
     }
+
+    if(is18plus):
+        context["adsshow"]=True
     return render(request,"index.html",context)
 
 
