@@ -68,7 +68,7 @@ def index(request):
         return render(request,"loadmore.html",context)
     seo={
         'title': "Telekit - Unlimited Telegram Group and channel invite links",
-        "description": "Enjoy Unlimited Telegram groups and channel invites links to join Telegram group and channel. Here you can find various types of Telegram join links.",
+        "description": "Enjoy Unlimited Telegram groups and channel invites links to join Telegram group and channel. Here you can find various types of Telegram join links on Telekit",
         "robots":"index, follow"
     }
     linka=pagination(request,link)
@@ -130,8 +130,8 @@ def category(request,path):
             context["adsshow"]=True
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" category telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" category telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -152,8 +152,8 @@ def country(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" country telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" country telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -172,8 +172,8 @@ def language(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" language telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" language telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
+        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
+        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
         "robots": "index, follow"
     }
     context={
@@ -263,7 +263,9 @@ def addgroup(request):
     postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
     Notification.objects.create(name="New group added",link=postLink)
     spTags = tags.split(",")
-    spTags.remove("")
+    try:
+        spTags.remove("")
+    except:pass
     for i in spTags:
         print("tags:",i)
         try:
@@ -335,6 +337,23 @@ def find(request):
         'seo':seo,
         'keyword':query,
     }
+
     if(is18plus):
         context["adsshow"]=True
     return render(request,"index.html",context)
+
+
+def unlimited(request,path):
+
+    postLink=Link.objects.filter(type=path.capitalize())
+    seo = {
+        'title': "unlimited telegram "+str(path)+" invite links "+str(date.today().year),
+        "description":"unlimited telegram "+str(path)+" invite links "+str(date.today().year),
+        "robots": "index, follow"
+    }
+    context={
+        'links':postLink,
+        'seo':seo
+    }
+
+    return render(request,'unlimited.html',context)

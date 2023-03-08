@@ -7,7 +7,6 @@ class Notification(models.Model):
     date=models.DateField(auto_now_add=True)
     viewed=models.BooleanField(default=False)
     link=models.ForeignKey("blog.Link",on_delete=models.DO_NOTHING,blank=True, null=True,)
-    class Meta:
-        ordering = ("viewed", "date")
+
     def __str__(self):
         return f"{self.name}"
