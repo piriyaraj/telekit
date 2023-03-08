@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'telekit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR.parent / 'db.sqlite3'),
+        'NAME': str(BASE_DIR.parent / 'telekit.sqlite3'),
     }
 }
 
