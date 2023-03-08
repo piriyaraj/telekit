@@ -6,9 +6,15 @@
 <div class="content">
     <div class="wrap">
         <div id="main" role="main">
+            {% if not adsshow %}
+                {% include "ads/hori_respon.html" %}
+            {% endif %}
             <div style="margin-bottom: 2px;text-align: center">
                 {% include "search.html" %}
             </div>
+            {% if not adsshow %}
+                {% include "ads/hori_respon.html" %}
+            {% endif %}
             <div class='row'>
                 <div class='col-sm-3' style="padding-top:10px">
                     {% if request.path == '/' %}
@@ -93,6 +99,9 @@
                         <div style="margin-top: 30px; margin-bottom: 30px">
                         </div>
                     </div>
+                    {% if not adsshow %}
+                        {% include "ads/hori_respon.html" %}
+                    {% endif %}
                     <h2 style="padding: 22px;font-size: large;color: darkgreen;">Related telegram groups and channels for {{post.country.name}}, {{post.language.name}}, and {{post.category.name}}</h2>
                     <div id="groupresult">
                         {% include "loadgroup.html" %}
