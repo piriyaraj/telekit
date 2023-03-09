@@ -43,8 +43,8 @@ def links(request,path,message={}):
 
     linka = pagination(request, relatedLink)
     seo = {
-        'title': postLink.name+" telegram "+postLink.type+" invite link "+str(date.today().year),
-        "description": postLink.name+" telegram "+postLink.type+" invite link Are you searching for active "+postLink.name+" telegram invite link then check out this blog and join the "+postLink.type,
+        'title': "Join Active "+postLink.name+" Telegram "+postLink.type+" | Find the Latest Invite Link "+str(date.today().year),
+        "description": "Join active "+postLink.name+" Telegram "+postLink.type+" with ease. Discover what makes this "+postLink.type+" unique and engage with fellow members. Check out our blog for the latest invite link and start exploring today!",
         "robots": "index, follow",
         "ogimage": postLink.image_file.url
     }
@@ -67,8 +67,8 @@ def index(request):
         }
         return render(request,"loadmore.html",context)
     seo={
-        'title': "Telekit - Unlimited Telegram Group and channel invite links",
-        "description": "Enjoy Unlimited Telegram groups and channel invites links to join Telegram group and channel. Here you can find various types of Telegram join links on Telekit",
+        'title': "Telekit - Discover and Share the Best Telegram Groups and Channels",
+        "description": "Discover and share top Telegram groups and channels easily. Find links by category, language, and country, or add your telegram on telekit. Start exploring now!",
         "robots":"index, follow"
     }
     linka=pagination(request,link)
