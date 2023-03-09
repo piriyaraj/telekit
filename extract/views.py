@@ -4,18 +4,18 @@ from extract import tools
 from blog.models import Category, Country, Language
 from django.contrib.auth.decorators import user_passes_test
 
-from extract.models import Notification
+# from extract.models import Notification
 
 # Create your views here.
 
 def index(request):
-    notification=Notification.objects.filter(viewed=False)
+    # notification=Notification.objects.filter(viewed=False)
     seo={
         "robots": "noindex, nofollow"
     }
     context = {
         'seo':seo,
-        'notification':notification
+        'notification':"notification"
     }
     return render(request,'superindex.html',context)
 
