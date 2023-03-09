@@ -46,12 +46,33 @@ def links(request,path,message={}):
         'title': "Join Active "+postLink.name+" Telegram "+postLink.type+" | Find the Latest Invite Link "+str(date.today().year),
         "description": "Join active "+postLink.name+" Telegram "+postLink.type+" with ease. Discover what makes this "+postLink.type+" unique and engage with fellow members. Check out our blog for the latest invite link and start exploring today!",
         "robots": "index, follow",
-        "ogimage": postLink.image_file.url
+        "ogimage": postLink.image_file.url,
     }
     context={
         "post":postLink,
         "links": linka,
-        'seo':seo
+        'seo':seo,
+        "article":f'''
+        <div>
+	<div>
+		<p>If you're looking for a new community to join on Telegram, we've got just the one for you! Introducing {postLink.name}, a {postLink.category} {postLink.type} from {postLink.country } with {postLink.noOfMembers} members.</p>
+		<p>To join {postLink.name}, simply click on the link provided. {postLink.type} links are a great way to stay connected with like-minded individuals from around the world.</p>
+		<p>The {postLink.language} language is primarily used in this {postLink.type}, making it the perfect place for speakers of this language to come together and engage in discussions on various topics.</p>
+		<p>The {postLink.tag} tag is used to describe the {postLink.type}'s interests and can give you a better idea of what to expect when you join.</p>
+		<p>In {postLink.name}, you'll find a diverse group of individuals who are passionate about {postLink.description}. Whether you're looking for a place to share your thoughts, ask for advice, or simply connect with others, you'll find a welcoming community in {postLink.name}.</p>
+		<p>So what are you waiting for? Click on the link to join {postLink.name} today and start connecting with like-minded individuals from around the world.</p>
+	</div>
+	<div>
+		<p>If you're looking for a new community to join on Telegram, we've got just the one for you! Introducing {postLink.name}, a {postLink.category} {postLink.type} from {postLink.country} with {postLink.noOfMembers} members.</p>
+		<p>To join {postLink.name}, simply click on the link provided. {postLink.type} links are a great way to stay connected with like-minded individuals from around the world.</p>
+		<p>The {postLink.language} language is primarily used in this {postLink.type}, making it the perfect place for speakers of this language to come together and engage in discussions on various topics.</p>
+		<p>The {postLink.tag} tag is used to describe the {postLink.type}'s interests and can give you a better idea of what to expect when you join.</p>
+		<p>In {postLink.name}, you'll find a diverse group of individuals who are passionate about {postLink.description}. Whether you're looking for a place to share your thoughts, ask for advice, or simply connect with others, you'll find a welcoming community in {postLink.name}.</p>
+		<p>So what are you waiting for? Click on the link to join {postLink.name} today and start connecting with like-minded individuals from around the world.</p>
+	</div>
+ </div>
+'''
+        
     }
     if(showAds):
         context["adsshow"]=True
