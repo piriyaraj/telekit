@@ -27,7 +27,7 @@ def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
             groupType = "Channel"
         
     except Exception as e:
-        print(e)
+        # print(e)
         return 0,0,0,0,0,0
     try:
         groupLogo = soup.find_all('img', class_="tgme_page_photo_image")[0]['src']
@@ -67,10 +67,13 @@ def addTeleLink(postUrl,categoryId,countryId,languageId,extractData,tags):
     # print(groupName, groupCount, groupLogo, groupDescri, groupType)
 
     if(len(Link.objects.filter(linkId=linkId))>0):
-        return 
+        return "already available"
 
     gtags=[]
-    postLink=Link.objects.create(name=groupName,link=postUrl,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
+    try:
+        postLink=Link.objects.create(name=groupName,link=postUrl,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId)
+    except:
+        return 0,0,0,0,0,0
     spTags = tags.split(",")
     try:
         spTags.remove("")
@@ -83,15 +86,19 @@ def addTeleLink(postUrl,categoryId,countryId,languageId,extractData,tags):
             gtags.append(Tag.objects.get(name=i))
     for i in list(gtags):
         postLink.tag.add(i)
+    return "added"
         
 def extractUrls(postUrl,categoryId,countryId,languageId,tags):
     teleLinks=findAllUrls(postUrl)
     for i in teleLinks:
         extractData=check(i)
+        result=extractData[0]!= 0
+        print(result,extractData[0],end=" ")
         if(extractData==(0,0,0,0,0,0)):
             continue
         # print(extractData[0] )
-        addTeleLink(i,categoryId,countryId,languageId,extractData,tags)
+        result=addTeleLink(i,categoryId,countryId,languageId,extractData,tags)
+        print(result)
 
 
 def extractFromGroupSor():
