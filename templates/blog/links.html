@@ -121,17 +121,21 @@
                     </div>
                     {% if links.has_next %}
                         <div style="margin-top: 10px"> 
-                            <a 
-                                {% if keyword|length %}
+                            <button 
+                            {% if keyword|length %}
                                 hx-get="?page={{ links.next_page_number }}&keyword={{keyword}}"
-
-                                {% else %}
+                            {% else %}
                                 hx-get="?page={{ links.next_page_number }}"
-                                {% endif %}
-                                hx-trigger="intersect"
-                                hx-target="#groupresult"
-                                hx-swap="beforeend"
-                            class="addbtn" name="load_more" id="load_more" style="cursor: pointer; display: inline;">next</a>
+                            {% endif %}
+                            hx-trigger="click"
+                            hx-target="#groupresult"
+                            hx-swap="beforeend"
+                            class="addbtn" 
+                            name="load_more" 
+                            id="load_more" 
+                            style="cursor: pointer; display: inline;">
+                            Load More
+                        </button>
                         </div>
                     {% endif %}
                 </div>
