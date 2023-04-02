@@ -126,16 +126,11 @@
                                 hx-get="?page={{ links.next_page_number }}&keyword={{keyword}}"
                             {% else %}
                                 hx-get="?page={{ links.next_page_number }}"
-                            {% endif %}
-                            hx-trigger="click"
-                            hx-target="#groupresult"
-                            hx-swap="beforeend"
-                            class="addbtn" 
-                            name="load_more" 
-                            id="load_more" 
-                            style="cursor: pointer; display: inline;">
-                            Load More
-                        </button>
+                                {% endif %}
+                                hx-trigger="click"
+                                hx-target="#groupresult"
+                                hx-swap="beforeend"
+                            class="addbtn" name="load_more" id="load_more" style="cursor: pointer; display: inline;">next</a>
                         </div>
                     {% endif %}
                 </div>
