@@ -93,12 +93,11 @@ def extractUrls(postUrl,categoryId,countryId,languageId,tags):
     for i in teleLinks:
         extractData=check(i)
         result=extractData[0]!= 0
-        # print(result,extractData[0],end=" ")
         if(extractData==(0,0,0,0,0,0)):
             continue
-        # print(extractData[0] )
+
         result=addTeleLink(i,categoryId,countryId,languageId,extractData,tags)
-        # print(result)
+
 
 
 def extractFromGroupSor():
