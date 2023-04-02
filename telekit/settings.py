@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'telekit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR.parent / 'db.sqlite3'),
+        'NAME': str(BASE_DIR / 'telekit.sqlite3'),
     }
 }
 
@@ -131,7 +131,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/"),
 )
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
 

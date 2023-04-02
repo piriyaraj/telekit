@@ -1,0 +1,242 @@
+/**
+ * Grid container
+ */
+/* item styles */
+
+
+.selectbtn{
+    width:230px;
+    padding:10px;
+    margin-top:8px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    color:#777;
+    border-radius: 5px;
+}
+.serbtn{
+    width:230px;
+    padding:10px;
+    margin-top:8px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    color: #ffffff;
+    background-color: #0088cc;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    
+}
+.addbtn{
+    color: white;
+    font-size: 20px;
+    background-color: #0088cc;
+    padding: 5px;
+    border-radius: 5px
+}
+.addbtn:hover{
+    background-color: #ffffff;
+    color: #023c58;
+    border: 1px solid #777;
+}
+/* arrows */
+
+select.classic {
+  background-image:
+    linear-gradient(45deg, transparent 50%, blue 50%),
+    linear-gradient(135deg, blue 50%, transparent 50%),
+    linear-gradient(to right, skyblue, skyblue);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+}
+
+select.classic:focus {
+  background-image:
+    linear-gradient(45deg, white 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, white 50%),
+    linear-gradient(to right, gray, gray);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+  border-color: grey;
+  outline: 0;
+}
+
+
+.item-image {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 50%; /* here the desired aspect ratio */
+}
+.item-image img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.item-content {
+  padding: 15px;
+  background: #72cffa;
+}
+.item-text {
+  position: relative;
+  overflow: hidden;
+  height: 100px;
+}
+#main {
+	margin-top: 9em;
+}
+#tiles {
+  list-style-type: none;
+  position: relative; /** Needed to ensure items are laid out relative to this container **/
+  margin: 0;
+  padding: 0;
+}
+#tiles li:hover img{
+	opacity:0.8;
+}
+/**
+ * Grid items
+ */
+#tiles li {
+ 	width: 280px;
+	background-color: #ffffff;
+	border: 1px solid #dedede;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	display: none;
+	cursor: pointer;
+	border-radius: 0.2em;
+}
+#tiles li img{
+	border-top-left-radius:0.2em;
+	border-top-right-radius:0.2em;
+}
+#tiles li.inactive {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#tiles li img {
+ 	display: block;
+}
+
+/**
+ * Grid item text
+ */
+
+footer {
+  text-align: center;
+
+}
+
+footer a {
+  color: #435DC5;
+  text-decoration: none;
+}
+
+/**
+ * Progress bar for imagesLoaded
+ */
+.progress-bar {
+  background-color: #0BC20B;
+  height: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 0;
+  box-shadow: 0 1px 3px rgba(11, 194, 11, 0.2);
+  -webkit-transition: width 0.3s ease-out;
+     -moz-transition: width 0.3s ease-out;
+       -o-transition: width 0.3s ease-out;
+          transition: width 0.3s ease-out;
+}
+
+/**
+ * Placerholder css
+ */
+.wookmark-placeholder {
+          border-radius: 2px;
+     -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  background-color: #eee;
+  border: 1px solid #dedede;
+  z-index: -1;
+}
+
+.example-tiles {
+  position: relative; /** Needed to ensure items are laid out relative to this container **/
+  margin: 0;
+  padding: 0;
+}
+
+.example-tiles li {
+  display: block;
+  list-style-type: none;
+  float: left;
+  margin: 5px;
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
+
+.example-tiles a,
+.example-tiles a:hover {
+  color: #555;
+  background-color: #eee;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  width: 200px;
+  height: 200px;
+  font-size: 2em;
+  font-weight: bold;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  padding: 5px 8px;
+  border-radius: 3px;
+}
+
+.example-tiles a:hover {
+  background-color: #ddd;
+}
+/*--media Quries for 640px-monitors-*/
+@media only screen and (max-width:640px) and (min-width:480px) {
+	#main {
+		margin-top: 7em;
+	}
+}
+/*--media Quries for 480px-monitors-*/
+@media only screen and (max-width:480px) and (min-width:320px) {
+	#main {
+		margin-top: 9.5em;
+	}
+}
+/*--media Quries for 320px-monitors-*/
+@media only screen and (max-width:320px) and (min-width:240px) {
+	#main {
+		margin-top: 9em;
+	}
+	#tiles li {
+		width: 266px;
+	}
+}
+
