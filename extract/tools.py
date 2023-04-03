@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from blog.models import Link, Tag
-
+from django.utils.text import slugify
 def findAllUrls(link):
     teleLinks=[]
     reqs = requests.get(link)
@@ -83,7 +83,8 @@ def addTeleLink(postUrl,categoryId,countryId,languageId,extractData,tags):
             tempTag=Tag.objects.create(name=i)
             gtags.append(tempTag)
         except:
-            gtags.append(Tag.objects.get(name=i))
+            slug=slugify(i)
+            gtags.append(Tag.objects.get(slug=slug))
     for i in list(gtags):
         postLink.tag.add(i)
     return "added"
