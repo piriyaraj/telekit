@@ -311,6 +311,12 @@ def find(request):
     countryId=request.GET.get('country')
     languageId=request.GET.get('language')
     print("Country id: ",countryId)
+    if(countryId == None):
+        countryId = ""
+    if categoryId == None:
+        categoryId = ""
+    if languageId == None:
+        languageId = ""
     query="category="+categoryId+"&country="+countryId+"&language="+languageId
     result=""
     postLink={}
