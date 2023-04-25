@@ -83,6 +83,9 @@
                                     href="whatsapp://send?text=Follow this link to Join my Telegram group :{{ request.get_host }}{{ request.path}} %0A %0AFind more Telegram Channels and Group at: {{ request.get_host }} "
                                     data-action="share/whatsapp/share" rel="nofollow">Share {{post.type}}</a>
                             </div>
+                            {% if not adsshow %}
+                                {% include "ads/multplex.html" %}
+                            {% endif %}
                             <div style="padding-top: 15px">
 
                                 <a href="https://t.me/share?url={{post.link}}&text=Follow this link to Join {{post.name}} Telegram {{post.type}}."
