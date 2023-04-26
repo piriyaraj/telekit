@@ -16,21 +16,21 @@
         </colgroup>
         <tr>
           <th style="width: 10%">Title</th>
-          <th>description</th>
+          {% comment %} <th>description</th>
           <th>members/subscribers</th>
           <th>Category</th>
           <th>Country</th>
-          <th>Language</th>
+          <th>Language</th> {% endcomment %}
           <th>Join</th>
         </tr>
         {% for link in links %}
         <tr>
           <td>{{link.name}}</td>
-          <td>{{link.description}}</td>
+          {% comment %} <td>{{link.description}}</td>
           <td>{{link.noOfMembers}}</td>
           <td>{{link.category}}</td>
           <td>{{link.country}}</td>
-          <td>{{link.language}}</td>
+          <td>{{link.language}}</td> {% endcomment %}
           <td>
             <a
               href="/join/{{link.linkId}}"

@@ -389,8 +389,8 @@ def unlimitedTelegramLinks(request):
     
     postLink=Link.objects.filter()
     seo = {
-        'title': str(len(postLink))+"+ Active Telegram Groups & channel Links Join, share, and submit ("+str(date.today().strftime("%d %B %Y"))+")",
-        "description":"Discover a vast collection of Telegram group links categorized by topics like education, entertainment, sports, technology, and more. Join groups relevant to your interests and connect with like-minded individuals from all around the world. Our curated list of groups is constantly updated to ensure that you get access to the most engaging and active communities. Join now and be a part of the conversation!",
+        'title': str(len(postLink))+"+  Active Telegram Groups Links |Join, Submit|"+str(date.today().strftime("%d %b %Y")),
+        "description":"Join "+str(len(postLink))+" Active telegram group & channel links updated "++str(date.today().strftime("%d %b %Y")),
         "robots": "index, follow"
     }
     context={
