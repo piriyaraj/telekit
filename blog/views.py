@@ -390,7 +390,7 @@ def unlimitedTelegramLinks(request):
     postLink=Link.objects.filter()
     seo = {
         'title': str(len(postLink))+"+  Active Telegram Groups Links |Join, Submit|"+str(date.today().strftime("%d %b %Y")),
-        "description":"Join "+str(len(postLink))+" Active telegram group & channel links updated "++str(date.today().strftime("%d %b %Y")),
+        "description":"Join "+str(len(postLink))+" Active telegram group & channel links updated "+str(date.today().strftime("%d %b %Y")),
         "robots": "index, follow"
     }
     context={
