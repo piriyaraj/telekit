@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="content">
+  <div class="wrap">
+    <div id="main" role="main">
+        <h1>{{ seo.title }}</h1>
+        <p>Welcome to the ultimate guide to thousands of active Telegram group links! Telegram is a popular messaging app with millions of users around the world, and joining groups is a great way to connect with people who share your interests. In this guide, we have compiled a list of over 10,000 active Telegram groups that cover a wide range of topics, from entertainment to education, from sports to politics. Whether you're looking for a group to chat with friends or to learn new skills, you're sure to find one that suits your needs. So join, share, and submit your own Telegram group links to become part of this vibrant community!</p>
+        <h2>
+      <table>
+        <colgroup>
+          <col span="1" style="width: 40%" />
+          <col span="1" style="width: 10%" />
+          <col span="1" style="width: 10%" />
+          <col span="1" style="width: 10%" />
+          <col span="1" style="width: 10%" />
+          <col span="1" style="width: 10%" />
+        </colgroup>
+        <tr>
+          <th style="width: 10%">Title</th>
+          <th>description</th>
+          <th>members/subscribers</th>
+          <th>Category</th>
+          <th>Country</th>
+          <th>Language</th>
+          <th>Join</th>
+        </tr>
+        {% for link in links %}
+        <tr>
+          <td>{{link.name}}</td>
+          <td>{{link.description}}</td>
+          <td>{{link.noOfMembers}}</td>
+          <td>{{link.category}}</td>
+          <td>{{link.country}}</td>
+          <td>{{link.language}}</td>
+          <td>
+            <a
+              href="/join/{{link.linkId}}"
+              title="{{link.name}} join link"
+              target="_blank"
+              >Join</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
