@@ -7,7 +7,6 @@ from unittest.util import _MAX_LENGTH
 from urllib.request import urlopen
 from django.db import models
 from django.utils.text import slugify
-
 from user_profile.models import User
 
 

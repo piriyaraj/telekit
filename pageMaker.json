@@ -1539,15 +1539,6 @@
     },
     {
         "model": "blog.category",
-        "pk": 1,
-        "fields": {
-            "name": "Adult/18+/Hot",
-            "slug": "adult-18+-hot",
-            "created_date": "2022-09-30"
-        }
-    },
-    {
-        "model": "blog.category",
         "pk": 2,
         "fields": {
             "name": "Art/Design/Photography",

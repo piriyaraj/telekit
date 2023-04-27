@@ -1,9 +1,10 @@
 import json
 import requests
 from bs4 import BeautifulSoup
-
+from django.db.models import Q
 from blog.models import Link, Tag
 from django.utils.text import slugify
+
 def findAllUrls(link):
     teleLinks=[]
     reqs = requests.get(link)
@@ -168,7 +169,7 @@ def createHtmlPage():
             category.append(key["fields"]["name"])
 
     for i in category+language+country:
-        links = Link.objects.filter(category__name=i).order_by('-added')[:10]
+        links = Link.objects.filter(Q(category__name=i) | Q(language__name=i) | Q(country__name=i)).order_by('-added')[:10]
         if(len(links)):
             name = []
             groupLink = []
