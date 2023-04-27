@@ -20,7 +20,7 @@ urlpatterns = [
     path('search/',views.search,name='search'),
     path('addgroup',views.addgroup,name='addgroup'),
     path('unlimited/<str:path>',views.unlimited,name='unlimited'),
-    path('unlimited-telegram-links/',views.unlimitedTelegramLinks,name='unlimitedTelegramLinks'),
+    path('unlimited-telegram-groups-links',views.unlimitedTelegramLinks,name='unlimitedtelegramlinks'),
     path('feed',LatestLinksFeed())
 ]   
 
