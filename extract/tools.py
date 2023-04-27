@@ -129,10 +129,9 @@ html_code = """
 
 def createATable(tableTitle, colHeading1, colHeading2, col1Data, col2Data, article = ""):
     # Create the opening HTML tags for the table
-    html = "<table>"
+    html = "<h2>{}</h2><table>".format(tableTitle)
     
-    # Create the table caption
-    html += "<caption>{}</caption>".format(tableTitle)
+    
     
     # Create the table headers
     html += "<tr><th>{}</th><th>{}</th></tr>".format(colHeading1, colHeading2)
@@ -140,6 +139,9 @@ def createATable(tableTitle, colHeading1, colHeading2, col1Data, col2Data, artic
     # Create the table rows and data
     for i in range(len(col1Data)):
         html += "<tr><td>{}</td><td><a href='{}'>Join</a></td></tr>".format(col1Data[i], col2Data[i])
+        
+    # Create the table caption
+    html += "<caption><b>{}</b></caption>".format(tableTitle)
     
     # Create the closing HTML tags for the table
     html += "</table>"
