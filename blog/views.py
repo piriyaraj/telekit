@@ -398,4 +398,4 @@ def unlimitedTelegramLinks(request):
         'seo':seo
     }
 
-    return render(request,'seoTest.html',context)
+    return render(request,'seoTest1.html',context)

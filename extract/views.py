@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from extract import tools
 
@@ -19,6 +20,10 @@ def index(request):
     }
     return render(request,'superindex.html',context)
 
+# creating unilimited grouplink page
+def makeHtml(request):
+    tools.createHtmlPage()
+    return HttpResponse("done")
 
 @user_passes_test(lambda u: u.is_superuser)
 def extract(request):

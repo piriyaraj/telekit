@@ -1,3 +1,4 @@
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -107,7 +108,80 @@ def extractFromGroupSor():
     soup = BeautifulSoup(reqs.text, 'html.parser')
     inviteBoxs = soup.find_all('div', class_="maindiv")
     print(len(inviteBoxs))
+
+html_code = """
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="content">
+  <div class="wrap">
+    <div id="main" role="main">
+        <h1>{{ seo.title }}</h1>
+        <img src="{% static 'images/unlimited telegram groups links.png' %}" alt="Unlimited Telegram groups and channels links" title="Unlimited Telegram groups and channels links">
+
+        <p>Welcome to the ultimate guide to thousands of <b>active Telegram group links</b> ! Telegram is a popular messaging app with millions of users around the world, and joining groups is a great way to connect with people who share your interests. In this guide, we have compiled a list of over 10,000 active Telegram groups that cover a wide range of topics, from <b>entertainment</b> to <b>education</b>, from <b>sports</b> to <b>politics</b>. Whether you're looking for a group to chat with friends or to learn new skills, you're sure to find one that suits your needs. So <b>join</b>, <b>share</b>, and <b>submit</b> your own Telegram group links to become part of this vibrant community!</p>
+        --table--
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+"""
+
+def createATable(tableTitle, colHeading1, colHeading2, col1Data, col2Data, article = ""):
+    # Create the opening HTML tags for the table
+    html = "<table>"
+    
+    # Create the table caption
+    html += "<caption>{}</caption>".format(tableTitle)
+    
+    # Create the table headers
+    html += "<tr><th>{}</th><th>{}</th></tr>".format(colHeading1, colHeading2)
+    
+    # Create the table rows and data
+    for i in range(len(col1Data)):
+        html += "<tr><td>{}</td><td><a href='{}'>Join</a></td></tr>".format(col1Data[i], col2Data[i])
+    
+    # Create the closing HTML tags for the table
+    html += "</table>"
+    html += article
+    
+    return html
+
+def createHtmlPage():
+    global html_code
+    tempHtml = """"""
+    country = []
+    language = []
+    category = []
+
+    with open('pageMaker.json', 'r') as file:
+    # Load the contents of the file into a variable
+        data = json.load(file)
+    with open('article.json', 'r') as file:
+    # Load the contents of the file into a variable
+        article = json.load(file)
+    for key in data:
+        if key['model'] == "blog.language":
+            language.append(key["fields"]["name"])
+        elif key['model'] == "blog.country":
+            country.append(key["fields"]["name"])
+        elif key['model'] == "blog.category":
+            category.append(key["fields"]["name"])
+
+    for i in category+language+country:
+        links = Link.objects.filter(category__name=i).order_by('-added')[:10]
+        if(len(links)):
+            name = []
+            groupLink = []
+            for link in links:
+                name.append(link.name)
+                groupLink.append(f"/join/{link.linkId}")
+            tempHtml += createATable(i+" telegram group links",i+" group name","Links",name, groupLink, article[i])
+    html_code = html_code.replace("--table--",tempHtml)
+    with open('templates/blog/seoTest1.html', 'w', encoding='utf-8') as file:
+    # Write the HTML code to the file
+        file.write(html_code)
+        
 if __name__=="__main__":
     # link="https://www.telegram-groups.com/sinhala-telegram-group/"
     # findAllUrls(link)
-    extractFromGroupSor()
+    createHtmlPage()
