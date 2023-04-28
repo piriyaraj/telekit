@@ -225,6 +225,7 @@ def tag(request,path):
     return render(request,"index.html",context)
 
 def search(request):
+    print(request.GET)
     keyword=request.GET['keyword']
     
     tag=Tag.objects.filter(Q(name__contains=keyword))
@@ -241,7 +242,7 @@ def search(request):
         linka=pagination(request,postLink)
         context={
         'links':linka,
-            "keyword": keyword
+            "keyword": "keyword="+keyword
         }
         return render(request,"loadmore.html",context)
     seo = {
@@ -252,7 +253,7 @@ def search(request):
     context={
         "links":pagination(request,postLink),
         'seo':seo,
-        "keyword":keyword
+        "keyword":"keyword="+keyword
     }
     return render(request,"index.html",context)
 
@@ -307,10 +308,11 @@ def addgroup(request):
 
 
 def find(request):
+    print(request.GET)
     categoryId=request.GET.get('category')
     countryId=request.GET.get('country')
     languageId=request.GET.get('language')
-    print("Country id: ",countryId)
+    print("Country id: ",categoryId)
     if(countryId == None):
         countryId = ""
     if categoryId == None:
@@ -358,6 +360,7 @@ def find(request):
         "description": result+" telegram groups and channels: Are you searching for the best telegram channels for "+result+" then check out this blog and join the group. Join Now",
         "robots": "noindex, follow"
     }
+    print("Query: ",query)
     context={
         "links":pagination(request,postLink),
         "results":result,
