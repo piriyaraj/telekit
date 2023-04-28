@@ -11,7 +11,7 @@
     
     <a 
         {% if keyword|length %}
-            hx-get="?page={{ links.next_page_number }}&keyword={{keyword}}"
+            hx-get="?page={{ links.next_page_number }}&{{keyword}}"
         {% else %}
              hx-get="?page={{ links.next_page_number }}"
         {% endif %}
