@@ -157,10 +157,10 @@ def createHtmlPage():
     language = []
     category = []
 
-    with open('pageMaker.json', 'r') as file:
+    with open('pageMaker.json', 'r', encoding='utf-8') as file:
     # Load the contents of the file into a variable
         data = json.load(file)
-    with open('article.json', 'r') as file:
+    with open('article.json', 'r', encoding='utf-8') as file:
     # Load the contents of the file into a variable
         article = json.load(file)
     for key in data:
