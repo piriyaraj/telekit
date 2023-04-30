@@ -129,7 +129,7 @@ html_code = """
 
 def createATable(tableTitle, colHeading1, colHeading2, col1Data, col2Data, article = ""):
     # Create the opening HTML tags for the table
-    html = "<h2>{}</h2><table>".format(tableTitle)
+    html = "<br></br> <hr> <h2>{}</h2><br/>{}<br/><table>".format(tableTitle,article)
     
     
     
@@ -138,14 +138,15 @@ def createATable(tableTitle, colHeading1, colHeading2, col1Data, col2Data, artic
     
     # Create the table rows and data
     for i in range(len(col1Data)):
-        html += "<tr><td>{}</td><td><a href='{}'>Join</a></td></tr>".format(col1Data[i], col2Data[i])
+        html += "<tr><td>{}</td><td><a class='linkbutton' href='{}'>Join</a></td></tr>".format(col1Data[i], col2Data[i])
         
     # Create the table caption
-    html += "<caption><b>{}</b></caption>".format(tableTitle)
+    head = tableTitle.split("telegram")[0]
+    html += "<caption><b>{}</b> telegram group links</caption>".format(head)
     
     # Create the closing HTML tags for the table
     html += "</table>"
-    html += article
+    # html += article
     
     return html
 
@@ -178,6 +179,7 @@ def createHtmlPage():
             for link in links:
                 name.append(link.name)
                 groupLink.append(f"/join/{link.linkId}")
+            print(article[i])
             tempHtml += createATable(i+" telegram group links",i+" group name","Links",name, groupLink, article[i])
     html_code = html_code.replace("--table--",tempHtml)
     with open('templates/blog/seoTest1.html', 'w', encoding='utf-8') as file:
