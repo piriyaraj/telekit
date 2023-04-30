@@ -179,7 +179,7 @@ def createHtmlPage():
             for link in links:
                 name.append(link.name)
                 groupLink.append(f"/join/{link.linkId}")
-            print(article[i])
+            # print(article[i])
             tempHtml += createATable(i+" telegram group links",i+" group name","Links",name, groupLink, article[i])
     html_code = html_code.replace("--table--",tempHtml)
     with open('templates/blog/seoTest1.html', 'w', encoding='utf-8') as file:
