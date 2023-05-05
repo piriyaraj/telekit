@@ -4,7 +4,11 @@
     
 <head>
         <!-- seo tags -->
-        {% include "components/seo.html" %}
+        {%if seo.title|length%}
+            {% include "components/seo.html" %}
+        {% else %}
+            {% block seo %}{% endblock %}
+        {% endif %}
         <!-- end of seo -->
 
 

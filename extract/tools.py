@@ -1,3 +1,4 @@
+from datetime import date
 import json
 import requests
 from bs4 import BeautifulSoup
@@ -111,11 +112,35 @@ def extractFromGroupSor():
     print(len(inviteBoxs))
 
 html_code = """
-{% extends "base.html" %} {% load static %} {% block content %}
+{% extends "base.html" %} {% load static %}
+{% block seo %}
+<title>--title--</title>
+<meta name="description" content="--description--" />
+<meta property="og:description" content="--description--"/>
+<meta property="og:title" content="--title--"/>
+<meta property="og:image" content="{% static 'images/unlimitedtelegramgroupslinks.webp' %}"/>
+<meta name="twitter:image" content="{% static 'images/unlimitedtelegramgroupslinks.webp' %}">
+<meta name="robots" content="index, follow" />
+
+<meta property="og:site_name" content="{{ request.get_host }}"/>
+<meta property="og:url" content="{{ request.get_host }}{{ request.path }}"/>
+<link rel="canonical" href="https://telekit.link{{ request.path }}" />
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="website" />
+<meta charset="UTF-8">
+
+<meta name="twitter:card" content="summary_large_image">
+{% comment %} <meta name="twitter:site" content="@nytimes"> {% endcomment %}
+<meta name="twitter:title" content="--title--">
+<meta name="twitter:description" content="--description--">
+{% endblock %}
+{% block content %}
 <div class="content">
   <div class="wrap">
     <div id="main" role="main">
-        <h1>{{ seo.title }}</h1>
+        <h1>--title--</h1>
         <img src="{% static 'images/unlimitedtelegramgroupslinks.webp' %}" alt="Unlimited Telegram groups and channels links" title="Unlimited Telegram groups and channels links">
 
         <p>Welcome to the ultimate guide to thousands of <b>active Telegram group links</b> ! Telegram is a popular messaging app with millions of users around the world, and joining groups is a great way to connect with people who share your interests. In this guide, we have compiled a list of over 10,000 active Telegram groups that cover a wide range of topics, from <b>entertainment</b> to <b>education</b>, from <b>sports</b> to <b>politics</b>. Whether you're looking for a group to chat with friends or to learn new skills, you're sure to find one that suits your needs. So <b>join</b>, <b>share</b>, and <b>submit</b> your own Telegram group links to become part of this vibrant community!</p>
@@ -156,6 +181,9 @@ def createHtmlPage():
     country = []
     language = []
     category = []
+    postLink=Link.objects.filter()
+    title = str(len(postLink))+"+ Active Telegram Groups Links |Join, Submit|"+str(date.today().strftime("%d %b %Y"))
+    description = "Join 10,000+ Active popular Telegram groups Links in "+str(date.today().strftime("%Y"))+" | join and Share telegram groups and channels. Find most top category links on telekit"
 
     with open('pageMaker.json', 'r', encoding='utf-8') as file:
     # Load the contents of the file into a variable
@@ -163,6 +191,7 @@ def createHtmlPage():
     with open('article.json', 'r', encoding='utf-8') as file:
     # Load the contents of the file into a variable
         article = json.load(file)
+        
     for key in data:
         if key['model'] == "blog.language":
             language.append(key["fields"]["name"])
@@ -182,6 +211,8 @@ def createHtmlPage():
             # print(article[i])
             tempHtml += createATable(i+" telegram group links",i+" group name","Links",name, groupLink, article[i])
     html_code = html_code.replace("--table--",tempHtml)
+    html_code = html_code.replace("--title--",title)
+    html_code = html_code.replace("--description--",description)
     with open('templates/blog/seoTest1.html', 'w', encoding='utf-8') as file:
     # Write the HTML code to the file
         file.write(html_code)

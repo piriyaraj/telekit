@@ -391,14 +391,14 @@ def unlimited(request,path):
 def unlimitedTelegramLinks(request):
     
     postLink=Link.objects.filter()
-    seo = {
-        'title': str(len(postLink))+"+ Active Telegram Groups Links |Join, Submit|"+str(date.today().strftime("%d %b %Y")),
-        "description":"Join 10,000+ Active popular Telegram groups Links in "+str(date.today().strftime("%Y"))+" | join and Share telegram groups and channels. Find most top category links on telekit",
-        "robots": "index, follow"
-    }
+    # seo = {
+    #     'title': str(len(postLink))+"+ Active Telegram Groups Links |Join, Submit|"+str(date.today().strftime("%d %b %Y")),
+    #     "description":"Join 10,000+ Active popular Telegram groups Links in "+str(date.today().strftime("%Y"))+" | join and Share telegram groups and channels. Find most top category links on telekit",
+    #     "robots": "index, follow"
+    # }
     context={
         'links':postLink,
-        'seo':seo
+        # 'seo':seo
     }
 
     return render(request,'seoTest1.html',context)
