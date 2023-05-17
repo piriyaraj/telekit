@@ -142,8 +142,8 @@ html_code = """
     <div id="main" role="main">
         <h1>--title--</h1>
         <img src="{% static 'images/unlimitedtelegramgroupslinks.webp' %}" alt="Unlimited Telegram groups and channels links" title="Unlimited Telegram groups and channels links">
-
-        <p>Welcome to the ultimate guide to thousands of <b>active Telegram group links</b> ! Telegram is a popular messaging app with millions of users around the world, and joining groups is a great way to connect with people who share your interests. In this guide, we have compiled a list of over 10,000 active Telegram groups that cover a wide range of topics, from <b>entertainment</b> to <b>education</b>, from <b>sports</b> to <b>politics</b>. Whether you're looking for a group to chat with friends or to learn new skills, you're sure to find one that suits your needs. So <b>join</b>, <b>share</b>, and <b>submit</b> your own Telegram group links to become part of this vibrant community!</p>
+        <div>--context--</div>
+        <p>Welcome to the ultimate guide to thousands of <b>active Telegram groups links</b> ! Telegram is a popular messaging app with millions of users around the world, and joining groups is a great way to connect with people who share your interests. In this guide, we have compiled a list of over 10,000 active Telegram groups that cover a wide range of topics, from <b>entertainment</b> to <b>education</b>, from <b>sports</b> to <b>politics</b>. Whether you're looking for a group to chat with friends or to learn new skills, you're sure to find one that suits your needs. So <b>join</b>, <b>share</b>, and <b>submit</b> your own Telegram group links to become part of this vibrant community!</p>
         --table--
     </div>
   </div>
@@ -154,7 +154,7 @@ html_code = """
 
 def createATable(tableTitle, colHeading1, colHeading2, col1Data, col2Data, article = ""):
     # Create the opening HTML tags for the table
-    html = "<br></br> <hr> <h2>{}</h2><br/>{}<br/><table>".format(tableTitle,article)
+    html = "<br></br> <hr> <h2 id='{}'>{}</h2><br/>{}<br/><table>".format(tableTitle.replace(" ","-").replace("/","-"),tableTitle,article)
     
     
     
@@ -178,6 +178,14 @@ def createATable(tableTitle, colHeading1, colHeading2, col1Data, col2Data, artic
 def createHtmlPage():
     global html_code
     tempHtml = """"""
+    tempContext = """
+        <div id="toc_container">
+        <p class="toc_title">Contents</p>
+        <ul class="toc_list">
+        ^
+        </ul>
+        </div>
+    """
     country = []
     language = []
     category = []
@@ -209,7 +217,10 @@ def createHtmlPage():
                 name.append(link.name)
                 groupLink.append(f"/join/{link.linkId}")
             # print(article[i])
-            tempHtml += createATable(i+" telegram group links",i+" group name","Links",name, groupLink, article[i])
+            id = (i+" telegram groups links").replace(" ","-").replace("/","-")
+            tempContext = tempContext.replace("^",f'<li><a href="#{id}">{i+" telegram groups links" }</a></li>\n^')
+            tempHtml += createATable(i+" telegram groups links",i+" group name","Links",name, groupLink, article[i])
+    html_code = html_code.replace("--context--",tempContext)
     html_code = html_code.replace("--table--",tempHtml)
     html_code = html_code.replace("--title--",title)
     html_code = html_code.replace("--description--",description)
