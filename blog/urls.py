@@ -21,6 +21,7 @@ urlpatterns = [
     path('addgroup',views.addgroup,name='addgroup'),
     path('unlimited/<str:path>',views.unlimited,name='unlimited'),
     path('unlimited-telegram-groups-links',views.unlimitedTelegramLinks,name='unlimitedtelegramlinks'),
+    path('random-post',views.randompost,name="randompost"),
     path('feed',LatestLinksFeed())
 ]   
 

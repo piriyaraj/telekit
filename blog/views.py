@@ -2,6 +2,7 @@ from ast import keyword
 from email import message
 from multiprocessing import context
 from os import link
+import random
 from re import L
 import re
 from unicodedata import category
@@ -387,6 +388,11 @@ def unlimited(request,path):
     }
 
     return render(request,'unlimited.html',context)
+
+def randompost(request):
+    random_link = random.choice(Link.objects.all())
+    print('/join/'+random_link.linkId)
+    return redirect('/join/'+random_link.linkId)
 
 def unlimitedTelegramLinks(request):
     
