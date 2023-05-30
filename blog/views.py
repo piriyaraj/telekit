@@ -90,7 +90,7 @@ def index(request):
         return render(request,"loadmore.html",context)
     seo={
         'title': f"1500+ Active telegram groups links List - {date.today().month}/{date.today().year}",
-        "description": "1500+ unlimited telegram groups links and channels links also add your telegram links here to increase the telegram growth factor",
+        "description": "1500+ links to unlimited Telegram groups and channels Add your Telegram links here as well to boost the Telegram growth factor.",
         "robots":"index, follow"
     }
     linka=pagination(request,link)
