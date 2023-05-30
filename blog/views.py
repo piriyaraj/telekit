@@ -89,8 +89,8 @@ def index(request):
         }
         return render(request,"loadmore.html",context)
     seo={
-        'title': "Telekit - Discover and Share the Best Telegram Groups and Channels",
-        "description": "Discover and share top Telegram groups and channels easily. Find links by category, language, and country, or add your telegram on telekit. Start exploring now!",
+        'title': f"1500+ Active telegram groups links List - {date.today().month}/{date.today().year}",
+        "description": "1500+ unlimited telegram groups links and channels links also add your telegram links here to increase the telegram growth factor",
         "robots":"index, follow"
     }
     linka=pagination(request,link)
