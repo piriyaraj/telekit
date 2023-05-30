@@ -4,7 +4,29 @@ from django.db.models import Count
 from blog.models import Category, Company, Country, Language, Link, Tag
 
 # Register your models here.
-admin.site.register(Link)
+@admin.register(Link)
+class LinkAdmin(admin.ModelAdmin):
+    list_display = ('name', 'link', 'country', 'category', 'language', 'noOfMembers', 'published')
+    list_filter = ('country', 'category', 'language', 'published')
+    search_fields = ('name', 'link', 'description')
+    readonly_fields = ('added', 'modified')
+
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('name', 'link', 'country', 'category', 'language')
+        }),
+        ('Additional Information', {
+            'fields': ('tag', 'noOfMembers', 'description', 'company', 'type', 'linkId', 'imgUrl', 'image_file')
+        }),
+        ('Status', {
+            'fields': ('published',)
+        }),
+        ('Timestamps', {
+            'fields': ('added', 'modified'),
+            'classes': ('collapse',),
+        }),
+    )
+
 admin.site.register(Company)
 # admin.site.register(Country)
 # admin.site.register(Language)
