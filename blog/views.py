@@ -44,7 +44,7 @@ def links(request,path,message={}):
 
     linka = pagination(request, relatedLink)
     seo = {
-        'title': "Join Active "+postLink.name+" Telegram "+postLink.type+" | Find the Latest Invite Link "+str(date.today().year),
+        'title': str(date.today().year)+ " "+ postLink.name+" Telegram "+postLink.type+" link",
         "description": "Join active "+postLink.name+" Telegram "+postLink.type+" with ease. Discover what makes this "+postLink.type+" unique and engage with fellow members. Check out our blog for the latest invite link and start exploring today!",
         "robots": "index, follow",
         "ogimage": postLink.image_file.url,
