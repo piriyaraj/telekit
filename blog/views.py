@@ -17,6 +17,7 @@ from . import tools
 from django.core.paginator import Paginator
 from datetime import date
 
+year = '2023'
 
 def pagination(request,obj):
     paginator = Paginator(obj, 6) # Show 25 contacts per page.
@@ -48,6 +49,7 @@ def links(request,path,message={}):
         "description": "Join active "+postLink.name+" Telegram "+postLink.type+" with ease. Discover what makes this "+postLink.type+" unique and engage with fellow members. Check out our blog for the latest invite link and start exploring today!",
         "robots": "index, follow",
         "ogimage": postLink.image_file.url,
+        "tag":"Common"
     }
     context={
         "post":postLink,
@@ -151,10 +153,13 @@ def category(request,path):
         if(not showAds):
             context["adsshow"]=True
         return render(request,"loadmore.html",context)
+    
     seo = {
-        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" telegram group and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
-        "robots": "index, follow"
+        'title': f'5500+ {cate.name} Telegram Group & Channel links {year}',
+        "description": f"Join 5500+ {cate.name} Telegram Group & Channel links. Are you searching for the {cate.name} Popular Telegram links then check out this blog and join the groups.",
+        "robots": "index, follow",
+        'tag': cate.name,
+        'year': year,
     }
     context={
         "links":pagination(request,postLink),
@@ -173,10 +178,15 @@ def country(request,path):
         'links':linka,
         }
         return render(request,"loadmore.html",context)
+    # 1000+ Belgium Telegram Group Links & Channel List 2023
+    # Join Belgium Telegram Group Links, Find a Guide about all tourist attractions in and around Belgium to visit and Check out. Learn Various languages like
     seo = {
-        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
-        "robots": "index, follow"
+        'title': f'5500+ {cate.name} Telegram Group & Channel links {year}',
+        "description": f"Join 5500+ {cate.name} Telegram Group & Channel links. Are you searching for the {cate.name} Popular Telegram links then check out this blog and join the groups.",
+        "robots": "index, follow",
+        'tag': cate.name,
+        'year': year,
+        
     }
     context={
         "links":pagination(request,postLink),
@@ -194,9 +204,11 @@ def language(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': cate.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": cate.name+" telegram groups and channels: Are you searching for the best telegram channels for "+cate.name+" then check out this blog and join the group. Join Now",
-        "robots": "index, follow"
+        'title': f'5500+ {cate.name} Telegram Group & Channel links {year}',
+        "description": f"Join 5500+ {cate.name} Telegram Group & Channel links. Are you searching for the {cate.name} Popular Telegram links then check out this blog and join the groups.",
+        "robots": "index, follow",
+        'tag': cate.name,
+        'year': year,
     }
     context={
         "links":pagination(request,postLink),
@@ -214,9 +226,11 @@ def tag(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': tag.name+" telegram groups and channels invite links "+str(date.today().year),
-        "description": tag.name+" telegram groups and channels: Are you searching for the best telegram channels for "+tag.name+" then check out this blog and join the group. Join Now",
-        "robots": "index, follow"
+        'title': f'5500+ {tag.name} Telegram Group & Channel links {year}',
+        "description": f"Join 5500+ {tag.name} Telegram Group & Channel links. Are you searching for the {tag.name} Popular Telegram links then check out this blog and join the groups.",
+        "robots": "index, follow",
+        'tag': tag.name,
+        'year': year,
     }
     context={
         "links":pagination(request,postLink),
@@ -247,7 +261,7 @@ def search(request):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': keyword+" telegram groups and channels invite links "+str(date.today().year),
+        'title': keyword+" telegram groups and channels invite links "+2023,
         "description": keyword+" telegram groups and channels: Are you searching for the best telegram channels for "+keyword+" then check out this blog and join the group. Join Now",
         "robots": "noindex, follow"
     }
@@ -357,7 +371,7 @@ def find(request):
             context["adsshow"]=True
         return render(request,"loadmore.html",context)
     seo = {
-        'title': result+" telegram groups and channels invite links "+str(date.today().year),
+        'title': result+" telegram groups and channels invite links "+year,
         "description": result+" telegram groups and channels: Are you searching for the best telegram channels for "+result+" then check out this blog and join the group. Join Now",
         "robots": "noindex, follow"
     }
@@ -378,8 +392,8 @@ def unlimited(request,path):
 
     postLink=Link.objects.filter(type=path.capitalize())
     seo = {
-        'title': "unlimited telegram "+str(path)+" invite links "+str(date.today().year),
-        "description":"unlimited telegram "+str(path)+" invite links "+str(date.today().year),
+        'title': "unlimited telegram "+str(path)+" invite links "+year,
+        "description":"unlimited telegram "+str(path)+" invite links "+year,
         "robots": "index, follow"
     }
     context={

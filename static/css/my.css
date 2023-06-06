@@ -517,3 +517,10 @@ b {
     /* list-style: outside none none !important; */
     list-style-type: circle;
 }
+
+p a{
+    color: #0088cc;
+}
+p strong{
+    font-weight: 550;
+}
