@@ -261,7 +261,7 @@ def search(request):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': keyword+" telegram groups and channels invite links "+2023,
+        'title': keyword+" telegram groups and channels invite links "+year,
         "description": keyword+" telegram groups and channels: Are you searching for the best telegram channels for "+keyword+" then check out this blog and join the group. Join Now",
         "robots": "noindex, follow"
     }
