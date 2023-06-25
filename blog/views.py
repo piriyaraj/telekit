@@ -27,6 +27,8 @@ def pagination(request,obj):
 
 def links(request,path,message={}):
     postLink=Link.objects.filter(linkId=path)[0]
+    if(not postLink.published):
+        return redirect("index")
     country=postLink.country
     language=postLink.language
     category=postLink.category
