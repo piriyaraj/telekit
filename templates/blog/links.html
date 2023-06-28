@@ -89,13 +89,7 @@
 
                             <div>
 
-                                <div style="margin: 15px;">
-                                    <div>Show your support to my channel</div>
-                                    <script src="https://apis.google.com/js/platform.js"></script>
-
-                                    <div class="g-ytsubscribe" data-channelid="UCOFIwc-bsotNeVNJh4CG51g" data-layout="full" data-count="default"></div>
-                                </div>
-                                
+                                {% include "components/affliate.html" %}
 
                                 <a href=" {{post.link}} " target="_blank" class="btn"
                                     rel="nofollow">Join {{post.type}}</a>
