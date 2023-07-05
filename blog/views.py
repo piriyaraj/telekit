@@ -94,7 +94,7 @@ def index(request):
         return render(request,"loadmore.html",context)
     seo={
         'title': f"5500+ Active telegram groups links List - {date.today().month}/{date.today().year}",
-        "description": "5500+ links to unlimited Telegram groups and channels Add your Telegram links here as well to boost the Telegram growth factor.",
+        "description": "Search & Join active telegram group links for Adults, movies, dating, education, and viral updates. Find unlimited telegram groups and channel links on Telekit.",
         "robots":"index, follow"
     }
     linka=pagination(request,link)
