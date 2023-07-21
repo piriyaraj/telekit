@@ -220,7 +220,7 @@ function spawEnemies() {
     };
 
     enemies.push(new Enemy(x, y, radius, color, velocity));
-  }, 5500);
+  }, 4500);
 }
 
 function spawSpecials() {
@@ -419,7 +419,7 @@ startgameBtn.addEventListener("click", () => {
   canvasDiv.style.display = "block";
   init();
   animate();
-  // spawEnemies();
+  spawEnemies();
   spawSpecials();
   modalEl.style.display = "none";
 });
