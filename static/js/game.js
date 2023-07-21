@@ -6,14 +6,15 @@ const modalEl = document.querySelector("#modalEl");
 const bigScoreEl = document.querySelector("#bigScoreEl");
 const canvasDiv = document.getElementById("canva");
 
-canvas.width = window.innerWidth*(3/4);
-canvas.height = window.innerHeight;
+// 16:9
+canvas.width = innerWidth * (3 / 4);
+canvas.height = innerHeight;
 
 // Adjust canvas size when the window is resized
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
+// window.addEventListener("resize", () => {
+//   canvas.width = window.innerWidth;
+//   canvas.height = window.innerHeight;
+// });
 
 var ctx = canvas.getContext("2d");
 
@@ -187,7 +188,7 @@ let specials = [];
 let particles = [];
 
 function init() {
-  player = new Player(x, y, 10, "white");
+  player = new Player(x, y, 10, "green");
   projectiles = [];
   enemies = [];
   specials = [];
@@ -399,10 +400,12 @@ function animate() {
 }
 
 addEventListener("click", (event) => {
+  // console.log(event.clientX, event.clientY);
   const angle = Math.atan2(
     event.clientY - canvas.height / 2,
     event.clientX - canvas.width / 2
   );
+  console.log(angle);
   const velocity = {
     x: Math.cos(angle) * 5,
     y: Math.sin(angle) * 5,
@@ -416,7 +419,7 @@ startgameBtn.addEventListener("click", () => {
   canvasDiv.style.display = "block";
   init();
   animate();
-  spawEnemies();
+  // spawEnemies();
   spawSpecials();
   modalEl.style.display = "none";
 });
