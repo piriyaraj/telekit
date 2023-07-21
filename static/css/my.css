@@ -518,9 +518,40 @@ b {
     list-style-type: circle;
 }
 
-p a{
+p a {
     color: #0088cc;
 }
-p strong{
+
+p strong {
     font-weight: 550;
+}
+
+canvas .fixed {
+    background: lightblue;
+}
+
+#modalEl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#modalEl>.bg-white {
+    max-width: 400px;
+    width: 100%;
+}
+
+#modalEl h3 {
+    font-size: 40px;
+}
+
+#bigScoreEl {
+    font-size: 2.25rem;
+}
+
+#startgameBtn {
+    font-size: 0.875rem;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
 }
