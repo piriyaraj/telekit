@@ -1,4 +1,5 @@
 from ast import keyword
+import datetime
 from email import message
 from multiprocessing import context
 from os import link
@@ -85,7 +86,7 @@ def links(request,path,message={}):
     return render(request,"links.html",context)
 
 def index(request):
-    link=Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")).order_by("-id")
+    link=Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")).order_by("-modified")
     if(request.GET.get('page')):
         linka=pagination(request,link)
         context={
@@ -141,7 +142,7 @@ def category(request,path):
     showAds=True
     cate=Category.objects.get(slug=path)
     if(cate.name!="Adult/18+/Hot"):
-        postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),category=cate).order_by("-id")
+        postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),category=cate).order_by("-modified")
     else:
         postLink = Link.objects.filter(Q(published=True),category=cate).order_by("-id")
         showAds=False
@@ -173,7 +174,7 @@ def category(request,path):
 
 def country(request,path):
     cate=Country.objects.get(slug=path)
-    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot") & Q(country__slug=path)).order_by("-id")
+    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot") & Q(country__slug=path)).order_by("-modified")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -198,7 +199,7 @@ def country(request,path):
 
 def language(request,path):
     cate=Language.objects.get(slug=path)
-    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(language__slug=path)).order_by("-id")
+    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(language__slug=path)).order_by("-modified")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -220,7 +221,7 @@ def language(request,path):
 
 def tag(request,path):
     tag=Tag.objects.get(slug=path)
-    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(tag__slug=path)).order_by("-id")
+    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(tag__slug=path)).order_by("-modified")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -250,7 +251,7 @@ def search(request):
     cate = Category.objects.filter(Q(name__contains=keyword))
     lang = Language.objects.filter(Q(name__contains=keyword))
     postLink = Link.objects.filter(Q(name__contains=keyword) | Q(description__contains=keyword) | Q(
-        tag__in=tag) | Q(country__in=coun) | Q(category__in=cate) | Q(language__in=lang)).order_by("-id")
+        tag__in=tag) | Q(country__in=coun) | Q(category__in=cate) | Q(language__in=lang)).order_by("-modified")
     # postLink=list(set(postLink))
     postLink=postLink.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"))
     
@@ -287,15 +288,44 @@ def addgroup(request):
     if(groupLogo==0):
         message={
             "alertmsgbgcolor": '#f44336',
-            "alertmsg":"This link is not acceptable!"
+            "message":"This link is not acceptable!"
         }
-        return groupfiles(request, "addgroup", message=message)
-    if(len(Link.objects.filter(linkId=linkId))>0):
-        message={
-            "alertmsgbgcolor": '#f44336',
-            "alertmsg":"This link already added"
+        return render(request,"groupaddresult.html",message)
+
+    linkObj =Link.objects.filter(linkId=linkId)
+    
+    if(len(linkObj)>0):
+        print(linkObj[0].modified)
+        # '2023-04-28 04:33:48.641650+00:00' 
+        # modified_time = datetime.datetime.strptime(str(linkObj[0].modified), '%Y-%m-%d %H:%M:%S.%f%z')
+
+        # Get the current time
+        current_time = datetime.datetime.now()
+        modified_time_naive = linkObj[0].modified.replace(tzinfo=None)
+        # Calculate the time difference
+        time_difference = current_time - modified_time_naive
+
+        # Extract the hours from the time difference
+        hours_since_update = time_difference.total_seconds() / 3600
+        print(hours_since_update)
+        if(hours_since_update>=24):
+            linkObj[0].noOfMembers = groupCount
+            linkObj[0].save()
+            message={
+                "alertmsgbgcolor": '#04AA6D',
+                "message":"Great your link placed in first place.",
+            }
+        else:
+            message={
+                "alertmsgbgcolor": '#f44336',
+                "message":"oops! submit your link after "+str(24-int(hours_since_update))+" Hours",
+            }
+        context={
+            'links':linkObj,
         }
-        return links(request, linkId,message=message)
+        context.update(message)
+        return render(request,"groupaddresult.html",context)
+
 
 
     
@@ -314,13 +344,18 @@ def addgroup(request):
             gtags.append(Tag.objects.get(name=i))
     for i in list(gtags):
         postLink.tag.add(i)
+        
+    linkObj =Link.objects.filter(linkId=linkId)
     context={
-        "results":"result"
+            'links':linkObj,
     }
     message = {
         "alertmsgbgcolor": '#04AA6D',
-        "alertmsg": "Your link Successfully added"
+        "message": "Your link Successfully added"
     }
+    context.update(message)
+
+    return render(request,"groupaddresult.html",context)
     return links(request, linkId, message=message)
 
 

@@ -113,7 +113,7 @@ class Link(models.Model):
     language=models.ForeignKey("Language", on_delete=models.DO_NOTHING)
     tag=models.ManyToManyField(Tag,related_name='tag_blogs',blank=True)
     added=models.DateTimeField(auto_now_add=True)
-    modified=models.DateTimeField(auto_now_add=True)
+    modified=models.DateTimeField(auto_now=True)
     imgUrl=models.URLField(max_length=1000)
     noOfMembers=models.IntegerField()
     description=models.CharField(max_length=1000)

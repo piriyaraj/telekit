@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!--start-content-->
+
+<div class="content">
+    <div class="wrap">
+        <div class="contact-info">
+            <h1 style="font-weight: bolder">Result of group adding</h1></br>
+            <div class='alertmsg' style="background-color: {{alertmsgbgcolor}};">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                    {{message}}
+            </div>
+            {% for link in links %}
+                {% include "components/groupbox.html" %}
+            {% endfor %}
+            <div>
+                <ul>
+                    <li> <h2>Get more Subscribers/Members</h2></li>
+                    <ul>
+                        <li>Resubmit your link after 24 hours</li>
+                    </ul>
+                </br></br>
+                    <li> if you have any issue in adding your links here please contact us Through tamilcomway@gmail.com</li>
+                </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
