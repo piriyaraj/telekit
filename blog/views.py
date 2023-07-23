@@ -17,6 +17,7 @@ from blog.models import Category, Company, Country, Language, Link, Tag
 from . import tools
 from django.core.paginator import Paginator
 from datetime import date
+from discordwebhook import Discord
 
 year = '2023'
 
@@ -275,6 +276,11 @@ def search(request):
     }
     return render(request,"index.html",context)
 
+def DiscordNotification(Msg):
+    webHookUrl = "https://discord.com/api/webhooks/1132597585824202813/8XDNjpwwOIsistL4nThyY7NjVo67UVHckbtOAAdGAf96_TZ7dTS3tOpDmle646rF_ZDX"
+    discord = Discord(url = webHookUrl)
+    discord.post(content=Msg)
+    
 def addgroup(request):
     groupLink=request.POST['glink']
     categoryId=Category.objects.get(id=request.POST['category'])
@@ -354,7 +360,7 @@ def addgroup(request):
         "message": "Your link Successfully added"
     }
     context.update(message)
-
+    DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
     return render(request,"groupaddresult.html",context)
     return links(request, linkId, message=message)
 
