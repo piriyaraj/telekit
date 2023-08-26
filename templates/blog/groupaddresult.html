@@ -21,12 +21,79 @@
                     </li>
                     <ul>
                         <li>
-                            <p><strong>Tip:</strong> <p>To gain more subscribers or members, you can resubmit your link after 24 hours.</p>
+                            <p><strong>Tip 1:</strong> To gain more subscribers or members, you can resubmit your link after 24 hours.</p>
                         </li>
+                        <li><p> <strong>Tip 2:</strong> Boost your Telegram link page on <strong>Google</strong> by sharing below link in your group/channel and other social media.</p></li>
+     
+                            {% for link in links %}
+                                <p style="margin: 0 auto;
+                                background-color: #c4c4c4;
+                                padding: 10px;
+                                border: 1px solid;
+                                border-radius: 5px;
+                                word-wrap: break-word;
+                                width: fit-content;
+                                ">https://telekit.link/join/{{ link.linkId }}</p>
+                                
+                            
+                                  <div style="margin: 10px auto;width: fit-content;">
+                                    <a
+                                      href="https://t.me/share?url=https://telekit.link/join/{{ link.linkId }}&text=Follow this link to Join {{link.name}} Telegram {{link.type}}."
+                                      data-action="share/telegram/share"
+                                      target="_blank"
+                                    >
+                                      <img
+                                        src="{% static 'images/telegram.png' %}"
+                                        width="24"
+                                        height="24"
+                                        alt="Share on Telegram"
+                                        title="Share on Telegram"
+                                        rel="nofollow"
+                                    /></a>
+                                    <a
+                                      href="https://www.facebook.com/sharer/sharer.php?u=https://telekit.link/join/{{ link.linkId }}&text=Follow this link to Join {{link.name}} Telegram {{link.type}}."
+                                      data-action="share/facebook/share"
+                                      target="_blank"
+                                    >
+                                      <img
+                                        src="{% static 'images/facebook.jpg' %}"
+                                        width="24"
+                                        height="24"
+                                        alt="Share on Facebook"
+                                        title="Share on Facebook"
+                                        rel="nofollow"
+                                    /></a>
+                                    <a
+                                      href="whatsapp://send?text=Follow this link to Join Telegram group : https://telekit.link/join/{{ link.linkId }} %0A %0AFind more Telegram group at: https://telekit.link/"
+                                      data-action="share/whatsapp/share"
+                                    >
+                                      <img
+                                        src="{% static 'images/whatsapp.png' %}"
+                                        width="24"
+                                        height="24"
+                                        alt="Share on Whatsapp"
+                                        title="Share on Whatsapp"
+                                        rel="nofollow"
+                                    /></a>
+                        
+                                    <a
+                                      href="https://twitter.com/intent/tweet?text=Follow this link to Join Telegram group : https://telekit.link/join/{{ link.linkId }} %0A %0AFind more Telegram group at: https://telekit.link/"
+                                      target="_blank"
+                                      rel="nofollow"
+                                    >
+                                      <img
+                                        src="{% static 'images/twitter.jpg' %}"
+                                        width="24"
+                                        height="24"
+                                        alt="Share on Twitter"
+                                        title="Share on Twitter"
+                                    /></a>
+                                  </div>
+                              {% endfor %}
                     </ul>
                 </ul>
                 <p>
-                    <strong>If you encounter any issues while adding your links, please don't hesitate to contact us at tamilcomway@gmail.com. We're here to help!</strong>
+                    If you encounter any issues while adding your links, please don't hesitate to contact us at <strong>tamilcomway@gmail.com</strong>. We're here to help!
                 </p>
             </div>
             
