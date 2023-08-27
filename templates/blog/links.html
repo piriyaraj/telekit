@@ -102,18 +102,18 @@
                             {% endif %}
                             <div style="padding-top: 15px">
 
-                                <a href="https://t.me/share?url={{post.link}}&text=Follow this link to Join {{post.name}} Telegram {{post.type}}."
+                                <a href="https://t.me/share?url=https://telekit.link/join/{{ post.linkId }}&text=Follow this link to Join {{post.name}} Telegram {{post.type}}."
                                     data-action="share/telegram/share" target="_blank">
                                     <img src="{% static 'images/telegram.png' %}" width="32" height="32"
                                         alt="Share on Telegram" title="Share on Telegram"
                                         rel="nofollow"></a>
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{post.link}}&text=Follow this link to Join {{post.name}} Telegram {{post.type}}."
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=https://telekit.link/join/{{ post.linkId }}&text=Follow this link to Join {{post.name}} Telegram {{post.type}}."
                                     data-action="share/facebook/share" target="_blank">
                                     <img src="{% static 'images/facebook.jpg' %}" width="32" height="32"
                                         alt="Share on Facebook" title="Share on Facebook"
                                         rel="nofollow"></a>
 
-                                <a href="whatsapp://send?text=Follow this link to Join {{post.name}} Telegram {{post.type}} : {{ request.get_host }}{{ request.path }} %0A %0AFind more Telegram {{post.link}} at: {{ request.get_host }} "
+                                <a href="whatsapp://send?text=Follow this link to Join {{post.name}} Telegram {{post.type}} : {{ request.get_host }}{{ request.path }} %0A %0AFind more Telegram https://telekit.link/join/{{ post.linkId }} at: {{ request.get_host }} "
                                     data-action="share/whatsapp/share" rel="nofollow">
                                     <img src="{% static 'images/whatsapp.png' %}" width="32" height="32" alt="Share on Whatsapp"
                                         title="Share on Whatsapp" rel="nofollow"></a>
