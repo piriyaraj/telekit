@@ -95,7 +95,7 @@ def index(request):
         }
         return render(request,"loadmore.html",context)
     seo={
-        'title': f"5500+ Find Active telegram group & channel link List - {date.today().month}/{date.today().year}",
+        'title': f"9999+ Find Active telegram group & channel link List - {date.today().month}/{date.today().year}",
         "description": "Search & Join active telegram group links for Adults, movies, dating, education, and viral updates. Find unlimited telegram groups and channel links on Telekit.",
         "robots":"index, follow"
     }
@@ -159,8 +159,8 @@ def category(request,path):
         return render(request,"loadmore.html",context)
     
     seo = {
-        'title': f'5500+ {cate.name} Telegram Group & Channel links {year}',
-        "description": f"Join 5500+ {cate.name} Telegram Group & Channel links. Are you searching for the {cate.name} Popular Telegram links then check out this blog and join the groups.",
+        'title': f'9999+ {cate.name} Telegram Group & Channel links {year}',
+        "description": f"Join 9999+ {cate.name} Telegram Group & Channel links. Are you searching for the {cate.name} Popular Telegram links then check out this blog and join the groups.",
         "robots": "index, follow",
         'tag': cate.name,
         'year': year,
@@ -185,8 +185,8 @@ def country(request,path):
     # 1000+ Belgium Telegram Group Links & Channel List 2023
     # Join Belgium Telegram Group Links, Find a Guide about all tourist attractions in and around Belgium to visit and Check out. Learn Various languages like
     seo = {
-        'title': f'5500+ {cate.name} Telegram Group & Channel links {year}',
-        "description": f"Join 5500+ {cate.name} Telegram Group & Channel links. Are you searching for the {cate.name} Popular Telegram links then check out this blog and join the groups.",
+        'title': f'9999+ {cate.name} Telegram Group & Channel links {year}',
+        "description": f"Join 9999+ {cate.name} Telegram Group & Channel links. Are you searching for the {cate.name} Popular Telegram links then check out this blog and join the groups.",
         "robots": "index, follow",
         'tag': cate.name,
         'year': year,
@@ -208,8 +208,8 @@ def language(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': f'5500+ {cate.name} Telegram Group & Channel links {year}',
-        "description": f"Join 5500+ {cate.name} Telegram Group & Channel links. Are you searching for the {cate.name} Popular Telegram links then check out this blog and join the groups.",
+        'title': f'9999+ {cate.name} Telegram Group & Channel links {year}',
+        "description": f"Join 9999+ {cate.name} Telegram Group & Channel links. Are you searching for the {cate.name} Popular Telegram links then check out this blog and join the groups.",
         "robots": "index, follow",
         'tag': cate.name,
         'year': year,
@@ -230,8 +230,8 @@ def tag(request,path):
         }
         return render(request,"loadmore.html",context)
     seo = {
-        'title': f'5500+ {tag.name} Telegram Group & Channel links {year}',
-        "description": f"Join 5500+ {tag.name} Telegram Group & Channel links. Are you searching for the {tag.name} Popular Telegram links then check out this blog and join the groups.",
+        'title': f'9999+ {tag.name} Telegram Group & Channel links {year}',
+        "description": f"Join 9999+ {tag.name} Telegram Group & Channel links. Are you searching for the {tag.name} Popular Telegram links then check out this blog and join the groups.",
         "robots": "index, follow",
         'tag': tag.name,
         'year': year,
