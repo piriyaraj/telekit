@@ -36,3 +36,8 @@ def extract(request):
     print(postUrl,categoryId,countryId,languageId)
     tools.extractUrls(postUrl,categoryId,countryId,languageId,tags)
     return redirect('/superuser/')
+
+def removeInvalidurl(request):
+    result = tools.removeInvalidurl()
+    return HttpResponse(result)
+    pass

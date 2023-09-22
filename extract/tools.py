@@ -24,13 +24,24 @@ def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
     reqs = requests.get(url)
     soup = BeautifulSoup(reqs.text, 'html.parser')
     try:
-        groupName = soup.find_all('div', class_="tgme_page_title")[0].get_text().replace("\n", "")        
+        try:
+            groupLink = soup.find_all('a', class_="tgme_username_link")[0].get_text().replace("\n", "")    
+        except:
+            pass
+        
+        try:
+            groupName = soup.find_all('div', class_="tgme_page_title")[0].get_text().replace("\n", "")    
+        except:
+            groupName = groupLink.replace("@","").replace("_", " ")
         groupType="Group"
-        if(soup.find_all('div', class_="tgme_page_extra")[0].get_text().find("subscribers")>0):
-            groupType = "Channel"
+        try:
+            if(soup.find_all('div', class_="tgme_page_extra")[0].get_text().find("subscribers")>0):
+                groupType = "Channel"
+        except:
+            groupType = "Unknown"
         
     except Exception as e:
-        # print(e)
+        print(e)
         return 0,0,0,0,0,0
     try:
         groupLogo = soup.find_all('img', class_="tgme_page_photo_image")[0]['src']
@@ -227,7 +238,33 @@ def createHtmlPage():
     with open('templates/blog/seoTest1.html', 'w', encoding='utf-8') as file:
     # Write the HTML code to the file
         file.write(html_code)
-        
+
+def removeInvalidurl():
+    # result = check("https://t.me/audrius_baciulis")
+    # # result = check("https://t.me/+YSLzPmSjzeM3MWJl") #revoked
+    # # result = check("https://telegram.me/apkmodultra") #revoked
+    # print(result)
+    # return " hello "
+    first_links = Link.objects.order_by('modified')[:100]
+    count = 0
+    for linkObj in first_links:
+        try:
+            extractData = check(linkObj.link)
+            
+            if extractData == (0, 0, 0, 0, 0, 0):
+                # delete linkObj
+                linkObj.delete()
+                count += 1
+        except Exception as e:
+            # Handle exceptions here, you can print or log the error
+            print(f"An error occurred for link ID {linkObj.id}: {str(e)}")
+            continue
+
+    return f"Out of {len(first_links)} links, {count} removed"
+
+# Replace 'check' with the actual function you're using to validate links
+
+
 if __name__=="__main__":
     # link="https://www.telegram-groups.com/sinhala-telegram-group/"
     # findAllUrls(link)

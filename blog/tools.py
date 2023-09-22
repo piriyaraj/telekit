@@ -4,10 +4,21 @@ def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
     reqs = requests.get(url)
     soup = BeautifulSoup(reqs.text, 'html.parser')
     try:
-        groupName = soup.find_all('div', class_="tgme_page_title")[0].get_text().replace("\n", "")        
+        try:
+            groupLink = soup.find_all('a', class_="tgme_username_link")[0].get_text().replace("\n", "")    
+        except:
+            pass
+        
+        try:
+            groupName = soup.find_all('div', class_="tgme_page_title")[0].get_text().replace("\n", "")    
+        except:
+            groupName = groupLink.replace("@","").replace("_", " ")
         groupType="Group"
-        if(soup.find_all('div', class_="tgme_page_extra")[0].get_text().find("subscribers")>0):
-            groupType = "Channel"
+        try:
+            if(soup.find_all('div', class_="tgme_page_extra")[0].get_text().find("subscribers")>0):
+                groupType = "Channel"
+        except:
+            groupType = "Unknown"
         
     except Exception as e:
         print(e)
