@@ -6,6 +6,8 @@ from django.db.models import Q
 from blog.models import Link, Tag
 from django.utils.text import slugify
 
+from blog.views import DiscordNotification
+
 def findAllUrls(link):
     teleLinks=[]
     reqs = requests.get(link)
@@ -245,6 +247,7 @@ def removeInvalidurl():
     # # result = check("https://telegram.me/apkmodultra") #revoked
     # print(result)
     # return " hello "
+    removedLink = ""
     first_links = Link.objects.order_by('modified')[:100]
     count = 0
     for linkObj in first_links:
@@ -254,12 +257,15 @@ def removeInvalidurl():
             if extractData == (0, 0, 0, 0, 0, 0):
                 # delete linkObj
                 linkObj.delete()
+                removedLink += linkObj.link+"   "
                 count += 1
         except Exception as e:
+            DiscordNotification(f"Telekit: An error occurred for link ID {linkObj.link}: {str(e)}")
+            
             # Handle exceptions here, you can print or log the error
             print(f"An error occurred for link ID {linkObj.id}: {str(e)}")
             continue
-
+    DiscordNotification(f"Telekit: Out of {len(first_links)} links, {count} removed links: {removedLink}")
     return f"Out of {len(first_links)} links, {count} removed"
 
 # Replace 'check' with the actual function you're using to validate links
