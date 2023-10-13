@@ -82,4 +82,15 @@
             </div>
         </div>
     </div>
+    {% if request.user.is_superuser %}
+    <form method="post" action="/changecategory" id="category-form">
+        {% csrf_token %}
+        <select class="selectbtn" name="category">
+            <option value="">Any Category</option>
+            {% include "components/category.html" %}
+        </select>
+        <input type="hidden" name="linkId" value="{{link.id}}" />
+        <input type="submit" class="serbtn" value="Change">
+    </form>
+    {% endif %}
 </div>

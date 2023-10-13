@@ -22,7 +22,8 @@ urlpatterns = [
     path('unlimited/<str:path>',views.unlimited,name='unlimited'),
     path('unlimited-telegram-groups-links',views.unlimitedTelegramLinks,name='unlimitedtelegramlinks'),
     path('random-post',views.randompost,name="randompost"),
-    path('feed',LatestLinksFeed())
+    path('feed',LatestLinksFeed()),
+    path('changecategory',views.changeCategory,name='changecategory')
 ]   
 
 sitemapUrls=[

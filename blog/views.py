@@ -18,6 +18,8 @@ from . import tools
 from django.core.paginator import Paginator
 from datetime import date
 from discordwebhook import Discord
+from django.http import JsonResponse
+from django.contrib.auth.decorators import user_passes_test
 
 year = '2023'
 
@@ -468,3 +470,24 @@ def unlimitedTelegramLinks(request):
     }
 
     return render(request,'seoTest1.html',context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def changeCategory(request):
+    linkId = request.POST.get('linkId')
+    category = request.POST.get('category')
+
+    if linkId is None or category is None:
+        return JsonResponse({'error': 'Missing or invalid parameters'})
+
+    try:
+        link = Link.objects.get(id=linkId)
+        newCategory = Category.objects.get(id=category)
+
+        link.category = newCategory
+        link.save()
+
+        return JsonResponse({'message': 'Category changed successfully'})
+    except Link.DoesNotExist:
+        return JsonResponse({'message': 'Link not found'})
+    except Category.DoesNotExist:
+        return JsonResponse({'message': 'Category not found'})
