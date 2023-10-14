@@ -1,3 +1,4 @@
+from django.utils import timezone
 from datetime import date
 import json
 import requests
@@ -252,6 +253,7 @@ def removeInvalidurl():
     count = 0
     for linkObj in first_links:
         try:
+            # # return groupName,groupCount,groupLogo,groupDescri,groupType
             extractData = check(linkObj.link)
             
             if extractData == (0, 0, 0, 0, 0, 0):
@@ -259,6 +261,15 @@ def removeInvalidurl():
                 linkObj.delete()
                 removedLink += linkObj.link+"   "
                 count += 1
+            else:
+                linkObj.name = extractData[0]
+                linkObj.noOfMembers = 1
+                linkObj.description = extractData[3]
+                linkObj.type = extractData[4]
+                linkObj.save()
+                linkObj.noOfMembers = int(extractData[1].replace(" ",""))
+                linkObj.save()
+
         except Exception as e:
             DiscordNotification(f"Telekit: An error occurred for link ID {linkObj.link}: {str(e)}")
             
