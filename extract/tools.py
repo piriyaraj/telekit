@@ -256,10 +256,10 @@ def removeInvalidurl():
             # # return groupName,groupCount,groupLogo,groupDescri,groupType
             extractData = check(linkObj.link)
             
-            if extractData == (0, 0, 0, 0, 0, 0):
+            if extractData == (0, 0, 0, 0, 0, 0) or extractData[4] == "Unknown":
                 # delete linkObj
                 linkObj.delete()
-                removedLink += linkObj.link+"   "
+                removedLink += linkObj.link+"   :"
                 count += 1
             else:
                 linkObj.name = extractData[0]
@@ -267,7 +267,7 @@ def removeInvalidurl():
                 linkObj.description = extractData[3]
                 linkObj.type = extractData[4]
                 linkObj.save()
-                linkObj.noOfMembers = int(extractData[1].replace(" ",""))
+                linkObj.noOfMembers = int(str(extractData[1]).replace(" ",""))
                 linkObj.save()
 
         except Exception as e:
@@ -285,4 +285,6 @@ def removeInvalidurl():
 if __name__=="__main__":
     # link="https://www.telegram-groups.com/sinhala-telegram-group/"
     # findAllUrls(link)
-    createHtmlPage()
+    print(check(" https://t.me/famillyairdropsdiskusi"))
+    print(check("https://t.me/app_xbot"))
+    print(check("https://t.me/Pjpiri"))
