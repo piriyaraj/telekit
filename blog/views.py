@@ -287,6 +287,8 @@ def DiscordNotification(Msg):
     discord.post(content=Msg)
     
 def addgroup(request):
+    if request.method == 'GET':
+        return redirect('/group/addgroup')
     groupLink=request.POST['glink']
     categoryId=Category.objects.get(id=request.POST['category'])
     countryId=Country.objects.get(id=request.POST['country'])
