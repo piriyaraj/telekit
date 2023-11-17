@@ -367,7 +367,8 @@ def addgroup(request):
         "message": "Your link Successfully added"
     }
     context.update(message)
-    DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
+    if categoryId != 1 :
+        DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
     return render(request,"groupaddresult.html",context)
     return links(request, linkId, message=message)
 
