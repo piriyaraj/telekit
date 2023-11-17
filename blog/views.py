@@ -367,8 +367,11 @@ def addgroup(request):
         "message": "Your link Successfully added"
     }
     context.update(message)
-    if categoryId != 1 :
-        DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
+    try:
+        if int(request.POST['category']) !=1  :
+            DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
+    except Exception as e:
+        DiscordNotification(f"TELEKIT: Error {e}")
     return render(request,"groupaddresult.html",context)
     return links(request, linkId, message=message)
 
