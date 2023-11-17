@@ -368,8 +368,10 @@ def addgroup(request):
     }
     context.update(message)
     try:
-        if int(request.POST['category']) !=1  :
+        if int(request.POST['category']) != 1:
             DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
+        else:
+            DiscordNotification(f"TELEKIT: Added new link")
     except Exception as e:
         DiscordNotification(f"TELEKIT: Error {e}")
     return render(request,"groupaddresult.html",context)
