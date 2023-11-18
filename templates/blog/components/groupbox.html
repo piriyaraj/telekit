@@ -1,5 +1,9 @@
 {% load static %}
-<div class="maindiv">
+<div class="maindiv" 
+    {% if link.paid%}
+    style = "background-color:#cfe4ca"
+    {% endif %}
+>
     <div>
         <a style="color: #5a5a5a" target="_blank" href="/join/{{link.linkId}}"
             title="Telegram group invite link: {{link.name}}">

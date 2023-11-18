@@ -20,6 +20,9 @@
                         <h2>Get More Subscribers/Members</h2>
                     </li>
                     <ul>
+                      {% for link in links %}
+                      <button class="button is-primary" id="submitBtn" value="{{link.linkId}}">Place on top!</button>
+                      {% endfor %}
                         <li>
                             <p><strong>Tip 1:</strong> To gain more subscribers or members, you can resubmit your link after 24 hours.</p>
                         </li>

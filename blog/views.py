@@ -1,3 +1,4 @@
+from django.utils import timezone
 from ast import keyword
 import datetime
 from email import message
@@ -92,7 +93,7 @@ def links(request,path,message={}):
     return render(request,"links.html",context)
 
 def index(request):
-    link=Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")).order_by("-modified")
+    link=Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")).order_by("-paid","-modified")
     if(request.GET.get('page')):
         linka=pagination(request,link)
         context={
@@ -499,3 +500,83 @@ def changeCategory(request):
         return JsonResponse({'message': 'Link not found'})
     except Category.DoesNotExist:
         return JsonResponse({'message': 'Category not found'})
+
+def payment(request):
+    return render(request,'payment.html')
+
+from django.views.decorators.csrf import csrf_exempt # new
+from django.conf import settings # new
+@csrf_exempt
+def stripe_config(request):
+    if request.method == 'GET':
+        stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
+        return JsonResponse(stripe_config, safe=False)
+
+import stripe
+@csrf_exempt
+def create_checkout_session(request,telegramId):
+    if request.method == 'GET':
+        domain_url = request.scheme + '://' + request.META['HTTP_HOST']+"/"
+        print("===========>",domain_url)
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        try:
+            # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
+            checkout_session = stripe.checkout.Session.create(
+                # success_url=domain_url + 'success?session_id={CHECKOUT_SESSION_ID}&telegramId=tempidtest',
+                success_url=domain_url,
+                cancel_url=domain_url + 'cancelled/',
+                metadata={
+                    'telegram_id': telegramId,
+                },
+                line_items=[{
+                    'price': 'price_1ODpCZSCPqL7xbscLH4Uev5R',
+                    'quantity':1
+                }],
+                mode='payment',
+            )
+            return JsonResponse({'sessionId': checkout_session['id']})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
+        
+def paymentSuccess(request):
+    template_name = 'success.html'
+    return render(request,template_name)
+
+
+def paymentFail(request):
+    template_name = 'cancelled.html'
+    return render(request,template_name)
+
+@csrf_exempt
+def stripe_webhook(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    endpoint_secret = settings.STRIPE_ENDPOINT_SECRET
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+    # Handle the checkout.session.completed event
+    if event['type'] == 'checkout.session.completed':
+        print("Payment was successful.")
+        # print("parameter_value:", telegramId)
+        metadata = event['data']['object']['metadata']
+        parameter_value = metadata.get('telegram_id')
+        print("Parameter received:", parameter_value)
+        linkObj = Link.objects.get(linkId=parameter_value)
+        linkObj.paid = True
+        linkObj.paidAt = timezone.now()
+        linkObj.save()
+        # TODO: run some custom code here
+
+    return HttpResponse(status=200)

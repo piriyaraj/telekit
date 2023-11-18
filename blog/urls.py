@@ -23,7 +23,13 @@ urlpatterns = [
     path('unlimited-telegram-groups-links',views.unlimitedTelegramLinks,name='unlimitedtelegramlinks'),
     path('random-post',views.randompost,name="randompost"),
     path('feed',LatestLinksFeed()),
-    path('changecategory',views.changeCategory,name='changecategory')
+    path('changecategory',views.changeCategory,name='changecategory'),
+    path('payment',views.payment,name='changecategory'),
+    path('config/', views.stripe_config),  # new
+    path('create-checkout-session/<telegramId>', views.create_checkout_session), # new
+    path('success/', views.paymentSuccess), # new
+    path('cancelled/', views.paymentFail), # new
+    path('webhook/', views.stripe_webhook), # new
 ]   
 
 sitemapUrls=[

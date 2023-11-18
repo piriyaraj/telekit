@@ -88,7 +88,9 @@
                             </div>
 
                             <div>
-
+                                {% comment %} {% if request.user.is_superuser %} {% endcomment %}
+                                <button class="button is-primary" id="submitBtn" value="{{post.linkId}}">Place on top!</button>
+                                {% comment %} {% endif %} {% endcomment %}
                                 {% include "components/affliate.html" %}
                                 <br/>
                                 <a href=" {{post.link}} " target="_blank" class="btn"
