@@ -92,8 +92,18 @@ def links(request,path,message={}):
     context.update(message)
     return render(request,"links.html",context)
 
+
 def index(request):
     link=Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")).order_by("-paid","-modified")
+    # current_date = timezone.now()
+    # link = Link.objects.filter(
+    #     Q(published=True) & ~Q(category__name="Adult/18+/Hot")
+    # ).annotate(
+    #     order_by_date=Case(
+    #         When(paidAt__gte=current_date - timezone.timedelta(days=30), then=F('paidAt')),
+    #         output_field=models.DateTimeField(),
+    #     )
+    # ).order_by('-order_by_date','-modified')
     if(request.GET.get('page')):
         linka=pagination(request,link)
         context={
@@ -529,7 +539,7 @@ def create_checkout_session(request,telegramId):
                     'telegram_id': telegramId,
                 },
                 line_items=[{
-                    'price': 'price_1ODpCZSCPqL7xbscLH4Uev5R',
+                    'price': 'price_1OE57LSCPqL7xbscVVx66Skt',
                     'quantity':1
                 }],
                 mode='payment',
@@ -580,3 +590,14 @@ def stripe_webhook(request):
         # TODO: run some custom code here
 
     return HttpResponse(status=200)
+
+from datetime import timedelta
+def change_paid():
+    # Get the current date
+    current_date = timezone.now()
+
+    # Calculate the date 30 days ago
+    thirty_days_ago = current_date - timedelta(days=30)
+
+    # Update links where paidAt is greater than 30 days ago
+    Link.objects.filter(paidAt__lte=thirty_days_ago).update(paid=False)
