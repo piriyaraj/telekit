@@ -1,5 +1,6 @@
 
-    $(document).ready(function () {
+    $(
+        document).ready(function () {
 
         var total_record = 0;
 
