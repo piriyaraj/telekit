@@ -305,7 +305,7 @@ def addgroup(request):
         }
         return render(request,"groupaddresult.html",message)
 
-    linkObj =Link.objects.filter(linkId=linkId)
+    linkObj = Link.objects.filter(Q(linkId=linkId) | Q(imgUrl=groupLogo))
     
     if(len(linkObj)>0):
         print(linkObj[0].modified)
