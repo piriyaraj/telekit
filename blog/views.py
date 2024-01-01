@@ -21,7 +21,7 @@ from discordwebhook import Discord
 from django.http import JsonResponse
 from django.contrib.auth.decorators import user_passes_test
 
-year = '2023'
+year = '2024'
 
 def pagination(request,obj):
     paginator = Paginator(obj, 6) # Show 25 contacts per page.
@@ -187,7 +187,7 @@ def country(request,path):
         'links':linka,
         }
         return render(request,"loadmore.html",context)
-    # 1000+ Belgium Telegram Group Links & Channel List 2023
+    # 1000+ Belgium Telegram Group Links & Channel List 2024
     # Join Belgium Telegram Group Links, Find a Guide about all tourist attractions in and around Belgium to visit and Check out. Learn Various languages like
     seo = {
         'title': f'9999+ {cate.name} Telegram Group & Channel links {year}',
@@ -309,7 +309,7 @@ def addgroup(request):
     
     if(len(linkObj)>0):
         print(linkObj[0].modified)
-        # '2023-04-28 04:33:48.641650+00:00' 
+        # '2024-04-28 04:33:48.641650+00:00' 
         # modified_time = datetime.datetime.strptime(str(linkObj[0].modified), '%Y-%m-%d %H:%M:%S.%f%z')
 
         # Get the current time
