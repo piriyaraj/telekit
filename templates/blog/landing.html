@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!---start-content---->
+
+<div class="content">
+    <div class="wrap">
+        <div id="main" role="main">
+    
+            {% include "ads/hori_respon.html" %}
+            <div style="margin-bottom: 2px;text-align: center">
+                {% include "search.html" %}
+            </div>
+            {% include "ads/hori_respon.html" %}
+            <div style="text-align: center;margin-top: 60px;">
+            <div class='row'>
+                {% if link_param %}
+
+                <a href=" {{link_param}} " class="btn" rel="nofollow">Join {{post.type}}</a>
+            {% endif %}
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="padding-top: 50px"></div>
+
+</div>
+</div>
+{% endblock %}

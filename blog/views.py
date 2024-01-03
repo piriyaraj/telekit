@@ -499,3 +499,19 @@ def changeCategory(request):
         return JsonResponse({'message': 'Link not found'})
     except Category.DoesNotExist:
         return JsonResponse({'message': 'Category not found'})
+
+def landing_view(request):
+    link_param = request.GET.get('link', '')  # Get the value of the 'link' parameter
+    if link_param == '':
+        return redirect("index") 
+    seo = {
+        'title': f'Landing page for join group/channel',
+        "description": f"Joining the group/channel",
+        "robots": "noindex, nofollow",
+    }
+    context={
+        'seo':seo,
+        'link_param': link_param
+    }
+
+    return render(request, 'landing.html', context)

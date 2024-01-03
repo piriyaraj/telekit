@@ -91,8 +91,12 @@
 
                                 {% include "components/affliate.html" %}
                                 <br/>
+                                {% if not adsshow %}
                                 <a href=" {{post.link}} " target="_blank" class="btn"
                                     rel="nofollow">Join {{post.type}}</a>
+                                {% else %}
+                                <a href="/landing?link={{post.link}} " class="btn" rel="nofollow">Join {{post.type}}</a>
+                                {% endif %}
                                 <a class="btn"
                                     href="whatsapp://send?text=Follow this link to Join my Telegram group :{{ request.get_host }}{{ request.path}} %0A %0AFind more Telegram Channels and Group at: {{ request.get_host }} "
                                     data-action="share/whatsapp/share" rel="nofollow">Share {{post.type}}</a>

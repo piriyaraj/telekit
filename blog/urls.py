@@ -23,7 +23,8 @@ urlpatterns = [
     path('unlimited-telegram-groups-links',views.unlimitedTelegramLinks,name='unlimitedtelegramlinks'),
     path('random-post',views.randompost,name="randompost"),
     path('feed',LatestLinksFeed()),
-    path('changecategory',views.changeCategory,name='changecategory')
+    path('changecategory',views.changeCategory,name='changecategory'),
+    path('landing/', views.landing_view, name='landing'),
 ]   
 
 sitemapUrls=[
