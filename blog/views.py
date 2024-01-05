@@ -449,8 +449,8 @@ def verify(request):
    
 
     # Query the Link model to get the Link object based on the extracted linkId
-    linkObj = Link.objects.filter(Q(linkId=verification_code))
-    # print("================>", str(len(linkObj)))
+    linkObj = Link.objects.filter(linkId=verification_code.strip())
+    print("================>", str(len(linkObj)))
     # Check if the Link object exists
     if not linkObj.exists():
         print("================> link not exit")
