@@ -13,7 +13,7 @@ class LinkAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name', 'link', 'country', 'category', 'language')
+            'fields': ('name', 'link', 'country', 'category', 'language','mail')
         }),
         ('Additional Information', {
             'fields': ('tag', 'noOfMembers', 'description', 'company', 'type', 'linkId', 'imgUrl', 'image_file')
