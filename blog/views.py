@@ -513,6 +513,7 @@ def find(request):
         result+=lang.name+", "
 
     postLink = Link.objects.filter(**filter_kwargs).order_by("-id")
+    postLink=postLink.filter(Q(published=True))
     if(not is18plus):
         postLink=postLink.filter(~Q(category__name="Adult/18+/Hot"))
     if(request.GET.get('page')):
