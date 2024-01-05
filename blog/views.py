@@ -407,8 +407,8 @@ def addgroup(request):
         "alertmsgbgcolor": '#90a316',
         "message": "Status: Pending, Check your mail and verify your mail address"
     }
-    
-    verification_link = f"https://www.telekit.link/verify?code={linkId+'_*_'+unique_code}"
+    current_domain = request.get_host()
+    verification_link = f"{current_domain}/verify?code={linkId+'_*_'+unique_code}"
     subject = "Mail verification - Telekit.link"
     body = f"""
     Welcome to Telekit.link
@@ -439,21 +439,22 @@ def verify(request):
     # Retrieve the verification code from the GET parameters
     verification_code = request.GET.get('code', '')
     # print("================>", verification_code)
-
+    if verification_code[0]== ' ':
+        verification_code = '+'+verification_code.strip()
     # Check if the verification code is empty and redirect to 'index' if so
     if verification_code == '':
-        print("================> Verification code not found")
+        # print("================> Verification code not found")
         return redirect("index")
 
     # Split the verification_code to extract linkId
    
-
+    # print("================>",verification_code)
     # Query the Link model to get the Link object based on the extracted linkId
-    linkObj = Link.objects.filter(linkId=verification_code.strip())
-    print("================>", str(len(linkObj)))
+    linkObj = Link.objects.filter(linkId=verification_code)
+    # print("================>", str(len(linkObj)))
     # Check if the Link object exists
     if not linkObj.exists():
-        print("================> link not exit")
+        # print("================> link not exit")
         
         # Handle the case where the Link object does not exist (you may want to redirect or show an error message)
         return redirect("index")  # Adjust the redirect target as needed
