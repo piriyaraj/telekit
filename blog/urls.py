@@ -1,3 +1,4 @@
+# urls.py
 from django.urls import path
 
 from blog.feeds import LatestLinksFeed
@@ -25,6 +26,8 @@ urlpatterns = [
     path('feed',LatestLinksFeed()),
     path('changecategory',views.changeCategory,name='changecategory'),
     path('landing/', views.landing_view, name='landing'),
+    path('verify/', views.verify, name='verify'),
+    path('mail_test/', views.mail_test, name='mail_test'),
 ]   
 
 sitemapUrls=[

@@ -122,6 +122,7 @@ class Link(models.Model):
     linkId=models.CharField(max_length=100)
     image_file = models.ImageField(upload_to='images')
     published=models.BooleanField(default=True)
+    mail = models.EmailField(max_length=100,default=None,blank=True,null=True)
 
     def get_absolute_url(self):
         return reverse("links", args=[self.linkId])

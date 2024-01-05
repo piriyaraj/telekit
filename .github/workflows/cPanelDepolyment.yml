@@ -3,7 +3,7 @@ name: Publish Website to Web Hosting
 on:
   push:
     branches:
-      - Deploy
+      - mail_verify
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
