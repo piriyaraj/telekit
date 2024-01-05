@@ -408,7 +408,7 @@ def addgroup(request):
         "message": "Status: Pending, Check your mail and verify your mail address"
     }
     current_domain = request.get_host()
-    verification_link = f"www.{current_domain}/verify?code={linkId+'_*_'+unique_code}"
+    verification_link = f"https://{current_domain}/verify?code={linkId+'_*_'+unique_code}"
     subject = "Mail verification - Telekit.link"
     body = f"""
     Welcome to Telekit.link
