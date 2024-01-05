@@ -442,6 +442,7 @@ def verify(request):
 
     # Check if the verification code is empty and redirect to 'index' if so
     if verification_code == '':
+        print("================> Verification code not found")
         return redirect("index")
 
     # Split the verification_code to extract linkId
@@ -452,6 +453,8 @@ def verify(request):
     # print("================>", str(len(linkObj)))
     # Check if the Link object exists
     if not linkObj.exists():
+        print("================> link not exit")
+        
         # Handle the case where the Link object does not exist (you may want to redirect or show an error message)
         return redirect("index")  # Adjust the redirect target as needed
     
