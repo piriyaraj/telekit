@@ -38,6 +38,7 @@ def extract(request):
     return redirect('/superuser/')
 
 def removeInvalidurl(request):
+    #
     result = tools.removeInvalidurl()
     return HttpResponse(result)
     pass
