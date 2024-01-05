@@ -331,6 +331,7 @@ def addgroup(request):
     to_mail = request.POST['mail']
     tags=request.POST['gtags']
     gtags=[]
+    print("======> Adding: {groupLink}")
     groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(groupLink)
     groupCount=int(str(groupCount).replace(" ",""))
     # print(groupName, groupCount, groupLogo, groupDescri, groupType, linkId)
@@ -339,6 +340,7 @@ def addgroup(request):
             "alertmsgbgcolor": '#f44336',
             "message":"This link is not acceptable!"
         }
+        # print("   [-] This link is not acceptable!")
         return render(request,"groupaddresult.html",message)
     link_objs_to_delete = Link.objects.filter(linkId__contains=linkId + "_*_")
 
@@ -349,7 +351,7 @@ def addgroup(request):
     linkObj = Link.objects.filter(Q(linkId=linkId) | Q(imgUrl=groupLogo))
     
     if(len(linkObj)>0):
-        print(linkObj[0].modified)
+        # print(linkObj[0].modified)
         # '2024-04-28 04:33:48.641650+00:00' 
         # modified_time = datetime.datetime.strptime(str(linkObj[0].modified), '%Y-%m-%d %H:%M:%S.%f%z')
 
@@ -378,6 +380,7 @@ def addgroup(request):
             'links':linkObj,
         }
         context.update(message)
+        # print(f"   [-] {message['message']}")
         return render(request,"groupaddresult.html",context)
 
     code_length = 10
@@ -407,6 +410,7 @@ def addgroup(request):
         "alertmsgbgcolor": '#90a316',
         "message": "Status: Pending, Check your mail and verify your mail address"
     }
+    # print(f"   [-] {message['message']}")
     current_domain = request.get_host()
     verification_link = f"https://{current_domain}/verify?code={linkId+'_*_'+unique_code}"
     subject = "Mail verification - Telekit.link"
