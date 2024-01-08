@@ -333,7 +333,7 @@ def addgroup(request):
     to_mail = request.POST['mail']
     tags=request.POST['gtags']
     gtags=[]
-    print("======> Adding: {groupLink}")
+    print(f"======> Adding: {groupLink}")
     groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(groupLink)
     groupCount=int(str(groupCount).replace(" ",""))
     # print(groupName, groupCount, groupLogo, groupDescri, groupType, linkId)
@@ -405,8 +405,16 @@ def addgroup(request):
         postLink.tag.add(i)
         
     linkObj =Link.objects.filter(linkId=linkId+"_*_"+unique_code)
+    if linkObj.exists():
+        link_obj = linkObj.first()
+
+        # Create a copy of the object to work with
+        temporary_link_obj = link_obj.__class__.objects.get(pk=link_obj.pk)
+
+        # Modify the attribute temporarily
+        temporary_link_obj.linkId = linkId
     context={
-            'links':linkObj,
+            'links':[temporary_link_obj],
     }
     message = {
         "alertmsgbgcolor": '#90a316',
