@@ -234,7 +234,8 @@ def country(request,path):
     }
     context={
         "links":pagination(request,postLink),
-        'seo':seo
+        'seo':seo,
+        "country": cate.name,
     }
     return render(request,"index.html",context)
 
@@ -256,7 +257,8 @@ def language(request,path):
     }
     context={
         "links":pagination(request,postLink),
-        'seo':seo
+        'seo':seo,
+        "country": cate.name,
     }
     return render(request,"index.html",context)
 
