@@ -481,11 +481,12 @@ def verify(request):
         'alertmsgbgcolor': '#04AA6D',
         'message': "Status: Accepted, Congratulations, your email is verified, and your link is successfully added."
     }
+    print("============>",linkObj.category.name)
     try:
-        if linkObj.id != 109:
-            DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
-        else:
+        if linkObj.category.name == "Adult/18+/Hot":
             DiscordNotification(f"TELEKIT: Added new link")
+        else:
+            DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
     except Exception as e:
         DiscordNotification(f"TELEKIT: Error {e}")
     # Render the template with the updated context
