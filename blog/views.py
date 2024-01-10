@@ -439,13 +439,7 @@ def addgroup(request):
     """
     send_email(subject,body,to_mail)
     context.update(message)
-    try:
-        if int(request.POST['category']) != 1:
-            DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
-        else:
-            DiscordNotification(f"TELEKIT: Added new link")
-    except Exception as e:
-        DiscordNotification(f"TELEKIT: Error {e}")
+
     return render(request,"groupaddresult.html",context)
     return links(request, linkId, message=message)
 
@@ -487,6 +481,13 @@ def verify(request):
         'alertmsgbgcolor': '#04AA6D',
         'message': "Status: Accepted, Congratulations, your email is verified, and your link is successfully added."
     }
+    try:
+        if linkObj.id != 109:
+            DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
+        else:
+            DiscordNotification(f"TELEKIT: Added new link")
+    except Exception as e:
+        DiscordNotification(f"TELEKIT: Error {e}")
     # Render the template with the updated context
     return render(request, "groupaddresult.html", context)
 
