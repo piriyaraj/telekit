@@ -181,7 +181,10 @@ def groupfiles(request, path, message={}):
 
 def category(request,path):
     showAds=True
-    cate=Category.objects.get(slug=path)
+    try:
+        cate=Category.objects.get(slug=path)
+    except:
+        return redirect("index")
     if(cate.name!="Adult/18+/Hot"):
         postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),category=cate).order_by("-modified")
     else:
@@ -214,7 +217,10 @@ def category(request,path):
     return render(request,"index.html",context)
 
 def country(request,path):
-    cate=Country.objects.get(slug=path)
+    try:
+        cate=Country.objects.get(slug=path)
+    except:
+        return redirect("index")
     postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot") & Q(country__slug=path)).order_by("-modified")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
@@ -240,7 +246,10 @@ def country(request,path):
     return render(request,"index.html",context)
 
 def language(request,path):
-    cate=Language.objects.get(slug=path)
+    try:
+        cate=Language.objects.get(slug=path)
+    except:
+        return redirect("index")
     postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(language__slug=path)).order_by("-modified")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
@@ -263,7 +272,10 @@ def language(request,path):
     return render(request,"index.html",context)
 
 def tag(request,path):
-    tag=Tag.objects.get(slug=path)
+    try:
+        tag=Tag.objects.get(slug=path)
+    except:
+        return redirect("index")
     postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(tag__slug=path)).order_by("-modified")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
