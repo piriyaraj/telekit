@@ -248,7 +248,6 @@ def removeInvalidurl():
     # # result = check("https://telegram.me/apkmodultra") #revoked
     # print(result)
     # return " hello "
-    removedLink = ""
     first_links = Link.objects.order_by('modified')[:100]
     count = 0
     for linkObj in first_links:
@@ -259,7 +258,6 @@ def removeInvalidurl():
             if extractData == (0, 0, 0, 0, 0, 0) or extractData[4] == "Unknown":
                 # delete linkObj
                 linkObj.delete()
-                removedLink += linkObj.link+"   :"
                 count += 1
             else:
                 linkObj.name = extractData[0]
@@ -271,12 +269,12 @@ def removeInvalidurl():
                 linkObj.save()
 
         except Exception as e:
-            DiscordNotification(f"Telekit: An error occurred for link ID {linkObj.link}: {str(e)}")
+            # DiscordNotification(f"Telekit: An error occurred for link ID {linkObj.link}: {str(e)}")
             
             # Handle exceptions here, you can print or log the error
             print(f"An error occurred for link ID {linkObj.id}: {str(e)}")
             continue
-    DiscordNotification(f"Telekit: Out of {len(first_links)} links, {count} removed links: {removedLink}")
+    DiscordNotification(f"Telekit: Out of {len(first_links)} links, {count} removed")
     return f"Out of {len(first_links)} links, {count} removed"
 
 # Replace 'check' with the actual function you're using to validate links
