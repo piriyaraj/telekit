@@ -495,9 +495,7 @@ def verify(request):
     }
     print("============>",linkObj.category.name)
     try:
-        if linkObj.category.name == "Adult/18+/Hot":
-            DiscordNotification(f"TELEKIT: Added new link")
-        else:
+        if linkObj.category.name != "Adult/18+/Hot":
             DiscordNotification(f"TELEKIT: Added new link https://telekit.link/join/{linkId}")
     except Exception as e:
         DiscordNotification(f"TELEKIT: Error {e}")
