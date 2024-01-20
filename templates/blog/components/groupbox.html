@@ -84,7 +84,7 @@
     </div>
     <br/>
     {% if request.user.is_superuser %}
-    <a href="#" class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ link.linkId }}" onclick="change18plus(this);">Change 18+</a>
+    <button class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ link.linkId }}" onclick="change18plus(this);">Change 18+</button>
     {% elif  request.user.is_authenticated%}
         {% if link in user.links.all %}
             <a href="#" class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ link.linkId }}" onclick="removeToProfile(this);">Remove from profile</a>
