@@ -82,15 +82,14 @@
             </div>
         </div>
     </div>
+    <br/>
     {% if request.user.is_superuser %}
-    <form method="post" action="/changecategory" id="category-form">
-        {% csrf_token %}
-        <select class="selectbtn" name="category">
-            <option value="">Any Category</option>
-            {% include "components/category.html" %}
-        </select>
-        <input type="hidden" name="linkId" value="{{link.id}}" />
-        <input type="submit" class="serbtn" value="Change">
-    </form>
+    <a href="#" class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ link.linkId }}" onclick="change18plus(this);">Change 18+</a>
+    {% elif  request.user.is_authenticated%}
+        {% if link in user.links.all %}
+            <a href="#" class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ link.linkId }}" onclick="removeToProfile(this);">Remove from profile</a>
+        {% else%}
+            <a href="#" class="serbtn add-to-profile" style="background-color: #0088cc;" data-linkid="{{ link.linkId }}" onclick="addToProfile(this);">Add to profile</a>
+        {% endif %}
     {% endif %}
 </div>

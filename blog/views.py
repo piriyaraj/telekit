@@ -605,25 +605,19 @@ def unlimitedTelegramLinks(request):
     return render(request,'seoTest1.html',context)
 
 @user_passes_test(lambda u: u.is_superuser)
-def changeCategory(request):
-    linkId = request.POST.get('linkId')
-    category = request.POST.get('category')
-
-    if linkId is None or category is None:
-        return JsonResponse({'error': 'Missing or invalid parameters'})
-
+def changeCategory(request,path):
     try:
-        link = Link.objects.get(id=linkId)
-        newCategory = Category.objects.get(id=category)
+        link = Link.objects.get(linkId=path)
+        newCategory = Category.objects.get(name="Adult/18+/Hot")
 
         link.category = newCategory
         link.save()
-
         return JsonResponse({'message': 'Category changed successfully'})
     except Link.DoesNotExist:
         return JsonResponse({'message': 'Link not found'})
     except Category.DoesNotExist:
         return JsonResponse({'message': 'Category not found'})
+
 
 def landing_view(request):
     link_param = request.GET.get('link', '')  # Get the value of the 'link' parameter

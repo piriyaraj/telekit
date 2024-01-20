@@ -24,7 +24,7 @@ urlpatterns = [
     path('unlimited-telegram-groups-links',views.unlimitedTelegramLinks,name='unlimitedtelegramlinks'),
     path('random-post',views.randompost,name="randompost"),
     path('feed',LatestLinksFeed()),
-    path('changecategory',views.changeCategory,name='changecategory'),
+    path('changecategory/<str:path>',views.changeCategory,name='changecategory'),
     path('landing/', views.landing_view, name='landing'),
     path('verify/', views.verify, name='verify'),
     path('mail_test/', views.mail_test, name='mail_test'),
