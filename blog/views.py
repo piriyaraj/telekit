@@ -74,7 +74,7 @@ def links(request,path,message={}):
     country=postLink.country
     language=postLink.language
     category=postLink.category
-    relatedLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),country=country, language=language, category=category).order_by("-id")
+    relatedLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),country=country, language=language, category=category).order_by("-pointsperday","-id")
     relatedLink=relatedLink.exclude(id=postLink.id)
     showAds=postLink.category.name=="Adult/18+/Hot"
     
@@ -186,8 +186,7 @@ def category(request,path):
     except:
         return redirect("index")
     if(cate.name!="Adult/18+/Hot"):
-        postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),category=cate).order_by("-modified")
-    else:
+        postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),category=cate).order_by("-pointsperday","-modified")
         postLink = Link.objects.filter(Q(published=True),category=cate).order_by("-id")
         showAds=False
     # if(not showAds):
@@ -221,7 +220,7 @@ def country(request,path):
         cate=Country.objects.get(slug=path)
     except:
         return redirect("index")
-    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot") & Q(country__slug=path)).order_by("-modified")
+    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot") & Q(country__slug=path)).order_by("-pointsperday","-modified")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -250,7 +249,7 @@ def language(request,path):
         cate=Language.objects.get(slug=path)
     except:
         return redirect("index")
-    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(language__slug=path)).order_by("-modified")
+    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(language__slug=path)).order_by("-pointsperday","-modified")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -276,7 +275,7 @@ def tag(request,path):
         tag=Tag.objects.get(slug=path)
     except:
         return redirect("index")
-    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(tag__slug=path)).order_by("-modified")
+    postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(tag__slug=path)).order_by("-pointsperday","-modified")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
@@ -306,7 +305,7 @@ def search(request):
     cate = Category.objects.filter(Q(name__contains=keyword))
     lang = Language.objects.filter(Q(name__contains=keyword))
     postLink = Link.objects.filter(Q(name__contains=keyword) | Q(description__contains=keyword) | Q(
-        tag__in=tag) | Q(country__in=coun) | Q(category__in=cate) | Q(language__in=lang)).order_by("-modified")
+        tag__in=tag) | Q(country__in=coun) | Q(category__in=cate) | Q(language__in=lang)).order_by("-pointsperday","-modified")
     # postLink=list(set(postLink))
     postLink=postLink.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"))
     
