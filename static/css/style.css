@@ -764,10 +764,11 @@ p.para {
     font-weight: 400;
 }
 
-.btn1:before {
+
+/* .btn1:before {
     content: url('../images/reply.png');
     float: left;
-}
+} */
 
 .btn1:hover {
     zoom: 1;
@@ -897,7 +898,6 @@ input[type="email"]:hover,
 /*  Contact Form  */
 
 .contact-info {
-    margin-top: 8em;
     padding: 2% 2% 3% 2%;
     background: #fff;
     border-radius: 5px;

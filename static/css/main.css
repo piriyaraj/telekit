@@ -1,22 +1,24 @@
 /**
  * Grid container
  */
+
+
 /* item styles */
 
-
-.selectbtn{
-    width:230px;
-    padding:10px;
-    margin-top:8px;
+.selectbtn {
+    width: 230px;
+    padding: 10px;
+    margin-top: 8px;
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
-    color:#777;
+    color: #777;
     border-radius: 5px;
 }
-.serbtn{
-    width:230px;
-    padding:10px;
-    margin-top:8px;
+
+.serbtn {
+    width: 230px;
+    padding: 10px;
+    margin-top: 8px;
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
     color: #ffffff;
@@ -24,219 +26,447 @@
     border-radius: 5px;
     text-decoration: none;
     border: none;
-    
 }
-.addbtn{
+
+.addbtn {
     color: white;
     font-size: 20px;
     background-color: #0088cc;
     padding: 5px;
     border-radius: 5px
 }
-.addbtn:hover{
+
+.addbtn:hover {
     background-color: #ffffff;
     color: #023c58;
     border: 1px solid #777;
 }
+
+
 /* arrows */
 
 select.classic {
-  background-image:
-    linear-gradient(45deg, transparent 50%, blue 50%),
-    linear-gradient(135deg, blue 50%, transparent 50%),
-    linear-gradient(to right, skyblue, skyblue);
-  background-position:
-    calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px),
-    100% 0;
-  background-size:
-    5px 5px,
-    5px 5px,
-    2.5em 2.5em;
-  background-repeat: no-repeat;
+    background-image: linear-gradient(45deg, transparent 50%, blue 50%), linear-gradient(135deg, blue 50%, transparent 50%), linear-gradient(to right, skyblue, skyblue);
+    background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), 100% 0;
+    background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
+    background-repeat: no-repeat;
 }
 
 select.classic:focus {
-  background-image:
-    linear-gradient(45deg, white 50%, transparent 50%),
-    linear-gradient(135deg, transparent 50%, white 50%),
-    linear-gradient(to right, gray, gray);
-  background-position:
-    calc(100% - 15px) 1em,
-    calc(100% - 20px) 1em,
-    100% 0;
-  background-size:
-    5px 5px,
-    5px 5px,
-    2.5em 2.5em;
-  background-repeat: no-repeat;
-  border-color: grey;
-  outline: 0;
+    background-image: linear-gradient(45deg, white 50%, transparent 50%), linear-gradient(135deg, transparent 50%, white 50%), linear-gradient(to right, gray, gray);
+    background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em, 100% 0;
+    background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
+    background-repeat: no-repeat;
+    border-color: grey;
+    outline: 0;
 }
-
 
 .item-image {
-  position: relative;
-  overflow: hidden;
-  padding-bottom: 50%; /* here the desired aspect ratio */
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 50%;
+    /* here the desired aspect ratio */
 }
+
 .item-image img {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
+
 .item-content {
-  padding: 15px;
-  background: #72cffa;
+    padding: 15px;
+    background: #72cffa;
 }
+
 .item-text {
-  position: relative;
-  overflow: hidden;
-  height: 100px;
+    position: relative;
+    overflow: hidden;
+    height: 100px;
 }
+
 #main {
-	margin-top: 9em;
+    margin-top: 9em;
 }
+
 #tiles {
-  list-style-type: none;
-  position: relative; /** Needed to ensure items are laid out relative to this container **/
-  margin: 0;
-  padding: 0;
+    list-style-type: none;
+    position: relative;
+    /** Needed to ensure items are laid out relative to this container **/
+    margin: 0;
+    padding: 0;
 }
-#tiles li:hover img{
-	opacity:0.8;
+
+#tiles li:hover img {
+    opacity: 0.8;
 }
+
+
 /**
  * Grid items
  */
+
 #tiles li {
- 	width: 280px;
-	background-color: #ffffff;
-	border: 1px solid #dedede;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	display: none;
-	cursor: pointer;
-	border-radius: 0.2em;
-}
-#tiles li img{
-	border-top-left-radius:0.2em;
-	border-top-right-radius:0.2em;
-}
-#tiles li.inactive {
-  visibility: hidden;
-  opacity: 0;
+    width: 280px;
+    background-color: #ffffff;
+    border: 1px solid #dedede;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    display: none;
+    cursor: pointer;
+    border-radius: 0.2em;
 }
 
 #tiles li img {
- 	display: block;
+    border-top-left-radius: 0.2em;
+    border-top-right-radius: 0.2em;
 }
+
+#tiles li.inactive {
+    visibility: hidden;
+    opacity: 0;
+}
+
+#tiles li img {
+    display: block;
+}
+
 
 /**
  * Grid item text
  */
 
 footer {
-  text-align: center;
-
+    text-align: center;
 }
 
 footer a {
-  color: #435DC5;
-  text-decoration: none;
+    color: #435DC5;
+    text-decoration: none;
 }
+
 
 /**
  * Progress bar for imagesLoaded
  */
+
 .progress-bar {
-  background-color: #0BC20B;
-  height: 2px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 0;
-  box-shadow: 0 1px 3px rgba(11, 194, 11, 0.2);
-  -webkit-transition: width 0.3s ease-out;
-     -moz-transition: width 0.3s ease-out;
-       -o-transition: width 0.3s ease-out;
-          transition: width 0.3s ease-out;
+    background-color: #0BC20B;
+    height: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 0;
+    box-shadow: 0 1px 3px rgba(11, 194, 11, 0.2);
+    -webkit-transition: width 0.3s ease-out;
+    -moz-transition: width 0.3s ease-out;
+    -o-transition: width 0.3s ease-out;
+    transition: width 0.3s ease-out;
 }
+
 
 /**
  * Placerholder css
  */
+
 .wookmark-placeholder {
-          border-radius: 2px;
-     -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  background-color: #eee;
-  border: 1px solid #dedede;
-  z-index: -1;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    background-color: #eee;
+    border: 1px solid #dedede;
+    z-index: -1;
 }
 
 .example-tiles {
-  position: relative; /** Needed to ensure items are laid out relative to this container **/
-  margin: 0;
-  padding: 0;
+    position: relative;
+    /** Needed to ensure items are laid out relative to this container **/
+    margin: 0;
+    padding: 0;
 }
 
 .example-tiles li {
-  display: block;
-  list-style-type: none;
-  float: left;
-  margin: 5px;
-  -webkit-transition: all 0.3s ease-out;
-     -moz-transition: all 0.3s ease-out;
-       -o-transition: all 0.3s ease-out;
-          transition: all 0.3s ease-out;
+    display: block;
+    list-style-type: none;
+    float: left;
+    margin: 5px;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 .example-tiles a,
 .example-tiles a:hover {
-  color: #555;
-  background-color: #eee;
-  text-align: center;
-  display: table-cell;
-  vertical-align: middle;
-  width: 200px;
-  height: 200px;
-  font-size: 2em;
-  font-weight: bold;
-  text-decoration: none;
-  border: 1px solid #ddd;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  padding: 5px 8px;
-  border-radius: 3px;
+    color: #555;
+    background-color: #eee;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    width: 200px;
+    height: 200px;
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    padding: 5px 8px;
+    border-radius: 3px;
 }
 
 .example-tiles a:hover {
-  background-color: #ddd;
-}
-/*--media Quries for 640px-monitors-*/
-@media only screen and (max-width:640px) and (min-width:480px) {
-	#main {
-		margin-top: 7em;
-	}
-}
-/*--media Quries for 480px-monitors-*/
-@media only screen and (max-width:480px) and (min-width:320px) {
-	#main {
-		margin-top: 9.5em;
-	}
-}
-/*--media Quries for 320px-monitors-*/
-@media only screen and (max-width:320px) and (min-width:240px) {
-	#main {
-		margin-top: 9em;
-	}
-	#tiles li {
-		width: 266px;
-	}
+    background-color: #ddd;
 }
 
+
+/*--media Quries for 640px-monitors-*/
+
+@media only screen and (max-width:640px) and (min-width:480px) {
+    #main {
+        margin-top: 7em;
+    }
+}
+
+
+/*--media Quries for 480px-monitors-*/
+
+@media only screen and (max-width:480px) and (min-width:320px) {
+    #main {
+        margin-top: 9.5em;
+    }
+}
+
+
+/*--media Quries for 320px-monitors-*/
+
+@media only screen and (max-width:320px) and (min-width:240px) {
+    #main {
+        margin-top: 9em;
+    }
+    #tiles li {
+        width: 266px;
+    }
+}
+
+.auth>a>button {
+    display: inline-block;
+    background-color: #0088cc;
+    color: white;
+    padding: 5px;
+    border-radius: 5%;
+    border: 1px solid #013d5b;
+    min-width: 100px;
+    margin-left: 2.1em;
+}
+
+.container {
+    height: 600px;
+    width: 500px;
+    background-color: white;
+    box-shadow: 8px 8px 20px rgb(128, 128, 128);
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+}
+
+.btn1 {
+    height: 60px;
+    width: 300px;
+    margin: 20px auto;
+    box-shadow: 10px 10px 30px rgb(188, 250, 254);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login,
+.signup {
+    font-size: 22px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    color: #000000;
+}
+
+.slider {
+    height: 60px;
+    width: 150px;
+    border-radius: 50px;
+    background-image: linear-gradient(to right, #0088cc, #002e44);
+    position: absolute;
+    top: 20px;
+    left: 100px;
+    transition: all 0.5s ease-in-out;
+}
+
+.moveslider {
+    left: 250px;
+}
+
+.form-section {
+    height: 500px;
+    width: 1000px;
+    padding: 20px 0;
+    display: flex;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    left: 0px;
+}
+
+.form-section-move {
+    left: -500px;
+}
+
+.login-box,
+.signup-box {
+    height: 100%;
+    width: 500px;
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px;
+}
+
+.login-box {
+    gap: 50px;
+}
+
+.signup-box {
+    gap: 30px;
+}
+
+.ele {
+    height: 60px;
+    width: 400px;
+    outline: none;
+    border: none;
+    color: rgb(77, 77, 77);
+    background-color: rgb(240, 240, 240);
+    border-radius: 50px;
+    padding-left: 30px;
+    font-size: 18px;
+}
+
+.clkbtn {
+    height: 60px;
+    width: 150px;
+    border-radius: 50px;
+    background-image: linear-gradient(to right, #0088cc, #002e44);
+    color: white;
+    font-size: 22px;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* For Responsiveness of the page */
+
+@media screen and (max-width: 650px) {
+    .container {
+        height: 600px;
+        width: 300px;
+    }
+    .title {
+        font-size: 15px;
+    }
+    .btn1 {
+        height: 50px;
+        width: 200px;
+        margin: 20px auto;
+    }
+    .login,
+    .signup {
+        font-size: 19px;
+    }
+    .slider {
+        height: 50px;
+        width: 100px;
+        left: 50px;
+    }
+    .moveslider {
+        left: 150px;
+    }
+    .form-section {
+        height: 500px;
+        width: 600px;
+    }
+    .form-section-move {
+        left: -300px;
+    }
+    .login-box,
+    .signup-box {
+        height: 100%;
+        width: 300px;
+    }
+    .ele {
+        height: 50px;
+        width: 200px;
+        font-size: 15px;
+    }
+    .clkbtn {
+        height: 50px;
+        width: 130px;
+        font-size: 19px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .container {
+        height: 600px;
+        width: 250px;
+    }
+    .heading {
+        font-size: 30px;
+    }
+    .title {
+        font-size: 10px;
+    }
+    .btn1 {
+        height: 50px;
+        width: 200px;
+        margin: 20px auto;
+    }
+    .login,
+    .signup {
+        font-size: 19px;
+    }
+    .slider {
+        height: 50px;
+        width: 100px;
+        left: 27px;
+    }
+    .moveslider {
+        left: 127px;
+    }
+    .form-section {
+        height: 500px;
+        width: 500px;
+    }
+    .form-section-move {
+        left: -250px;
+    }
+    .login-box,
+    .signup-box {
+        height: 100%;
+        width: 250px;
+    }
+    .ele {
+        height: 50px;
+        width: 220px;
+        font-size: 15px;
+    }
+    .clkbtn {
+        height: 50px;
+        width: 130px;
+        font-size: 19px;
+    }
+}

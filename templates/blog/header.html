@@ -4,48 +4,23 @@
     <div class="wrap">
         <div class="logo">
             <a href="/"><img src="{% static 'images/logo/logo.png' %}" alt="Telekit unlimited telegram link provider logo" height="52" width="154" title="Telekit" /></a>
-
         </div>
-
-        <div class="nav-icon">
-            <a href="#" class="right_bt" id="activator"><span> </span> </a>
-        </div>
-        <div class="box" id="box">
-            <div class="box_content">        					                         
-                <div class="box_content_center">
-                    <div class="form_content">
-                        <div class="menu_box_list">
-                            <ul>
-                                <li><a href="/"><span>Home</span></a></li>
-                                <li>{% include 'components/dropdown.html' %}</li>
-                                <li><a href="/doc/aboutus"><span>About us</span></a></li>
-                                <li><a href="/doc/terms"><span>Terms</span></a></li>
-                                <li><a href="/doc/privacy"><span>Privacy</span></a></li>
-                                <li><a href="/doc/disclaimer"><span>Disc</span></a></li>
-                                <li><a href="/doc/contact"><span>Contact</span></a></li>
-                                <div class="clear"> </div>
-                            </ul>
-                        </div>
-                        <a href="#" class="boxclose" id="boxclose"> <span> </span></a>
-                    </div>                                  
-                </div> 	
-            </div> 
-        </div>       	  
+        <div class="auth">
+            {% if  request.user.is_authenticated%}
+            <a href='/profile'><button class="auth-first">Profile</button></a>
+    
+            <a href='/logout'><button>Log out</button></div>
+            {% else %}
+            <a href='/login/'><button class="auth-first">Login</button></a>
+            {% endif %}
+            </div>
         <div class="top-searchbar">
 
             <form action="/search" method="get">
                 <input type="text" name="keyword" placeholder="Type Keywords to Search" required/><input type="submit" value="" />
             </form>
         </div>
-        <div>
-        {% if  request.user.is_authenticated%}
-        <a href='/profile'><button>Profile</button></a>
 
-        <a href='/logout'><button>Log out</button></div>
-        {% else %}
-        <a href='/login'><button>Login</button></a>
-        {% endif %}
-        </div>
         
 
             <div style="position: fixed; top: 200px; left: 0px; ">

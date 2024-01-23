@@ -6,9 +6,9 @@ from .models import User
 from django.core.exceptions import ValidationError
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=250, required=True)
-    password = forms.CharField(max_length=250, required=True, widget=forms.PasswordInput)
-    
+    username = forms.CharField(max_length=250, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter your username or email'}))
+    password = forms.CharField(max_length=250, required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Enter your password'}))
+   
 
 
 class UserRegistrationForm(forms.ModelForm):

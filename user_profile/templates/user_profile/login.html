@@ -6,43 +6,91 @@
 
 <div class="content">
   <div class="wrap">
-    <div class="contact-info">
-        <div class="sidebar-heading">
-          <h2>Login to your account</h2>
-        </div>
-        <div class="content">
-          <form id="contact" action="" method="POST" novalidate>
-            {% csrf_token %}
-            <div class="row">
-              {% if messages %}
-              <div class="col-md-12 col-sm-12">
-                {% include 'message.html' %}
-                {{ message}}
-              </div>
-              {% endif %}
-              <div class="col-md-12 col-sm-12">
-                <fieldset>
-                  <input name="username" type="text" id="username_id" placeholder="Your name/email" >
-                  <p class="error py-1 text-danger">{{form.username.errors}}</p>
-                </fieldset>
-              </div>
-              <div class="col-md-12 col-sm-12">
-                <fieldset>
-                  <input name="password" type="password" id="password_id" placeholder="Your password" >
-                  <p class="error py-1 text-danger">{{form.password.errors}}</p>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <button type="submit" id="form-submit" class="main-button mr-2">Login</button>
-                  <a href="{% url 'register_user' %}" id="form-submit" class="main-button btn-primary">Signup</a>
-                </fieldset>
-              </div>
-            </div>
-          </form>
-        </div>
+    <div id="main" role="main">
+    <div class="container">
+ 
+      <!-- upper button section to select
+           the login or signup form -->
+      <div class="slider"></div>
+      <div class="btn1">
+          <button class="login">Login</button>
+          <button class="signup">Signup</button>
       </div>
-    </div>
+
+      <!-- Form section that contains the
+           login and the signup form -->
+      <div class="form-section">
+
+          <!-- login form -->
+          <div class="login-box">
+            {% if messages %}
+            <div class="col-md-12 col-sm-12">
+              {% comment %} {% include 'message.html' %} {% endcomment %}
+              {{ message}}
+            </div>
+            {% endif %}
+            <form id="contact" action="/login/" method="POST">
+              {% csrf_token %}
+              <input type="text"
+                     class="email ele"
+                     placeholder="Enter your username"
+                     id="username_id"
+                     name="username"
+                     >
+              <p class="py-1 text-danger errors">{{form.username.errors}}</p>
+              <input type="password"
+                     class="password ele"
+                     name="password"id="password_id" placeholder="Your password">
+                     <p class="error py-1 text-danger">{{form.password.errors}}</p>
+              <button class="clkbtn" type="submit" id="form-submit" >Login</button>
+            </form>
+          </div>
+
+          <!-- signup form -->
+          
+          <div class="signup-box">
+            <form id="contact" action="/register/" method="POST">
+              {% csrf_token %}
+              <input type="text"
+                     class="name ele"
+                     placeholder="Enter your username"
+                     name="username" 
+                     {% if form.is_bound %} value="{{form.username.value}}" {% endif %}
+                     id="username_id">
+              <p class="py-1 text-danger errors">{{form.username.errors}}</p>
+              <input type="email"
+                     class="email ele"
+                     name="email" 
+                     {% if form.is_bound %} value="{{form.email.value}}" {% endif %}
+                     id="email_id" 
+                     placeholder="Enter your email">
+              <p class="py-1 text-danger errors">{{form.email.errors}}</p>
+              <input type="password"
+                     class="password ele"
+                     name="password" 
+                     id="password_id" 
+                     placeholder="Your password"
+                     >
+              <p class="py-1 text-danger errors">{{form.password.errors}}</p>
+              <input type="password"
+                     class="password ele"
+                     name="confirm_password" 
+                     type="password" 
+                     id="confirm_password_id" 
+                     placeholder="Retype password" 
+                     >
+              <p class="py-1 text-danger errors">{{form.confirm_password.errors}}</p>
+              <button 
+              class="clkbtn"
+              type="submit" 
+              id="form-submit"
+              >Signup
+            </button>
+          </form>
+          </div>
+      </div>
+  </div>
+  </div>
   </div>
 </div>
 

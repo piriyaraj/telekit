@@ -65,15 +65,17 @@ def login_user(request):
                 username=form.cleaned_data.get('username'),
                 password=form.cleaned_data.get('password')
             )
-            print(user.verified)
+            # print(user.verified)
             if user:
                 if not user.verified:
-                    messages.warning(request, "Verification Required: Confirm Your Email Address")
-                    return redirect('login')
+                    # messages.warning(request, "Verification Required: Confirm Your Email Address")
+                    # form['verification'] = "Verification Required: Confirm Your Email Address"
+                    return render(request, 'user_profile/login.html', {'message': "Verification Required: Confirm Your Email Address"})
                 login(request, user)
                 return redirect('index')
             else:
-                messages.warning(request, "Wrong credentials")
+                # messages.warning(request, "Wrong credentials")
+                return render(request, 'user_profile/login.html', {'message': "Wrong credentials"})
     seo = {
         "robots": "noindex, nofollow"
     }
@@ -124,6 +126,8 @@ def register_user(request):
             send_email(subject,body,mail)
             messages.success(request, "Check your inbox: Confirm your email address")
             return redirect('login')
+        else:
+            return render(request, 'user_profile/registration.html', {'form': form})
     seo = {
         "robots": "noindex, nofollow"
     }
