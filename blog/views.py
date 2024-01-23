@@ -127,7 +127,7 @@ def links(request,path,message={}):
     return render(request,"links.html",context)
 
 def index(request):
-    link=Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")).order_by("-modified")
+    link=Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")).order_by("-pointsperday","-modified")
     if(request.GET.get('page')):
         linka=pagination(request,link)
         context={

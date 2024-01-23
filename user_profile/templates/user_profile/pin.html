@@ -9,18 +9,23 @@
             <div id="groupresult">
                 {% include "loadgroup.html" %}
             </div>
-            <div>
+            <div class='pinner'>
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <span id="pointsperday"></span></br>
-                    <span>Position: </span><span id="Position">Default</span></br>
-                    <button type="submit">Submit</button>
-                </form>
-                <div class="alert" id='alert'>
-                    <div> You dont have enough points to pin </div>
+                    <button type="submit" class='clkbtn'>Submit</button>
+                    </form>
+                    <div>
+                        <span id="pointsperday"></span>
+                        <span id="Position">Default</span>
+                    </div>
                 </div>
+
+                
             </div>
+            {% comment %} <div class="alert" id='alert'>
+                <div> You dont have enough points to pin </div>
+            </div> {% endcomment %}
             <script>
                 // Function to calculate points per day
                 function calculatePointsPerDay() {
@@ -41,7 +46,7 @@
                     // all available points per day in {{ points }}
                     // generate algorithm so that it will find the position of the calculated pointsPerDay
                     var position = findPosition(availablePointsPerDay, pointsPerDay);
-                    document.getElementById('Position').textContent = position;
+                    document.getElementById('Position').textContent = "Position: "+position;
                 }
             
                 // Attach the function to the input change event

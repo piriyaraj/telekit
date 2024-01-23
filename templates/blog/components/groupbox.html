@@ -1,5 +1,9 @@
 {% load static %}
+{% if link.pointsperday %}
+<div class="maindiv" style="background-color: #0088ff17;">
+{% else %}
 <div class="maindiv">
+{% endif %}
     <div>
         <a style="color: #5a5a5a" target="_blank" href="/join/{{link.linkId}}"
             title="Telegram group invite link: {{link.name}}">
@@ -92,4 +96,6 @@
             <a href="#" class="serbtn add-to-profile" style="background-color: #0088cc;" data-linkid="{{ link.linkId }}" onclick="addToProfile(this);">Add to profile</a>
         {% endif %}
     {% endif %}
+    <a href="/pin/{{link.linkId}}" class="serbtn add-to-profile" style="background-color: #0088cc;">Pin in 1st place</a>
+
 </div>
