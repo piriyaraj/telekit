@@ -8,9 +8,7 @@
             {% if not adsshow %}
                 {% include "ads/hori_respon.html" %}
             {% endif %}
-            <div class='dashboard'>
-                points: {{user.points}}
-            </div>
+            {% include "user_profile/dashboard.html" %}
             <div class="col-sm-9">
                 <div id="groupresult">
                     {% include "loadgroup.html" %}

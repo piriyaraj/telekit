@@ -5,10 +5,11 @@
 <div class="content">
     <div class="wrap">
         <div id="main" role="main">
-            <div> Pin Page </div>
+            {% include "user_profile/dashboard.html" %}
             <div id="groupresult">
                 {% include "loadgroup.html" %}
             </div>
+            
             <div class='pinner'>
                 <form method="post">
                     {% csrf_token %}

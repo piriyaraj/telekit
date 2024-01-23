@@ -1,0 +1,8 @@
+{% load static %}
+<div class="dashboard">
+    <span> <img src="{% static 'images/profile.png' %}" width='160px' /></span>
+    <div>
+    <h2>{{user.username}}</h2>
+    <div> Balance Points: <span class='points'>{{user.points}}</span> </div>
+    </div>
+</div>
