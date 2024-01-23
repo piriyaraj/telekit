@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+    <div class="wrap">
+        <div id="main" role="main">
+            {% if not adsshow %}
+                {% include "ads/hori_respon.html" %}
+            {% endif %}
+            <div style="margin-bottom: 10px;text-align: center">
+                {% include "search.html" %}
+            </div>
+            {% if not adsshow %}
+                {% include "ads/hori_respon.html" %}
+            {% endif %}
+
+            <!-- These are our grid blocks -->
+            <div class="row">
+                <div class='col-sm-3'>
+                    {% if request.path == '/' %}
+                        {% include 'teleintro.html'%}
+                    {% else %}
+                        {% include 'sidebar.html' %}
+                    {% endif %}
+                </div></div></div>
+                <div class="col-sm-9">
+                    <div id="groupresult">
+                        {% include "loadgroup.html" %}
+                    </div>
+                    {% if links.has_next %}
+                        <div style="margin-top: 10px"> 
+                            <button 
+                                {% if keyword|length %}
+                                    hx-get="?page={{ links.next_page_number }}&{{keyword}}"
+                                {% else %}
+                                    hx-get="?page={{ links.next_page_number }}"
+                                {% endif %}
+                                hx-trigger="click"
+                                hx-target="#groupresult"
+                                hx-swap="beforeend"
+                                class="addbtn" 
+                                name="load_more" 
+                                id="load_more" 
+                                style="cursor: pointer; display: inline;">
+                                Load More
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if request.path == '/' %}
+                    {% include 'homepage.html' %}
+                {% elif country %}
+                    {% include 'components/country_content.html' %}
+                {% elif language %}
+                    {% include 'components/language_content.html' %}
+                {% endif %}
+
+            </div>
+            <!-- End of grid blocks -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

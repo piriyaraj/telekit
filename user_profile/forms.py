@@ -1,8 +1,9 @@
+from math import floor
 from django import forms
 from django.forms.forms import Form
 
 from .models import User
-
+from django.core.exceptions import ValidationError
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=250, required=True)
@@ -93,3 +94,33 @@ class UserProfileUpdateForm(forms.ModelForm):
 
 class ProfilePictureUpdateForm(forms.Form):
     profile_image = forms.ImageField(required=True)
+
+class Pinlinks(forms.Form):
+    max_points = 0
+    days = forms.IntegerField(label='Days', initial=1, min_value=1)
+    points = forms.FloatField(
+        label='Points',
+        # decimal_places=2
+    )
+
+    def __init__(self, *args, **kwargs):
+        max_points = kwargs.pop('max_points', None)
+        self.max_points = max_points
+        min_points = kwargs.pop('min_points', None)
+        super(Pinlinks, self).__init__(*args, **kwargs)
+        print(max_points)
+        # Set max_value dynamically
+        if max_points is not None:
+            self.fields['points'].widget.attrs['max'] = max_points
+            self.fields['points'].widget.attrs['min'] = min_points
+            self.fields['points'].initial = floor(max_points)
+        
+    # def clean_points(self):
+    #     points = self.cleaned_data.get('points')
+
+    #     if points is not None and points <= 0:
+    #         raise ValidationError("Points must be greater than 0.")
+    #     elif points > self.max_points:
+    #         raise ValidationError(f"Points value should be less than {self.max_points}.")
+
+    #     return points

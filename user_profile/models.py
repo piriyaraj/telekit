@@ -12,27 +12,26 @@ class User(AbstractUser):
             "unique": "The email must be unique"
         }
     )
-    profile_image = models.ImageField(
-        null=True,
-        blank=True,
-        upload_to="profile_images"
-    )
-    followers = models.ManyToManyField("Follow")
-
+    links = models.ManyToManyField("blog.Link")
+    verified = models.BooleanField(default=False)
+    added=models.DateTimeField(auto_now_add=True)
+    modified=models.DateTimeField(auto_now=True)
+    points = models.IntegerField(default = 1000)
+    verification_id = models.CharField(max_length=30,default='aaa')
     REQUIRED_FIELDS = ["email"]
     objects = CustomUserManager()
 
     def __str__(self):
         return self.username
 
-    def get_profile_picture(self):
-        url = ""
-        try:
-            url = self.profile_image.url
-        except:
-            url = ""
-        return url
-
+class Linkpin(models.Model):
+    points = models.FloatField()
+    days = models.FloatField()
+    points_per_day = models.FloatField(blank=True, null=True)
+    added = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    linkId = models.CharField(max_length=30,unique=True)
 
 class Follow(models.Model):
     followed = models.ForeignKey(

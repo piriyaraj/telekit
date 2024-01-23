@@ -7,7 +7,7 @@ from unittest.util import _MAX_LENGTH
 from urllib.request import urlopen
 from django.db import models
 from django.utils.text import slugify
-from user_profile.models import User
+# from user_profile.models import User
 
 
 
@@ -82,7 +82,7 @@ class Company(models.Model):
     name=models.CharField(max_length=200)
     description=models.CharField(max_length=1000)
     profile=models.ImageField(upload_to='Company')
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    # user=models.ForeignKey(User, on_delete=models.CASCADE)
     slug = models.SlugField(null=True, blank=False,unique=True)
 
     def get_absolute_url(self):
@@ -123,7 +123,8 @@ class Link(models.Model):
     image_file = models.ImageField(upload_to='images')
     published=models.BooleanField(default=True)
     mail = models.EmailField(max_length=100,default=None,blank=True,null=True)
-
+    pointsperday = models.FloatField(default=0)
+    
     def get_absolute_url(self):
         return reverse("links", args=[self.linkId])
         # return f'/{self.linkId}/'

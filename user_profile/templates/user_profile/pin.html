@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+    <div class="wrap">
+        <div id="main" role="main">
+            <div> Pin Page </div>
+            <div id="groupresult">
+                {% include "loadgroup.html" %}
+            </div>
+            <div>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <span id="pointsperday"></span></br>
+                    <span>Position: </span><span id="Position">Default</span></br>
+                    <button type="submit">Submit</button>
+                </form>
+                <div class="alert" id='alert'>
+                    <div> You dont have enough points to pin </div>
+                </div>
+            </div>
+            <script>
+                // Function to calculate points per day
+                function calculatePointsPerDay() {
+                    var daysInput = document.getElementById('id_days');
+                    var pointsInput = document.getElementById('id_points');
+                    var pointsPerDayLabel = document.getElementById('pointsperday');
+                    var availablePointsPerDay = {{ points|default:"[]" }};  // Extract the list of available points per day
+
+                    // Get values from the inputs
+                    var days = parseInt(daysInput.value);
+                    var points = parseInt(pointsInput.value);
+            
+                    // Perform the calculation
+                    var pointsPerDay = days > 0 ? points / days : 0;
+            
+                    // Update the points per day label
+                    pointsPerDayLabel.textContent = 'Points per Day: ' + pointsPerDay.toFixed(2);
+                    // all available points per day in {{ points }}
+                    // generate algorithm so that it will find the position of the calculated pointsPerDay
+                    var position = findPosition(availablePointsPerDay, pointsPerDay);
+                    document.getElementById('Position').textContent = position;
+                }
+            
+                // Attach the function to the input change event
+                document.getElementById('id_days').addEventListener('input', calculatePointsPerDay);
+                document.getElementById('id_points').addEventListener('input', calculatePointsPerDay);
+                window.onload = function() {
+                    calculatePointsPerDay();
+                };
+                // Function to find the position of a value in a list
+                function findPosition(list, value) {
+                    for (var i = 0; i < list.length; i++) {
+                        if (value >= list[i]) {
+                            return i + 1;
+                        }
+                    }
+                    return list.length + 1;  // If value is greater than all elements in the list
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

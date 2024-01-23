@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+    <div class="wrap">
+        <div id="main" role="main">
+            {% if not adsshow %}
+                {% include "ads/hori_respon.html" %}
+            {% endif %}
+            <div class='dashboard'>
+                points: {{user.points}}
+            </div>
+            <div class="col-sm-9">
+                <div id="groupresult">
+                    {% include "loadgroup.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
