@@ -10,6 +10,8 @@ from django.contrib.sitemaps.views import sitemap
 urlpatterns = [
     path('', views.index, name='index'),
     path('loadmore/', views.loadmore, name='loadmore'),
+    # path('doc/addgroup',views.addingGroup,name='docs'),
+    path('addgroup',views.addgroup,name='addgroup'),
     path('doc/<str:path>',views.docfiles,name='docs'),
     path('group/find',views.find,name='find'),
     path('group/<str:path>',views.groupfiles,name='groups'),
@@ -19,7 +21,6 @@ urlpatterns = [
     path('language/<str:path>',views.language,name='language'),
     path('tag/<str:path>',views.tag,name='tag'),
     path('search/',views.search,name='search'),
-    path('addgroup',views.addgroup,name='addgroup'),
     path('unlimited/<str:path>',views.unlimited,name='unlimited'),
     path('unlimited-telegram-groups-links',views.unlimitedTelegramLinks,name='unlimitedtelegramlinks'),
     path('random-post',views.randompost,name="randompost"),

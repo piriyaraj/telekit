@@ -14,6 +14,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.db.models import Q
 from blog.models import Category, Company, Country, Language, Link, Tag
+from telekit import settings
 # from extract.models import Notification
 from . import tools
 from django.core.paginator import Paginator
@@ -336,12 +337,15 @@ def DiscordNotification(Msg):
     
 def addgroup(request):
     if request.method == 'GET':
-        return redirect('/group/addgroup')
+        return render(request,'blog/addgroup.html',{'mail':settings.GROUP_ADD_MAIL_VERIFICATION})
     groupLink=request.POST['glink']
     categoryId=Category.objects.get(id=request.POST['category'])
     countryId=Country.objects.get(id=request.POST['country'])
     languageId=Language.objects.get(id=request.POST['language'])
-    to_mail = request.POST['mail']
+    try:
+        to_mail = request.POST['mail']
+    except:
+        to_mail = None
     tags=request.POST['gtags']
     gtags=[]
     print(f"======> Adding: {groupLink}")
@@ -399,7 +403,7 @@ def addgroup(request):
     code_length = 10
     unique_code = secrets.token_hex(code_length // 2)
         
-    postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId+"_*_"+unique_code,published = False,mail = to_mail)
+    postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId+"_*_"+unique_code,published = not(settings.GROUP_ADD_MAIL_VERIFICATION),mail = to_mail)
     # Notification.objects.create(name="New group added",link=postLink)
     spTags = tags.split(",")
     try:
@@ -431,24 +435,30 @@ def addgroup(request):
         "alertmsgbgcolor": '#90a316',
         "message": "Status: Pending, Check your mail and verify your mail address"
     }
-    # print(f"   [-] {message['message']}")
-    current_domain = request.get_host()
-    verification_link = f"https://{current_domain}/verify?code={linkId+'_*_'+unique_code}"
-    subject = "Mail verification - Telekit.link"
-    body = f"""
-    Welcome to Telekit.link
-    
-    Your Telegram group/Channel has been Added successfully.
-    
-    click the below link to verify your email address
-    
-    {verification_link}
-    
-    Thank you
-    Regards
-    Telekit.link
-    """
-    send_email(subject,body,to_mail)
+    if not settings.GROUP_ADD_MAIL_VERIFICATION:
+        message = {
+        "alertmsgbgcolor": '#04AA6D',
+        "message": "Status: Success, Your Link placed successfully in Telekit."
+    }
+    if settings.GROUP_ADD_MAIL_VERIFICATION:
+        # print(f"   [-] {message['message']}")
+        current_domain = request.get_host()
+        verification_link = f"https://{current_domain}/verify?code={linkId+'_*_'+unique_code}"
+        subject = "Mail verification - Telekit.link"
+        body = f"""
+        Welcome to Telekit.link
+        
+        Your Telegram group/Channel has been Added successfully.
+        
+        click the below link to verify your email address
+        
+        {verification_link}
+        
+        Thank you
+        Regards
+        Telekit.link
+        """
+        send_email(subject,body,to_mail)
     context.update(message)
 
     return render(request,"groupaddresult.html",context)
