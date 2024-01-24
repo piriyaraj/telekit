@@ -186,10 +186,18 @@ def category(request,path):
         cate=Category.objects.get(slug=path)
     except:
         return redirect("index")
+    # print("=================>",cate.name)
     if(cate.name!="Adult/18+/Hot"):
         postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),category=cate).order_by("-pointsperday","-modified")
         postLink = Link.objects.filter(Q(published=True),category=cate).order_by("-id")
+        # showAds=False
+    else:
+        postLink = Link.objects.filter(Q(published=True) & Q(category__name="Adult/18+/Hot"),category=cate).order_by("-pointsperday")
+        # postLink = Link.objects.filter(Q(published=True),category=cate).order_by("-pointsperday","-modified")
+        # print("hello how are you")
+
         showAds=False
+
     # if(not showAds):
         # print("its 18+")
     if(request.GET.get('page')):
@@ -547,7 +555,7 @@ def find(request):
         filter_kwargs['language'] = lang
         result+=lang.name+", "
 
-    postLink = Link.objects.filter(**filter_kwargs).order_by("-id")
+    postLink = Link.objects.filter(**filter_kwargs).order_by("-pointsperday","-modified")
     postLink=postLink.filter(Q(published=True))
     if(not is18plus):
         postLink=postLink.filter(~Q(category__name="Adult/18+/Hot"))
