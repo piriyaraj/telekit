@@ -329,7 +329,7 @@
       </br>
       {% include 'user_profile/dashboard.html' %}
         <!-- Add your existing content here -->
-        {% if spin is True%}
+        {% if spin %}
         <div id="wrapper">
           <div id="wheel">
             <div id="inner-wheel">
@@ -375,6 +375,7 @@
   </div>
   
   <script>
+    {% if spin%}
     // set default degree (360 * 5)
     var degree = 3600;
     // number of clicks = 0
@@ -414,6 +415,7 @@
                 var currentPoints = parseInt(document.querySelector('.points').innerText);
                 var newPoints = currentPoints + selectedValue;
                 document.querySelector('.points').innerText = newPoints;
+                location.reload();
               },
               error: function (error) {
                 console.error(error);
@@ -431,7 +433,7 @@
         return values[selectedIndex];
       }
     }); // DOCUMENT READY
-
+{% else %}
 const remMinutes = document.getElementById("minutes");
 const remSeconds = document.getElementById("seconds");
 
@@ -440,7 +442,8 @@ const currentYear = new Date().getFullYear();
 const birthDay = `27 Dec ${currentYear}`;
 
 const formatTime = (time) => (time < 10 ? `0${time}` : time);
-const targetTime = new Date().getTime() + {{wait_time}} * 1000;
+const targetTime = new Date().getTime() + {{ wait_time }} * 1000;
+
 const countdown = () => {
   const birthDayDate = new Date(birthDay);
   const currentDate = new Date();
@@ -452,10 +455,16 @@ const countdown = () => {
 
   remMinutes.innerHTML = formatTime(mins);
   remSeconds.innerHTML = formatTime(seconds);
-};
-countdown();
 
+  if (totalSeconds <= 0) {
+    // Refresh the page when the countdown finishes
+    location.reload();
+  }
+};
+
+countdown();
 setInterval(countdown, 1000);
 
+{% endif%}
   </script>
   {% endblock %}

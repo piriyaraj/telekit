@@ -22,7 +22,7 @@ def spinner(request):
         # For example, you might update the last_spin field after a successful spin
         # spin.last_spin = timezone.now()
         # spin.save()
-        return render(request, 'game/spin.html',{"spin":True})
+        return render(request, 'game/spin.html',{"spin":True,'wait_time':0})
         # Notify the user if more than 1 day has passed since the last spin
         spin.notify_user()
 
