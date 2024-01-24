@@ -5,12 +5,12 @@
 <div class="content">
     <div class="wrap">
         <div id="main" role="main">
-            {% include "user_profile/dashboard.html" %}
             <div id="groupresult">
                 {% include "loadgroup.html" %}
             </div>
             
             <div class='pinner'>
+                <div class="hint-message">Pin Group/Channel at the top</div>
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
@@ -24,6 +24,7 @@
 
                 
             </div>
+            {% include "user_profile/dashboard.html" %}
             {% comment %} <div class="alert" id='alert'>
                 <div> You dont have enough points to pin </div>
             </div> {% endcomment %}

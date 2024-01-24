@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user_profile',
     'extract',
     'robots',
+    'game',
     'django_cleanup.apps.CleanupConfig', #keep it last
 ]
 SITE_ID = 1

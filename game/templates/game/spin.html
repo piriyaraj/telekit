@@ -1,0 +1,461 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<style>
+  /*WRAPPER*/
+  #wrapper {
+    margin: 40px auto 0;
+    width: 266px;
+    position: relative;
+  }
+
+  #txt {
+    color: #eaeaea;
+  }
+
+  /*WHEEL*/
+  #wheel {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    border: 8px solid #fff;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px, rgba(0, 0, 0, 0.05) 0px 3px 0px;
+    transform: rotate(0deg);
+  }
+
+  #wheel:before {
+    content: "";
+    position: absolute;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 242px;
+    height: 242px;
+    border-radius: 50%;
+    z-index: 1000;
+  }
+
+  #inner-wheel {
+    width: 100%;
+    height: 100%;
+
+    -webkit-transition: all 6s cubic-bezier(0, 0.99, 0.44, 0.99);
+    -moz-transition: all 6 cubic-bezier(0, 0.99, 0.44, 0.99);
+    -o-transition: all 6s cubic-bezier(0, 0.99, 0.44, 0.99);
+    -ms-transition: all 6s cubic-bezier(0, 0.99, 0.44, 0.99);
+    transition: all 6s cubic-bezier(0, 0.99, 0.44, 0.99);
+  }
+
+  #wheel div.sec {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 130px 75px 0;
+    border-color: #19c transparent;
+    transform-origin: 75px 129px;
+    left: 50px;
+    top: -4px;
+    opacity: 1;
+  }
+
+  #wheel div.sec:nth-child(1) {
+    transform: rotate(60deg);
+    -webkit-transform: rotate(60deg);
+    -moz-transform: rotate(60deg);
+    -o-transform: rotate(60deg);
+    -ms-transform: rotate(60deg);
+    border-color: #16a085 transparent;
+  }
+  #wheel div.sec:nth-child(2) {
+    transform: rotate(120deg);
+    -webkit-transform: rotate(120deg);
+    -moz-transform: rotate(120deg);
+    -o-transform: rotate(120deg);
+    -ms-transform: rotate(120deg);
+    border-color: #2980b9 transparent;
+  }
+  #wheel div.sec:nth-child(3) {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    border-color: #34495e transparent;
+  }
+  #wheel div.sec:nth-child(4) {
+    transform: rotate(240deg);
+    -webkit-transform: rotate(240deg);
+    -moz-transform: rotate(240deg);
+    -o-transform: rotate(240deg);
+    -ms-transform: rotate(240deg);
+    border-color: #f39c12 transparent;
+  }
+  #wheel div.sec:nth-child(5) {
+    transform: rotate(300deg);
+    -webkit-transform: rotate(300deg);
+    -moz-transform: rotate(300deg);
+    -o-transform: rotate(300deg);
+    -ms-transform: rotate(300deg);
+    border-color: #d35400 transparent;
+  }
+  #wheel div.sec:nth-child(6) {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    border-color: #c0392b transparent;
+  }
+
+  #wheel div.sec .fa {
+    margin-top: -100px;
+    color: rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10000000;
+    display: block;
+    text-align: center;
+    font-size: 36px;
+    margin-left: -15px;
+
+    text-shadow: rgba(255, 255, 255, 0.1) 0px -1px 0px,
+      rgba(0, 0, 0, 0.2) 0px 1px 0px;
+  }
+
+  #spin {
+    width: 68px;
+    height: 68px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -34px 0 0 -34px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 0px;
+    z-index: 1000;
+    background: #fff;
+    cursor: pointer;
+    font-family: "Exo 2", sans-serif;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+
+  #spin:after {
+    content: "SPIN";
+    text-align: center;
+    line-height: 68px;
+    color: #ccc;
+    text-shadow: 0 2px 0 #fff, 0 -2px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 100000;
+    width: 68px;
+    height: 68px;
+    display: block;
+  }
+
+  #spin:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 20px 28px 20px;
+    border-color: transparent transparent #ffffff transparent;
+    top: -12px;
+    left: 14px;
+  }
+
+  #inner-spin {
+    width: 54px;
+    height: 54px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -27px 0 0 -27px;
+    border-radius: 50%;
+    background: red;
+    z-index: 999;
+    box-shadow: rgba(255, 255, 255, 1) 0px -2px 0px inset,
+      rgba(255, 255, 255, 1) 0px 2px 0px inset, rgba(0, 0, 0, 0.4) 0px 0px 5px;
+
+    background: rgb(255, 255, 255); /* Old browsers */
+    background: -moz-radial-gradient(
+      center,
+      ellipse cover,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(234, 234, 234, 1) 100%
+    ); /* FF3.6+ */
+    background: -webkit-gradient(
+      radial,
+      center center,
+      0px,
+      center center,
+      100%,
+      color-stop(0%, rgba(255, 255, 255, 1)),
+      color-stop(100%, rgba(234, 234, 234, 1))
+    ); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(
+      center,
+      ellipse cover,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(234, 234, 234, 1) 100%
+    ); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(
+      center,
+      ellipse cover,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(234, 234, 234, 1) 100%
+    ); /* Opera 12+ */
+    background: -ms-radial-gradient(
+      center,
+      ellipse cover,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(234, 234, 234, 1) 100%
+    ); /* IE10+ */
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(234, 234, 234, 1) 100%
+    ); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eaeaea',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  }
+
+  #spin:active #inner-spin {
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 5px inset;
+  }
+
+  #spin:active:after {
+    font-size: 15px;
+  }
+
+  #shine {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: -moz-radial-gradient(
+      center,
+      ellipse cover,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.99) 1%,
+      rgba(255, 255, 255, 0.91) 9%,
+      rgba(255, 255, 255, 0) 100%
+    ); /* FF3.6+ */
+    background: -webkit-gradient(
+      radial,
+      center center,
+      0px,
+      center center,
+      100%,
+      color-stop(0%, rgba(255, 255, 255, 1)),
+      color-stop(1%, rgba(255, 255, 255, 0.99)),
+      color-stop(9%, rgba(255, 255, 255, 0.91)),
+      color-stop(100%, rgba(255, 255, 255, 0))
+    ); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(
+      center,
+      ellipse cover,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.99) 1%,
+      rgba(255, 255, 255, 0.91) 9%,
+      rgba(255, 255, 255, 0) 100%
+    ); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(
+      center,
+      ellipse cover,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.99) 1%,
+      rgba(255, 255, 255, 0.91) 9%,
+      rgba(255, 255, 255, 0) 100%
+    ); /* Opera 12+ */
+    background: -ms-radial-gradient(
+      center,
+      ellipse cover,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.99) 1%,
+      rgba(255, 255, 255, 0.91) 9%,
+      rgba(255, 255, 255, 0) 100%
+    ); /* IE10+ */
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.99) 1%,
+      rgba(255, 255, 255, 0.91) 9%,
+      rgba(255, 255, 255, 0) 100%
+    ); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    opacity: 0.1;
+  }
+
+  /*ANIMATION*/
+  @-webkit-keyframes hh {
+    0%,
+    100% {
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+    }
+
+    50% {
+      transform: rotate(7deg);
+      -webkit-transform: rotate(7deg);
+    }
+  }
+
+  @keyframes hh {
+    0%,
+    100% {
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+    }
+
+    50% {
+      transform: rotate(7deg);
+      -webkit-transform: rotate(7deg);
+    }
+  }
+
+  .spin {
+    -webkit-animation: hh 0.1s; /* Chrome, Safari, Opera */
+    animation: hh 0.1s;
+  }
+</style>
+
+<div class="content">
+    <div class="wrap">
+      <div id="main" role="main">
+      </br>
+      {% include 'user_profile/dashboard.html' %}
+        <!-- Add your existing content here -->
+        {% if spin is True%}
+        <div id="wrapper">
+          <div id="wheel">
+            <div id="inner-wheel">
+              <div class="sec"><span class="fa fa-bell-o">10</span></div>
+              <div class="sec"><span class="fa fa-comment-o">15</span></div>
+              <div class="sec"><span class="fa fa-smile-o">20</span></div>
+              <div class="sec"><span class="fa fa-heart-o">25</span></div>
+              <div class="sec"><span class="fa fa-star-o">50</span></div>
+              <div class="sec"><span class="fa fa-lightbulb-o">5</span></div>
+            </div>
+  
+            <div id="spin">
+              <div id="inner-spin"></div>
+            </div>
+  
+            <div id="shine"></div>
+          </div>
+  
+          <div id="txt"></div>
+        </div>
+        {% else %}
+    <main >
+        <div class="hint-message" >Wait</div>
+        <div class="count-down-container">
+          <div class="count-down-box">
+            <div class="count-down">
+              <h1 id="minutes">00</h1>
+              <p>Minutes</p>
+            </div>
+          </div>
+          <div class="count-down-box">
+            <div class="count-down">
+              <h1 id="seconds">00</h1>
+              <p>Seconds</p>
+            </div>
+          </div>
+        </div>
+        <div class="hint-message" >For the next spin.</div>
+      </main>
+        {% endif %} 
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // set default degree (360 * 5)
+    var degree = 3600;
+    // number of clicks = 0
+    var clicks = 10;
+  
+    $(document).ready(function () {
+      /* WHEEL SPIN FUNCTION */
+      $("#spin").click(function () {
+        $(this).off('click');
+        var probability = Math.random() * 100;
+  
+        if (probability <= 10) {
+          var extraDegree = Math.floor(Math.random() * 120) + 30;
+        } else {
+          var extraDegree = Math.floor(Math.random() * 210) + 150;
+        }
+  
+        var newDegree = degree * clicks;
+        totalDegree = newDegree + extraDegree;
+  
+        $("#inner-wheel").css({
+          transform: "rotate(" + totalDegree + "deg)",
+        });
+  
+        // Display alert after spin animation finishes
+        setTimeout(function () {
+            var selectedValue = getSelectedValue(extraDegree);
+            {% comment %} alert("Selected Value: " + selectedValue); {% endcomment %}
+          
+            // Assuming you're using jQuery for simplicity, you can replace it with vanilla JavaScript if needed
+            $.ajax({
+              url: '/spin-handler/' + selectedValue,
+              method: 'GET',
+              success: function (response) {
+                console.log(response);
+                // You can handle the response from the backend here
+                var currentPoints = parseInt(document.querySelector('.points').innerText);
+                var newPoints = currentPoints + selectedValue;
+                document.querySelector('.points').innerText = newPoints;
+              },
+              error: function (error) {
+                console.error(error);
+                // Handle the error if the backend request fails
+              }
+            });
+          }, 6000); // Assuming the animation duration is 6 seconds
+      });
+  
+      // Function to get the selected value based on the wheel rotation
+      function getSelectedValue(rotation) {
+        var values = [5, 50, 50, 25, 25, 20, 20, 15, 15, 10, 10, 5];
+        var selectedIndex = Math.floor(rotation / 30);
+        console.log(rotation,selectedIndex)
+        return values[selectedIndex];
+      }
+    }); // DOCUMENT READY
+
+const remMinutes = document.getElementById("minutes");
+const remSeconds = document.getElementById("seconds");
+
+const currentYear = new Date().getFullYear();
+
+const birthDay = `27 Dec ${currentYear}`;
+
+const formatTime = (time) => (time < 10 ? `0${time}` : time);
+const targetTime = new Date().getTime() + {{wait_time}} * 1000;
+const countdown = () => {
+  const birthDayDate = new Date(birthDay);
+  const currentDate = new Date();
+
+  const totalSeconds = (targetTime - currentDate) / 1000;
+
+  const mins = Math.floor(totalSeconds / 60) % 60;
+  const seconds = Math.floor(totalSeconds) % 60;
+
+  remMinutes.innerHTML = formatTime(mins);
+  remSeconds.innerHTML = formatTime(seconds);
+};
+countdown();
+
+setInterval(countdown, 1000);
+
+  </script>
+  {% endblock %}

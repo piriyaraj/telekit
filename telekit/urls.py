@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('blog.urls')),
     path('admin/', admin.site.urls),
     path('', include('user_profile.urls')),
+    path('', include('game.urls')),
     path('superuser/', include('extract.urls')),
     path('robots.txt', include('robots.urls')),
     path('ads.txt', TemplateView.as_view(template_name='text/ads.txt', content_type='text/plain')),

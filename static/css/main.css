@@ -470,3 +470,56 @@ footer a {
         font-size: 19px;
     }
 }
+
+.count-down-container {
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    /* width: 600px; */
+    height: 150px;
+    max-width: 600px;
+    place-items: center;
+    margin: auto;
+}
+
+.count-down-box {
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+    place-items: center;
+    text-align: center;
+    display: grid;
+    height: 100%;
+    width: 100%;
+}
+
+.count-down-box:nth-child(1) {
+    background-color: #3c79e0;
+}
+
+.count-down-box:nth-child(2) {
+    background-color: #4285f6;
+}
+
+.count-down-box:nth-child(3) {
+    background-color: #5390f7;
+}
+
+.count-down-box:nth-child(4) {
+    background-color: #629af8;
+}
+
+.count-down-box h1 {
+    font-size: 60px;
+    color: white;
+}
+
+.count-down-box p {
+    font-size: 13px;
+    color: white;
+}
+
+.hint-message {
+    margin: 15px 0px;
+    text-align: center;
+    font-size: 25px;
+    color: #0088cc;
+}
