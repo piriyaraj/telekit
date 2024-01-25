@@ -427,23 +427,24 @@ def addgroup(request):
             gtags.append(Tag.objects.get(name=i))
     for i in list(gtags):
         postLink.tag.add(i)
-        
-    linkObj =Link.objects.filter(linkId=linkId+"_*_"+unique_code)
-    if linkObj.exists():
-        link_obj = linkObj.first()
+    
+    if settings.GROUP_ADD_MAIL_VERIFICATION: 
+        linkObj =Link.objects.filter(linkId=linkId)
+        if linkObj.exists():
+            link_obj = linkObj.first()
 
-        # Create a copy of the object to work with
-        temporary_link_obj = link_obj.__class__.objects.get(pk=link_obj.pk)
+            # Create a copy of the object to work with
+            temporary_link_obj = link_obj.__class__.objects.get(pk=link_obj.pk)
 
-        # Modify the attribute temporarily
-        temporary_link_obj.linkId = linkId
-    context={
-            'links':[temporary_link_obj],
-    }
-    message = {
-        "alertmsgbgcolor": '#90a316',
-        "message": "Status: Pending, Check your mail and verify your mail address"
-    }
+            # Modify the attribute temporarily
+            temporary_link_obj.linkId = linkId
+        context={
+                'links':[temporary_link_obj],
+        }
+        message = {
+            "alertmsgbgcolor": '#90a316',
+            "message": "Status: Pending, Check your mail and verify your mail address"
+        }
     if not settings.GROUP_ADD_MAIL_VERIFICATION:
         message = {
         "alertmsgbgcolor": '#04AA6D',
