@@ -25,7 +25,9 @@
                             <p><strong>Tip 1:</strong> To gain more subscribers or members, you can resubmit your link after 24 hours.</p>
                         </li>
                         <li><p> <strong>Tip 2:</strong> Boost your Telegram link page on <strong>Google</strong> by sharing below link in your group/channel and other social media.</p></li>
-     
+                        {% for link in links %}
+                          <li><p> <strong>Tip 3:</strong> Pin your group in Telekit <a href="/pin/{{link.linkId}}"><button class='serbtn'>Pin Link</button></a></p></li>
+                        {% endfor %}
                             {% for link in links %}
                                 <p style="margin: 0 auto;
                                 background-color: #c4c4c4;
@@ -94,10 +96,9 @@
                     </ul>
                 </ul>
                 <p>
-                    If you encounter any issues while adding your links, please don't hesitate to contact us at <strong>tamilcomway@gmail.com</strong>. We're here to help!
+                    If you encounter any issues while adding your links, please don't hesitate to contact us at <strong>support@telekit.link</strong>. We're here to help!
                 </p>
             </div>
-            
     </div>
   </div>
 </div>

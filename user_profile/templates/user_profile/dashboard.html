@@ -1,9 +1,11 @@
 {% load static %}
 <div class="dashboard">
-    <span> <img src="{% static 'images/profile.png' %}" width='160px' /></span>
+    <div> <img src="{% static 'images/profile.png' %}" width='160px' /></div>
     <div>
-    <h2>{{user.username}}</h2>
-    <div> Balance Points: <span class='points'>{{user.points}}</span> </div>
+        <h2>{{user.username}}</h2>
+        <div> Balance Points: <span class='points'>{{user.points}}</span> </div>
     </div>
-    <a href="/spin-earn-points" title="Earn Free points"><button class="serbtn add-to-profile">Earn Free points</button></a>
+    <div>
+        <a href="/spin-earn-points" title="Earn Free points"><button class="serbtn add-to-profile">Earn Free points</button></a>
+    </div>
 </div>
