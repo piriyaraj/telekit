@@ -410,8 +410,9 @@ def addgroup(request):
 
     code_length = 10
     unique_code = secrets.token_hex(code_length // 2)
-        
-    postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId+"_*_"+unique_code,published = not(settings.GROUP_ADD_MAIL_VERIFICATION),mail = to_mail)
+    if settings.GROUP_ADD_MAIL_VERIFICATION:
+        linkId = linkId+"_*_"+unique_code
+    postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId,published = not(settings.GROUP_ADD_MAIL_VERIFICATION),mail = to_mail)
     # Notification.objects.create(name="New group added",link=postLink)
     spTags = tags.split(",")
     try:
