@@ -23,12 +23,12 @@
 
           <!-- login form -->
           <div class="login-box">
-            {% if messages %}
+            {% comment %} {% if messages %} {% endcomment %}
             <div class="col-md-12 col-sm-12">
               {% comment %} {% include 'message.html' %} {% endcomment %}
               {{ message}}
             </div>
-            {% endif %}
+            {% comment %} {% endif %} {% endcomment %}
             <form id="contact" action="/login/" method="POST">
               {% csrf_token %}
               <input type="text"

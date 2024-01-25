@@ -125,7 +125,7 @@ def register_user(request):
             user.save()
             send_email(subject,body,mail)
             messages.success(request, "Check your inbox: Confirm your email address")
-            return render(request, 'user_profile/login.html', {'message': "Verification Required: Confirm Your Email Address"})
+            return render(request, 'user_profile/login.html', {'message': "Verification Required: Check you inbox @ Confirm Your Email Address"})
         else:
             return render(request, 'user_profile/registration.html', {'form': form})
     seo = {
