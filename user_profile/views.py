@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
@@ -211,8 +212,12 @@ def view_user_information(request, username):
 def pinLink(request, path):
     link_obj = Link.objects.get(linkId=path)
     pin_link_obj = Linkpin.objects.filter(linkId=path)
-    points_list = Link.objects.filter(pointsperday__gt=0).order_by('-pointsperday').values_list('pointsperday', flat=True)
+    print(link_obj.category.name)
+    if link_obj.category.name != "Adult/18+/Hot":
+        points_list = Link.objects.filter(Q(pointsperday__gt=0) & ~Q(category__name="Adult/18+/Hot")).order_by('-pointsperday').values_list('pointsperday', flat=True)
            # from datetime import timedelta
+    else:
+        points_list = Link.objects.filter(Q(pointsperday__gt=0) & Q(category__name="Adult/18+/Hot")).order_by('-pointsperday').values_list('pointsperday', flat=True)
     total_points = request.user.points
     
     allocated = 1
