@@ -46,11 +46,12 @@ class Linkpin(models.Model):
                 link_obj.pointsperday = 0
                 link_obj.save()
                 self.delete()
+                return "Removed"
                 print("Removed Link:",self.linkId)
             except Link.DoesNotExist:
                 # Handle the case where the Links object with the specified linkId does not exist
                 pass
-
+        return False
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.update_points_per_day()
