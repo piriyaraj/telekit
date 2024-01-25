@@ -91,6 +91,21 @@
 
                                 {% include "components/affliate.html" %}
                                 <br/>
+                                {% if request.user.is_superuser  %}
+                                <button class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ post.linkId }}" onclick="change18plus(this);">Change 18+</button>
+                            </br></br>
+                                {% endif %}
+                                {% if  request.user.is_authenticated%}
+                                    {% if post in request.user.links.all %}
+                                        <a href="#" class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ post.linkId }}" onclick="removeToProfile(this);">Remove from profile</a>
+                                    {% else%}
+                                        <a href="#" class="serbtn add-to-profile" style="background-color: #0088cc;" data-linkid="{{ post.linkId }}" onclick="addToProfile(this);">Add to profile</a>
+                                    {% endif %}
+                                {% endif %}
+                                <a href="/pin/{{post.linkId}}" class="serbtn add-to-profile" style="background-color: #0088cc;">Pin in 1st place</a>
+                            <br/>
+                            <br/>
+                            <br/>
                                 {% if not adsshow %}
                                 <a href=" {{post.link}} " target="_blank" class="btn"
                                     rel="nofollow">Join {{post.type}}</a>
