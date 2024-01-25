@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.utils import timezone
 from .managers import CustomUserManager
-
+from blog.models import Link
 
 class User(AbstractUser):
     email = models.EmailField(
@@ -24,6 +24,9 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+from django.db import models
+from django.utils import timezone
+
 class Linkpin(models.Model):
     points = models.FloatField()
     days = models.FloatField()
@@ -31,8 +34,27 @@ class Linkpin(models.Model):
     added = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    linkId = models.CharField(max_length=30,unique=True)
+    linkId = models.CharField(max_length=30, unique=True)
 
+    def update_points_per_day(self):
+        current_date = timezone.now()
+        time_difference = (current_date - self.modified).total_seconds()
+
+        if time_difference > self.days * 86400:
+            try:
+                link_obj = Link.objects.get(linkId=self.linkId)
+                link_obj.pointsperday = 0
+                link_obj.save()
+                self.delete()
+                print("Removed Link:",self.linkId)
+            except Link.DoesNotExist:
+                # Handle the case where the Links object with the specified linkId does not exist
+                pass
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.update_points_per_day()
+        
 class Follow(models.Model):
     followed = models.ForeignKey(
         User,
