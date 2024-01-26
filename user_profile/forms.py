@@ -97,7 +97,7 @@ class ProfilePictureUpdateForm(forms.Form):
 
 class Pinlinks(forms.Form):
     max_points = 0
-    days = forms.IntegerField(label='Days', initial=1, min_value=1)
+    days = forms.IntegerField(label='Days', initial=1, min_value=1,max_value=5)
     points = forms.FloatField(
         label='Points',
         # decimal_places=2
