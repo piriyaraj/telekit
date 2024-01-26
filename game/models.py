@@ -2,9 +2,10 @@ from django.db import models
 from django.utils import timezone
 
 from user_profile.models import User
+from datetime import timedelta
 
 class Spin(models.Model):
-    last_spin = models.DateTimeField(default=timezone.now)
+    last_spin = models.DateTimeField(default=timezone.now() - timedelta(hours=2))
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     notified_data = models.DateTimeField(null=True, blank=True)
 

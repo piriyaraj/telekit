@@ -14,7 +14,6 @@ def spinner(request):
         spin.save()
 
     wait_time = spin.can_spin_now()
-    print(wait_time)
     if wait_time>=3600:
         print("User can spin now")
         # User can spin now, perform the spin logic
