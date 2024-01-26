@@ -16,7 +16,7 @@ class User(AbstractUser):
     verified = models.BooleanField(default=False)
     added=models.DateTimeField(auto_now_add=True)
     modified=models.DateTimeField(auto_now=True)
-    points = models.IntegerField(default = 100)
+    points = models.IntegerField(default = 0)
     verification_id = models.CharField(max_length=30,default='aaa')
     REQUIRED_FIELDS = ["email"]
     objects = CustomUserManager()
