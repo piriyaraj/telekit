@@ -45,9 +45,10 @@ def send_email(subject, body, to_email):
             # Send the email
             server.sendmail(sender_email, to_email, message.as_string())
 
-        print("Email sent successfully.")
+        # print("Email sent successfully.")
     except Exception as e:
         print(f"Error sending email: {str(e)}")
+        # pass
         
         
 from .models import Linkpin, User
@@ -58,7 +59,11 @@ from .models import Linkpin, User
 @not_logged_in_required
 def login_user(request):
     form = LoginForm()
-
+    seo = {
+        'title': f'Log into Telekit.link.',
+        "description": f"Securely log into Telekit.link for seamless access to your account. Experience hassle-free authentication and enjoy the features of Telekit with confidence. Your gateway to a personalized and secure online experience.",
+        "robots": "noindex, nofollow",
+    }
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -76,10 +81,7 @@ def login_user(request):
                 return redirect('index')
             else:
                 # messages.warning(request, "Wrong credentials")
-                return render(request, 'user_profile/login.html', {'message': "Wrong credentials"})
-    seo = {
-        "robots": "noindex, nofollow"
-    }
+                return render(request, 'user_profile/login.html', {'message': "Wrong credentials","seo":seo})
     context = {
         "form": form,
         "seo":seo
@@ -97,11 +99,15 @@ def verification_id_gen():
 @never_cache
 @not_logged_in_required
 def register_user(request):
-
+    seo = {
+        'title': f'Sign Up for Telekit.link',
+        'description': 'Create a new account on Telekit.link for access to exclusive features. Join now and enjoy a personalized and secure online experience.',
+        'robots': 'index, follow',
+    }
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
-        print("Form errors:", form.errors)
-        print("Is form valid?", form.is_valid())
+        # print("Form errors:", form.errors)
+        # print("Is form valid?", form.is_valid())
         if form.is_valid():
             current_domain = request.get_host()
             mail = form.cleaned_data.get('email')
@@ -126,12 +132,15 @@ def register_user(request):
             user.save()
             send_email(subject,body,mail)
             messages.success(request, "Check your inbox: Confirm your email address")
-            return render(request, 'user_profile/login.html', {'message': "Verification Required: Check you inbox @ Confirm Your Email Address"})
+            seo = {
+                'title': f'Log into Telekit.link.',
+                "description": f"Securely log into Telekit.link for seamless access to your account. Experience hassle-free authentication and enjoy the features of Telekit with confidence. Your gateway to a personalized and secure online experience.",
+                "robots": "noindex, nofollow",
+            }
+            return render(request, 'user_profile/login.html', {'message': "Verification Required: Check you inbox @ Confirm Your Email Address","seo":seo})
         else:
-            return render(request, 'user_profile/registration.html', {'form': form})
-    seo = {
-        "robots": "noindex, nofollow"
-    }
+            return render(request, 'user_profile/registration.html', {'form': form,"seo":seo})
+
     form = UserRegistrationForm()
     context = {
         "form": form,
@@ -144,9 +153,14 @@ def register_user(request):
 def profile(request):
     account = get_object_or_404(User, pk=request.user.pk)
     links = account.links.all()
-    print(links)
+    seo = {
+    'title': f'{account.username} Profile on Telekit.link',
+    'description': 'Explore and manage your Telekit.link profile. View and update your information, preferences, and settings. Your personalized hub for a seamless online experience.',
+    'robots': 'noindex, nofollow',
+    }
     context={
       'links':links,
+      "seo":seo
     }
     return render(request, 'user_profile/profile.html',context)
 
@@ -212,7 +226,11 @@ def view_user_information(request, username):
 def pinLink(request, path):
     link_obj = Link.objects.get(linkId=path)
     pin_link_obj = Linkpin.objects.filter(linkId=path)
-    print(link_obj.category.name)
+    seo = {
+        'title': f'Pin {link_obj.name} on Telekit.link',
+        'description': f'Pin {link_obj.name} on Telekit.link to get more members to your {link_obj.type}',
+        'robots': 'noindex, nofollow',
+    }
     if link_obj.category.name != "Adult/18+/Hot":
         points_list = Link.objects.filter(Q(pointsperday__gt=0) & ~Q(category__name="Adult/18+/Hot")).order_by('-pointsperday').values_list('pointsperday', flat=True)
            # from datetime import timedelta
@@ -276,7 +294,8 @@ def pinLink(request, path):
     context = {
         'links': [link_obj],
         'form': form,  
-        'points': list(points_list)
+        'points': list(points_list),
+        "seo":seo
      }
 
 
@@ -290,7 +309,7 @@ def mail_verify(request,path):
         userObj.verified = True
         userObj.save()
         messages.success(request, "Your account has been verified login now!")
-        print("=================Your account has been verified login now!")
+        # print("=================Your account has been verified login now!")
     except User.DoesNotExist:
         print("=================Try again: Failed to verify your account")
     return render(request, 'user_profile/login.html', {'message': "Successfully verified your account! log in now!"})

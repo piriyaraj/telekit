@@ -6,6 +6,11 @@ from django.shortcuts import redirect, render
 @login_required(login_url='login')
 def spinner(request):
     user = request.user
+    seo = {
+        'title': f'Spin and earn free points and pin your link on telekit.link',
+        'description': 'Get free points and pin your link on telekit',
+        'robots': 'noindex, nofollow',
+    }
     try:
         # Retrieve the user's spin record, or create a new one if it doesn't exist
         spin = Spin.objects.get(user=user)
@@ -15,7 +20,7 @@ def spinner(request):
 
     wait_time = spin.can_spin_now()
     if wait_time>=3600:
-        print("User can spin now")
+        # print("User can spin now")
         # User can spin now, perform the spin logic
         # Note: Add your spinning logic here, and update the last_spin field accordingly
         # For example, you might update the last_spin field after a successful spin
@@ -33,7 +38,7 @@ def spinner(request):
     else:
         # User needs to wait before spinning again
         # return render(request, 'game/spin.html',{"spin":False,'wait_time':36})
-        return render(request, 'game/spin.html',{"spin":False,'wait_time':3600-wait_time})
+        return render(request, 'game/spin.html',{"spin":False,'wait_time':3600-wait_time,"seo":seo})
 
 @login_required(login_url='login')
 def spinHandler(request,points):
