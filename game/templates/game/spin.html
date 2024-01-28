@@ -328,6 +328,7 @@
       <div id="main" role="main">
       </br>
       {% include 'user_profile/dashboard.html' %}
+      {% include 'components/bonus.html' %}
         <!-- Add your existing content here -->
         {% if spin %}
         <div id="wrapper">
@@ -340,11 +341,11 @@
               <div class="sec"><span class="fa fa-star-o">50</span></div>
               <div class="sec"><span class="fa fa-lightbulb-o">5</span></div>
             </div>
-  
+
             <div id="spin">
               <div id="inner-spin"></div>
             </div>
-  
+
             <div id="shine"></div>
           </div>
   
@@ -370,101 +371,103 @@
         <div class="hint-message" >For the next spin.</div>
       </main>
         {% endif %} 
+        
       </div>
     </div>
   </div>
   
-  <script>
-    {% if spin%}
-    // set default degree (360 * 5)
-    var degree = 3600;
-    // number of clicks = 0
-    var clicks = 10;
-  
-    $(document).ready(function () {
-      /* WHEEL SPIN FUNCTION */
-      $("#spin").click(function () {
-        $(this).off('click');
-        var probability = Math.random() * 100;
-  
-        if (probability <= 10) {
-          var extraDegree = Math.floor(Math.random() * 120) + 30;
-        } else {
-          var extraDegree = Math.floor(Math.random() * 210) + 150;
-        }
-  
-        var newDegree = degree * clicks;
-        totalDegree = newDegree + extraDegree;
-  
-        $("#inner-wheel").css({
-          transform: "rotate(" + totalDegree + "deg)",
-        });
-  
-        // Display alert after spin animation finishes
-        setTimeout(function () {
-            var selectedValue = getSelectedValue(extraDegree);
-            {% comment %} alert("Selected Value: " + selectedValue); {% endcomment %}
-          
-            // Assuming you're using jQuery for simplicity, you can replace it with vanilla JavaScript if needed
-            $.ajax({
-              url: '/spin-handler/' + selectedValue,
-              method: 'GET',
-              success: function (response) {
-                console.log(response);
-                // You can handle the response from the backend here
-                var currentPoints = parseInt(document.querySelector('.points').innerText);
-                var newPoints = currentPoints + selectedValue;
-                document.querySelector('.points').innerText = newPoints;
-                location.reload();
-              },
-              error: function (error) {
-                console.error(error);
-                // Handle the error if the backend request fails
-              }
-            });
-          }, 6000); // Assuming the animation duration is 6 seconds
-      });
-  
-      // Function to get the selected value based on the wheel rotation
-      function getSelectedValue(rotation) {
-        var values = [5, 50, 50, 25, 25, 20, 20, 15, 15, 10, 10, 5];
-        var selectedIndex = Math.floor(rotation / 30);
-        console.log(rotation,selectedIndex)
-        return values[selectedIndex];
+<script>
+  {% if spin%}
+  // set default degree (360 * 5)
+  var degree = 3600;
+  // number of clicks = 0
+  var clicks = 10;
+
+  $(document).ready(function () {
+    /* WHEEL SPIN FUNCTION */
+    $("#spin").click(function () {
+      $(this).off('click');
+      var probability = Math.random() * 100;
+
+      if (probability <= 10) {
+        var extraDegree = Math.floor(Math.random() * 120) + 30;
+      } else {
+        var extraDegree = Math.floor(Math.random() * 210) + 150;
       }
-    }); // DOCUMENT READY
-{% else %}
-const remMinutes = document.getElementById("minutes");
-const remSeconds = document.getElementById("seconds");
 
-const currentYear = new Date().getFullYear();
+      var newDegree = degree * clicks;
+      totalDegree = newDegree + extraDegree;
 
-const birthDay = `27 Dec ${currentYear}`;
+      $("#inner-wheel").css({
+        transform: "rotate(" + totalDegree + "deg)",
+      });
 
-const formatTime = (time) => (time < 10 ? `0${time}` : time);
-const targetTime = new Date().getTime() + {{ wait_time }} * 1000;
+      // Display alert after spin animation finishes
+      setTimeout(function () {
+          var selectedValue = getSelectedValue(extraDegree);
+          {% comment %} alert("Selected Value: " + selectedValue); {% endcomment %}
+        
+          // Assuming you're using jQuery for simplicity, you can replace it with vanilla JavaScript if needed
+          $.ajax({
+            url: '/spin-handler/' + selectedValue,
+            method: 'GET',
+            success: function (response) {
+              console.log(response);
+              // You can handle the response from the backend here
+              var currentPoints = parseInt(document.querySelector('.points').innerText);
+              var newPoints = currentPoints + selectedValue;
+              document.querySelector('.points').innerText = newPoints;
+              location.reload();
+            },
+            error: function (error) {
+              console.error(error);
+              // Handle the error if the backend request fails
+            }
+          });
+        }, 6000); // Assuming the animation duration is 6 seconds
+    });
 
-const countdown = () => {
-  const birthDayDate = new Date(birthDay);
-  const currentDate = new Date();
+    // Function to get the selected value based on the wheel rotation
+    function getSelectedValue(rotation) {
+      var values = [5, 50, 50, 25, 25, 20, 20, 15, 15, 10, 10, 5];
+      var selectedIndex = Math.floor(rotation / 30);
+      console.log(rotation,selectedIndex)
+      return values[selectedIndex];
+    }
+  }); // DOCUMENT READY
+  {% else %}
+  const remMinutes = document.getElementById("minutes");
+  const remSeconds = document.getElementById("seconds");
 
-  const totalSeconds = (targetTime - currentDate) / 1000;
+  const currentYear = new Date().getFullYear();
 
-  const mins = Math.floor(totalSeconds / 60) % 60;
-  const seconds = Math.floor(totalSeconds) % 60;
+  const birthDay = `27 Dec ${currentYear}`;
 
-  remMinutes.innerHTML = formatTime(mins);
-  remSeconds.innerHTML = formatTime(seconds);
+  const formatTime = (time) => (time < 10 ? `0${time}` : time);
+  const targetTime = new Date().getTime() + {{ wait_time }} * 1000;
 
-  if (totalSeconds <= 0) {
-    // Refresh the page when the countdown finishes
-    location.reload();
-  }
-};
+  const countdown = () => {
+    const birthDayDate = new Date(birthDay);
+    const currentDate = new Date();
 
-countdown();
-setInterval(countdown, 1000);
+    const totalSeconds = (targetTime - currentDate) / 1000;
 
-{% endif%}
-  </script>
+    const mins = Math.floor(totalSeconds / 60) % 60;
+    const seconds = Math.floor(totalSeconds) % 60;
+
+    remMinutes.innerHTML = formatTime(mins);
+    remSeconds.innerHTML = formatTime(seconds);
+
+    if (totalSeconds <= 0) {
+      // Refresh the page when the countdown finishes
+      location.reload();
+    }
+  };
+
+  countdown();
+  setInterval(countdown, 1000);
+
+  {% endif%}
+</script>
+
   {% endblock %}

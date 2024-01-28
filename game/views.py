@@ -19,6 +19,7 @@ def spinner(request):
         spin.save()
 
     wait_time = spin.can_spin_now()
+    spin_count = spin.today_spin_count
     if wait_time>=3600:
         # print("User can spin now")
         # User can spin now, perform the spin logic
@@ -26,7 +27,7 @@ def spinner(request):
         # For example, you might update the last_spin field after a successful spin
         # spin.last_spin = timezone.now()
         # spin.save()
-        return render(request, 'game/spin.html',{"spin":True,'wait_time':0})
+        return render(request, 'game/spin.html',{"spin":True,'wait_time':0,'spin_count':spin_count})
         # Notify the user if more than 1 day has passed since the last spin
         spin.notify_user()
 
@@ -38,7 +39,7 @@ def spinner(request):
     else:
         # User needs to wait before spinning again
         # return render(request, 'game/spin.html',{"spin":False,'wait_time':36})
-        return render(request, 'game/spin.html',{"spin":False,'wait_time':3600-wait_time,"seo":seo})
+        return render(request, 'game/spin.html',{"spin":False,'wait_time':3600-wait_time,"seo":seo,'spin_count':spin_count})
 
 @login_required(login_url='login')
 def spinHandler(request,points):
@@ -48,8 +49,31 @@ def spinHandler(request,points):
     if spin.can_spin_now()>=3600 and int(points)<=50:
         user.points += int(points)
         user.save()
+        current_time = timezone.now()
+        
+        if spin.last_spin and spin.last_spin.date() == current_time.date():
+            # If yes, increment today_spin_count
+            spin.today_spin_count += 1
+        else:
+            # If no, set today_spin_count to 1
+            spin.today_spin_count = 1
         spin.last_spin = timezone.now()
         spin.save()
         return JsonResponse({'message': 'Your score updated successfully'})
     else:
         return redirect('spin-earn-points')
+    
+    
+@login_required(login_url='login')
+def claim_bonus(request):
+    user = request.user
+    spin = Spin.objects.get(user=user)
+
+    if spin.today_spin_count >= 10:
+        user.points += 100
+        user.save()
+        spin.today_spin_count -= 10
+        spin.save()
+        return JsonResponse({'status': True, 'message': 'Congratulations! You got 100 points'})
+    else:
+        return JsonResponse({'status': False, 'message': 'You need to complete 10 spins within one day.'})

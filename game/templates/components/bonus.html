@@ -1,0 +1,135 @@
+<style>
+    .bonus {
+        border: 1px solid black;
+        padding: 20px;
+        margin: 20px;
+        background-color: #dcdcdc;
+        text-align: center;
+        max-width: 400px;
+        margin: 20px auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .bonus-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .bonus-text {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .serbtn {
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    .serbtn:hover {
+        background-color: #45a049;
+    }
+
+    #resetMessage {
+        margin-top: 15px;
+        font-size: 16px;
+    }
+</style>
+
+<div class="bonus">
+    <div class="bonus-title">Daily Bonus Points</div>
+    <div class="bonus-text">Get 100 Bonus Points every day!</div>
+
+    {% if spin_count >= 10 %}
+    <div id="claimButtonContainer">
+        <button class="serbtn" onclick="claimBonus()">Claim today's Bonus</button>
+    </div>
+    {% else %}
+        <div>Do at least 10 Spins Today to be rewarded!</div>
+    {% endif %}
+
+    <div>You have made {{ spin_count }} Spins out of 10 today.</div>
+
+    <div id="resetMessage"></div>
+</div>
+  
+  <script>
+    function claimBonus() {
+        // You can add AJAX logic here to send a request to the server to claim the bonus
+        // For simplicity, let's assume the claimBonus view URL is '/claim_bonus/'
+        // Modify the URL accordingly based on your actual Django project structure
+        fetch('/claim-bonus', {
+            method: 'GET',  // Use GET method for the request
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',  // Include the CSRF token for security
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data
+            if (data.status) {
+                const claimButtonContainer = document.getElementById("claimButtonContainer");
+                  if (claimButtonContainer) {
+                    // Hide the claim button container
+                    claimButtonContainer.style.display = 'none';
+                }
+              const pointsElement = document.querySelector('.points');
+                  if (pointsElement) {
+                      // Extract the current points, add 100, and update the HTML content
+                      const currentPoints = parseInt(pointsElement.textContent, 10);
+                      const newPoints = currentPoints + 100;
+                      pointsElement.textContent = newPoints;
+                  }
+                  
+  
+            } 
+                // If the claim was not successful, show an error alert
+            alert(data.message);
+        })
+        .catch(error => {
+            // Handle any errors during the AJAX request
+            console.error('Error claiming bonus:', error);
+        });
+    }
+  </script>
+  <script>
+    function calculateTimeRemaining() {
+      // Current time in UTC
+      const currentTime = new Date();
+      
+      // Target reset time at 12:00:00 AM UTC
+      const resetTime = new Date();
+      resetTime.setUTCHours(0, 0, 0, 0);
+  
+      // Calculate time difference in milliseconds
+      let timeRemaining = resetTime - currentTime;
+  
+      // Ensure the time remaining is non-negative
+      if (timeRemaining < 0) {
+          // If the current time is past the reset time, set the reset time for the next day
+          resetTime.setUTCDate(resetTime.getUTCDate() + 1);
+          timeRemaining = resetTime - currentTime;
+      }
+  
+      // Calculate hours and minutes
+      const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+  
+      // Display the results on the page
+      const resetMessageElement = document.getElementById("resetMessage");
+      resetMessageElement.innerHTML = `Hits Reset at 12:00:00 AM UTC<br>Reset is in ${hours} hour(s) ${minutes} minute(s).`;
+    }
+  
+    // Call the function to initialize the countdown
+    calculateTimeRemaining();
+  
+    // Update the countdown every second (1000 milliseconds)
+    setInterval(calculateTimeRemaining, 1000);
+  </script>
+  

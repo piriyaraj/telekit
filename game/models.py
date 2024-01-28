@@ -8,7 +8,8 @@ class Spin(models.Model):
     last_spin = models.DateTimeField(default=timezone.now() - timedelta(hours=2))
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     notified_data = models.DateTimeField(null=True, blank=True)
-
+    today_spin_count = models.IntegerField(default=0)
+    
     def can_spin_now(self):
         # Check if at least an hour has passed since the last spin
         elapsed_time = timezone.now() - self.last_spin
