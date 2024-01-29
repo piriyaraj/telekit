@@ -10,6 +10,13 @@ class Spin(models.Model):
     notified_data = models.DateTimeField(null=True, blank=True)
     today_spin_count = models.IntegerField(default=0)
     
+    def get_spin_count_today(self):
+        if self.last_spin and self.last_spin.date() == timezone.now().date():
+            return self.today_spin_count
+        else:
+            self.today_spin_count = 0
+            self.save()
+            return 0
     def can_spin_now(self):
         # Check if at least an hour has passed since the last spin
         elapsed_time = timezone.now() - self.last_spin
