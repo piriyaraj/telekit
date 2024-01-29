@@ -418,8 +418,15 @@ def addgroup(request):
     try:
         spTags.remove("")
     except:pass
+    ADULT_KEYWORDS = ['adult', 'explicit', '18+', 'nsfw', 'mature', 'XXX','sex', 'sexy','porn','child','onlyfans','masturbating']
+
     for i in spTags:
+        if(len(i)>15):
+            continue
         # print("tags:",i)
+        for keyword in ADULT_KEYWORDS:
+            if re.search(rf'\b{re.escape(keyword)}\b', i, flags=re.IGNORECASE):
+                break
         try:
             tempTag=Tag.objects.create(name=i)
             gtags.append(tempTag)
