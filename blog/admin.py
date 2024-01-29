@@ -30,7 +30,11 @@ class LinkAdmin(admin.ModelAdmin):
 admin.site.register(Company)
 # admin.site.register(Country)
 # admin.site.register(Language)
-admin.site.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug', 'created_date')
+    search_fields = ['name']
+
+admin.site.register(Tag, TagAdmin)
 # admin.site.register(Category)
 
 
