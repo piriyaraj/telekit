@@ -412,13 +412,18 @@ def addgroup(request):
     unique_code = secrets.token_hex(code_length // 2)
     if settings.GROUP_ADD_MAIL_VERIFICATION:
         linkId = linkId+"_*_"+unique_code
+        
+    ADULT_KEYWORDS = ['adult', 'explicit', '18+', 'nsfw', 'mature', 'XXX','sex', 'sexy','porn','child','onlyfans','masturbating']
+    for keyword in ADULT_KEYWORDS:
+            if re.search(rf'\b{re.escape(keyword)}\b', groupName, flags=re.IGNORECASE):
+                categoryId=Category.objects.get(name="Adult/18+/Hot")
+                break
     postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId,published = not(settings.GROUP_ADD_MAIL_VERIFICATION),mail = to_mail)
     # Notification.objects.create(name="New group added",link=postLink)
     spTags = tags.split(",")
     try:
         spTags.remove("")
     except:pass
-    ADULT_KEYWORDS = ['adult', 'explicit', '18+', 'nsfw', 'mature', 'XXX','sex', 'sexy','porn','child','onlyfans','masturbating']
 
     for i in spTags:
         if(len(i)>15):
