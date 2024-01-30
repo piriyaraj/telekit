@@ -424,7 +424,7 @@ def addgroup(request):
 
         for i in spTags:
             i = i.strip()
-            if(len(i)>15 or len(i)==0):
+            if(len(i)>20 or len(i)==0):
                 continue
 
             for keyword in ADULT_KEYWORDS:

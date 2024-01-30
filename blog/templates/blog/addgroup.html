@@ -74,13 +74,12 @@ static %} {% block content %}
                 class="text"
                 placeholder="Enter Tags by Comma (,) Separated (Optional) "
               />
+              <div class="tag-container"></div>
               <p style="font-size: 14px">
                 Ex:- Funny, Jokes, City, State (Up to 100 Words)</br>
                 Note: max length of tag is 15 characters</p>
               </p>
-              <div class="tag-container">
-
-              </div>
+              
               
             </div>
 
@@ -107,7 +106,7 @@ static %} {% block content %}
       tags.forEach(function (tag) {
         const trimmedTag = tag; // Limit tag length to 15 characters
 
-        if (trimmedTag !== '' && trimmedTag.length <= 15) {
+        if (trimmedTag !== '' && trimmedTag.length <= 20) {
           const tagElement = document.createElement('span');
           tagElement.innerText = trimmedTag;
           tagElement.classList.add('tag');
