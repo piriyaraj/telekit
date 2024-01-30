@@ -346,153 +346,151 @@ def DiscordNotification(Msg):
 def addgroup(request):
     if request.method == 'GET':
         return render(request,'blog/addgroup.html',{'mail':settings.GROUP_ADD_MAIL_VERIFICATION})
-    groupLink=request.POST['glink']
-    categoryId=Category.objects.get(id=request.POST['category'])
-    countryId=Country.objects.get(id=request.POST['country'])
-    languageId=Language.objects.get(id=request.POST['language'])
     try:
-        to_mail = request.POST['mail']
-    except:
-        to_mail = None
-    tags=request.POST['gtags']
-    gtags=[]
-    print(f"======> Adding: {groupLink}")
-    groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(groupLink)
-    print(groupLogo)
-    groupCount=int(str(groupCount).replace(" ",""))
-    # print(groupName, groupCount, groupLogo, groupDescri, groupType, linkId)
-    if(groupLogo==0):
-        message={
-            "alertmsgbgcolor": '#f44336',
-            "message":"Invalid Link! :This link is not acceptable!"
-        }
-        # print("   [-] This link is not acceptable!")
-        return render(request,"groupaddresult.html",message)
-    link_objs_to_delete = Link.objects.filter(linkId__contains=linkId + "_*_")
-
-    # Check if the object(s) exist before deleting
-    if link_objs_to_delete.exists():
-        # Delete the Link object(s)
-        link_objs_to_delete[0].delete()
-    linkObj = Link.objects.filter(Q(linkId=linkId) | Q(imgUrl=groupLogo))
-    context={
-            'links':linkObj,
-        }
-    if(len(linkObj)>0):
-        # print(linkObj[0].modified)
-        # '2024-04-28 04:33:48.641650+00:00' 
-        # modified_time = datetime.datetime.strptime(str(linkObj[0].modified), '%Y-%m-%d %H:%M:%S.%f%z')
-
-        # Get the current time
-        current_time = datetime.datetime.now()
-        modified_time_naive = linkObj[0].modified.replace(tzinfo=None)
-        # Calculate the time difference
-        time_difference = current_time - modified_time_naive
-
-        # Extract the hours from the time difference
-        hours_since_update = time_difference.total_seconds() / 3600
-        # print(hours_since_update)
-        if(hours_since_update>=24):
-            linkObj[0].noOfMembers = groupCount
-            linkObj[0].save()
-            message={
-                "alertmsgbgcolor": '#04AA6D',
-                "message":"Great your link placed in first place.",
-            }
-        else:
+        groupLink=request.POST['glink']
+        categoryId=Category.objects.get(id=request.POST['category'])
+        countryId=Country.objects.get(id=request.POST['country'])
+        languageId=Language.objects.get(id=request.POST['language'])
+        try:
+            to_mail = request.POST['mail']
+        except:
+            to_mail = None
+        tags=request.POST['gtags']
+        gtags=[]
+        print(f"======> Adding: {groupLink}")
+        groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(groupLink)
+        print(groupLogo)
+        groupCount=int(str(groupCount).replace(" ",""))
+        # print(groupName, groupCount, groupLogo, groupDescri, groupType, linkId)
+        if(groupLogo==0):
             message={
                 "alertmsgbgcolor": '#f44336',
-                "message":"oops! submit your link after "+str(24-int(hours_since_update))+" Hours",
+                "message":"Invalid Link! :This link is not acceptable!"
             }
-        
-        context.update(message)
-        # print(f"   [-] {message['message']}")
-        return render(request,"groupaddresult.html",context)
+            # print("   [-] This link is not acceptable!")
+            return render(request,"groupaddresult.html",message)
+        link_objs_to_delete = Link.objects.filter(linkId__contains=linkId + "_*_")
 
-    code_length = 10
-    unique_code = secrets.token_hex(code_length // 2)
-    if settings.GROUP_ADD_MAIL_VERIFICATION:
-        linkId = linkId+"_*_"+unique_code
-        
-    ADULT_KEYWORDS = ['adult', 'explicit', '18+', 'nsfw', 'mature', 'XXX','sex', 'sexy','porn','child','onlyfans','masturbating']
-    for keyword in ADULT_KEYWORDS:
-            if re.search(rf'\b{re.escape(keyword)}\b', groupName, flags=re.IGNORECASE):
-                categoryId=Category.objects.get(name="Adult/18+/Hot")
-                break
-    postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId,published = not(settings.GROUP_ADD_MAIL_VERIFICATION),mail = to_mail)
-    # Notification.objects.create(name="New group added",link=postLink)
-    spTags = tags.split(",")
-    try:
-        spTags.remove("")
-    except:pass
-
-    for i in spTags:
-        i = i.strip()
-        if(len(i)>15 or len(i)==0):
-            continue
-
-        for keyword in ADULT_KEYWORDS:
-            if re.search(rf'\b{re.escape(keyword)}\b', i, flags=re.IGNORECASE):
-                break
-        try:
-            tempTag=Tag.objects.create(name=i)
-            gtags.append(tempTag)
-        except:
-            try:
-                gtags.append(Tag.objects.get(name=i))
-            except:
-                pass
-    for i in list(gtags):
-        postLink.tag.add(i)
-    
-    if settings.GROUP_ADD_MAIL_VERIFICATION: 
-        linkObj =Link.objects.filter(linkId=linkId)
-        if linkObj.exists():
-            link_obj = linkObj.first()
-
-            # Create a copy of the object to work with
-            temporary_link_obj = link_obj.__class__.objects.get(pk=link_obj.pk)
-
-            # Modify the attribute temporarily
-            temporary_link_obj.linkId = linkId
+        # Check if the object(s) exist before deleting
+        if link_objs_to_delete.exists():
+            # Delete the Link object(s)
+            link_objs_to_delete[0].delete()
+        linkObj = Link.objects.filter(Q(linkId=linkId) | Q(imgUrl=groupLogo))
         context={
-                'links':[temporary_link_obj],
-        }
-        message = {
-            "alertmsgbgcolor": '#90a316',
-            "message": "Status: Pending, Check your mail and verify your mail address"
-        }
-    if not settings.GROUP_ADD_MAIL_VERIFICATION:
-        message = {
-        "alertmsgbgcolor": '#04AA6D',
-        "message": "Status: Success, Your Link placed successfully in Telekit."
-    }
-    if settings.GROUP_ADD_MAIL_VERIFICATION:
-        # print(f"   [-] {message['message']}")
-        current_domain = request.get_host()
-        verification_link = f"https://{current_domain}/verify?code={linkId+'_*_'+unique_code}"
-        subject = "Mail verification - Telekit.link"
-        body = f"""
-        Welcome to Telekit.link
-        
-        Your Telegram group/Channel has been Added successfully.
-        
-        click the below link to verify your email address
-        
-        {verification_link}
-        
-        Thank you
-        Regards
-        Telekit.link
-        """
-        send_email(subject,body,to_mail)
-    context={
-        'links':[postLink],
-    }
-    context.update(message)
+                'links':linkObj,
+            }
+        if(len(linkObj)>0):
+            current_time = datetime.datetime.now()
+            modified_time_naive = linkObj[0].modified.replace(tzinfo=None)
+            # Calculate the time difference
+            time_difference = current_time - modified_time_naive
 
-    return render(request,"groupaddresult.html",context)
-    return links(request, linkId, message=message)
+            # Extract the hours from the time difference
+            hours_since_update = time_difference.total_seconds() / 3600
+            # print(hours_since_update)
+            if(hours_since_update>=24):
+                linkObj[0].noOfMembers = groupCount
+                linkObj[0].save()
+                message={
+                    "alertmsgbgcolor": '#04AA6D',
+                    "message":"Great your link placed in first place.",
+                }
+            else:
+                message={
+                    "alertmsgbgcolor": '#f44336',
+                    "message":"oops! submit your link after "+str(24-int(hours_since_update))+" Hours",
+                }
+            
+            context.update(message)
+            # print(f"   [-] {message['message']}")
+            return render(request,"groupaddresult.html",context)
+
+        code_length = 10
+        unique_code = secrets.token_hex(code_length // 2)
+        if settings.GROUP_ADD_MAIL_VERIFICATION:
+            linkId = linkId+"_*_"+unique_code
+            
+        ADULT_KEYWORDS = ['adult', 'explicit', '18+', 'nsfw', 'mature', 'XXX','sex', 'sexy','porn','child','onlyfans','masturbating']
+        for keyword in ADULT_KEYWORDS:
+                if re.search(rf'\b{re.escape(keyword)}\b', groupName, flags=re.IGNORECASE):
+                    categoryId=Category.objects.get(name="Adult/18+/Hot")
+                    break
+        postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId,published = not(settings.GROUP_ADD_MAIL_VERIFICATION),mail = to_mail)
+        # Notification.objects.create(name="New group added",link=postLink)
+        spTags = tags.split(",")
+        try:
+            spTags.remove("")
+        except:pass
+
+        for i in spTags:
+            i = i.strip()
+            if(len(i)>15 or len(i)==0):
+                continue
+
+            for keyword in ADULT_KEYWORDS:
+                if re.search(rf'\b{re.escape(keyword)}\b', i, flags=re.IGNORECASE):
+                    break
+            try:
+                tempTag=Tag.objects.create(name=i)
+                gtags.append(tempTag)
+            except:
+                try:
+                    gtags.append(Tag.objects.get(name=i))
+                except:
+                    pass
+        for i in list(gtags):
+            postLink.tag.add(i)
+        
+        if settings.GROUP_ADD_MAIL_VERIFICATION: 
+            linkObj =Link.objects.filter(linkId=linkId)
+            if linkObj.exists():
+                link_obj = linkObj.first()
+
+                # Create a copy of the object to work with
+                temporary_link_obj = link_obj.__class__.objects.get(pk=link_obj.pk)
+
+                # Modify the attribute temporarily
+                temporary_link_obj.linkId = linkId
+            context={
+                    'links':[temporary_link_obj],
+            }
+            message = {
+                "alertmsgbgcolor": '#90a316',
+                "message": "Status: Pending, Check your mail and verify your mail address"
+            }
+        if not settings.GROUP_ADD_MAIL_VERIFICATION:
+            message = {
+            "alertmsgbgcolor": '#04AA6D',
+            "message": "Status: Success, Your Link placed successfully in Telekit."
+        }
+        if settings.GROUP_ADD_MAIL_VERIFICATION:
+            # print(f"   [-] {message['message']}")
+            current_domain = request.get_host()
+            verification_link = f"https://{current_domain}/verify?code={linkId+'_*_'+unique_code}"
+            subject = "Mail verification - Telekit.link"
+            body = f"""
+            Welcome to Telekit.link
+            
+            Your Telegram group/Channel has been Added successfully.
+            
+            click the below link to verify your email address
+            
+            {verification_link}
+            
+            Thank you
+            Regards
+            Telekit.link
+            """
+            send_email(subject,body,to_mail)
+        context={
+            'links':[postLink],
+        }
+        context.update(message)
+
+        return render(request,"groupaddresult.html",context)
+    except Exception as e:
+        DiscordNotification(f"Link Adding error: {e}")
+
 
 def verify(request):
     # Retrieve the verification code from the GET parameters
