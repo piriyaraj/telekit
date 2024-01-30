@@ -1,7 +1,19 @@
 {% extends "base.html" %} {% load
 static %} {% block content %}
-<!---start-content---->
-<!---start-content---->
+<style>
+  .tag-container {
+    margin-top: 10px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    color: white;
+  }
+</style>
+
 <div class="content">
   <div class="wrap">
     <div id="main" role="main">
@@ -52,8 +64,8 @@ static %} {% block content %}
                   required
                   placeholder="Enter your mail address (Required)"
             />
+            <p style="font-size: 12px">Ex:- abcde@example.com</p>
             {% endif %}
-              <p style="font-size: 12px">Ex:- abcde@example.com</p>
 
               <input
                 type="text"
@@ -62,9 +74,14 @@ static %} {% block content %}
                 class="text"
                 placeholder="Enter Tags by Comma (,) Separated (Optional) "
               />
-              <p style="font-size: 12px">
-                Ex:- Funny, Jokes, City, State (Up to 100 Words)
+              <p style="font-size: 14px">
+                Ex:- Funny, Jokes, City, State (Up to 100 Words)</br>
+                Note: max length of tag is 15 characters</p>
               </p>
+              <div class="tag-container">
+
+              </div>
+              
             </div>
 
             <b style="font-size: 14px; margin-bottom: 10px"
@@ -78,5 +95,38 @@ static %} {% block content %}
   </div>
   </div>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tagInput = document.querySelector('input[name="gtags"]');
+    const tagContainer = document.querySelector('.tag-container');
+
+    tagInput.addEventListener('input', function () {
+      const tags = tagInput.value.split(',');
+      tagContainer.innerHTML = '';
+
+      tags.forEach(function (tag) {
+        const trimmedTag = tag; // Limit tag length to 15 characters
+
+        if (trimmedTag !== '' && trimmedTag.length <= 15) {
+          const tagElement = document.createElement('span');
+          tagElement.innerText = trimmedTag;
+          tagElement.classList.add('tag');
+          tagElement.style.backgroundColor = '#0088cc'; // Function to generate random color
+          tagContainer.appendChild(tagElement);
+        }
+      });
+    });
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  });
+</script>
+
 
 {% endblock %}

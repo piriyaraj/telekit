@@ -46,6 +46,8 @@ def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
     except Exception as e:
         print(e)
         return 0,0,0,0,0,0
+    if groupType == "Unknown":
+        return 0,0,0,0,0,0
     try:
         groupLogo = soup.find_all('img', class_="tgme_page_photo_image")[0]['src']
     except:

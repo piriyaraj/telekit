@@ -358,12 +358,13 @@ def addgroup(request):
     gtags=[]
     print(f"======> Adding: {groupLink}")
     groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(groupLink)
+    print(groupLogo)
     groupCount=int(str(groupCount).replace(" ",""))
     # print(groupName, groupCount, groupLogo, groupDescri, groupType, linkId)
     if(groupLogo==0):
         message={
             "alertmsgbgcolor": '#f44336',
-            "message":"This link is not acceptable!"
+            "message":"Invalid Link! :This link is not acceptable!"
         }
         # print("   [-] This link is not acceptable!")
         return render(request,"groupaddresult.html",message)
@@ -374,7 +375,9 @@ def addgroup(request):
         # Delete the Link object(s)
         link_objs_to_delete[0].delete()
     linkObj = Link.objects.filter(Q(linkId=linkId) | Q(imgUrl=groupLogo))
-    
+    context={
+            'links':linkObj,
+        }
     if(len(linkObj)>0):
         # print(linkObj[0].modified)
         # '2024-04-28 04:33:48.641650+00:00' 
@@ -401,9 +404,7 @@ def addgroup(request):
                 "alertmsgbgcolor": '#f44336',
                 "message":"oops! submit your link after "+str(24-int(hours_since_update))+" Hours",
             }
-        context={
-            'links':linkObj,
-        }
+        
         context.update(message)
         # print(f"   [-] {message['message']}")
         return render(request,"groupaddresult.html",context)
@@ -426,9 +427,10 @@ def addgroup(request):
     except:pass
 
     for i in spTags:
-        if(len(i)>15):
+        i = i.strip()
+        if(len(i)>15 or len(i)==0):
             continue
-        # print("tags:",i)
+
         for keyword in ADULT_KEYWORDS:
             if re.search(rf'\b{re.escape(keyword)}\b', i, flags=re.IGNORECASE):
                 break
@@ -436,7 +438,10 @@ def addgroup(request):
             tempTag=Tag.objects.create(name=i)
             gtags.append(tempTag)
         except:
-            gtags.append(Tag.objects.get(name=i))
+            try:
+                gtags.append(Tag.objects.get(name=i))
+            except:
+                pass
     for i in list(gtags):
         postLink.tag.add(i)
     
@@ -481,6 +486,9 @@ def addgroup(request):
         Telekit.link
         """
         send_email(subject,body,to_mail)
+    context={
+        'links':[postLink],
+    }
     context.update(message)
 
     return render(request,"groupaddresult.html",context)

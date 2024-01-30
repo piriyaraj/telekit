@@ -23,6 +23,8 @@ def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
     except Exception as e:
         print(e)
         return 0,0,0,0,0,0
+    if groupType == "Unknown":
+        return 0,0,0,0,0,0
     try:
         groupLogo = soup.find_all('img', class_="tgme_page_photo_image")[0]['src']
     except:
@@ -58,7 +60,17 @@ def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
 
 if __name__=="__main__":
     linkg="https://t.me/icolisting"
+    linkg_1="https://t.me/icolisting"
     linkc='https://t.me/+R26YVj3eW0EzYTc1'
     links='https://t.me/addstickers/braloveero'
     linkb='https://t.me/delorean_bot'
+    link_invalid = "https://t.me/bitcoinsrilankar"
     print(check(linkg))
+    print("/n/n")
+    print(check(linkc))
+    print("/n/n")
+    print(check(links))
+    print("/n/n")
+    print(check(linkb))
+    print("/n/n")
+    print(check(link_invalid))
