@@ -9,7 +9,7 @@
             {% if  request.user.is_authenticated%}
             <a href='/profile'><button class="auth-first">Profile</button></a>
     
-            <a href='/logout'><button>Log out</button></div>
+            <a href='/logout'><button>Log out</button></a>
             {% else %}
             <a href='/login/'><button class="auth-first">Login</button></a>
             {% endif %}
