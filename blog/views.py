@@ -410,11 +410,9 @@ def addgroup(request):
         if settings.GROUP_ADD_MAIL_VERIFICATION:
             linkId = linkId+"_*_"+unique_code
             
-        ADULT_KEYWORDS = ['adult', 'explicit', '18+', 'nsfw', 'mature', 'XXX','sex', 'sexy','porn','child','onlyfans','masturbating']
-        for keyword in ADULT_KEYWORDS:
-                if re.search(rf'\b{re.escape(keyword)}\b', groupName, flags=re.IGNORECASE):
-                    categoryId=Category.objects.get(name="Adult/18+/Hot")
-                    break
+        if tools.is_adult_keyword(groupName):
+            categoryId=Category.objects.get(name="Adult/18+/Hot")
+            
         postLink=Link.objects.create(name=groupName,link=groupLink,category=categoryId,language=languageId,country=countryId,description=groupDescri,noOfMembers=groupCount,imgUrl=groupLogo,type=groupType,linkId=linkId,published = not(settings.GROUP_ADD_MAIL_VERIFICATION),mail = to_mail)
         # Notification.objects.create(name="New group added",link=postLink)
         spTags = tags.split(",")
@@ -427,9 +425,10 @@ def addgroup(request):
             if(len(i)>20 or len(i)==0):
                 continue
 
-            for keyword in ADULT_KEYWORDS:
-                if re.search(rf'\b{re.escape(keyword)}\b', i, flags=re.IGNORECASE):
-                    break
+            if tools.is_adult_keyword(i):
+                postLink.category = Category.objects.get(name="Adult/18+/Hot")
+                postLink.save()
+                continue
             try:
                 tempTag=Tag.objects.create(name=i)
                 gtags.append(tempTag)

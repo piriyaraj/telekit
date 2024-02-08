@@ -1,3 +1,4 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
@@ -57,20 +58,28 @@ def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
             groupId=url.split(".me/")[1].replace("/","")
     return groupName, groupCount, groupLogo, groupDescri, groupType,groupId
 
+def is_adult_keyword(keyword):
+    ADULT_KEYWORDS = ['adult', 'explicit', '18+', 'nsfw', 'mature', 'XXX','sex', 'sexy','porn','child','onlyfans','masturbating']
+    for keyword in ADULT_KEYWORDS:
+        if re.search(rf'\b{re.escape(keyword)}\b', keyword, flags=re.IGNORECASE):
+            return True
+    return False
+
 
 if __name__=="__main__":
-    linkg="https://t.me/icolisting"
-    linkg_1="https://t.me/icolisting"
-    linkc='https://t.me/+R26YVj3eW0EzYTc1'
-    links='https://t.me/addstickers/braloveero'
-    linkb='https://t.me/delorean_bot'
-    link_invalid = "https://t.me/bitcoinsrilankar"
-    print(check(linkg))
-    print("/n/n")
-    print(check(linkc))
-    print("/n/n")
-    print(check(links))
-    print("/n/n")
-    print(check(linkb))
-    print("/n/n")
-    print(check(link_invalid))
+    # linkg="https://t.me/icolisting"
+    # linkg_1="https://t.me/icolisting"
+    # linkc='https://t.me/+R26YVj3eW0EzYTc1'
+    # links='https://t.me/addstickers/braloveero'
+    # linkb='https://t.me/delorean_bot'
+    # link_invalid = "https://t.me/bitcoinsrilankar"
+    # print(check(linkg))
+    # print("/n/n")
+    # print(check(linkc))
+    # print("/n/n")
+    # print(check(links))
+    # print("/n/n")
+    # print(check(linkb))
+    # print("/n/n")
+    # print(check(link_invalid))
+    print(is_adult_keyword('sex porn'))
