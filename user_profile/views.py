@@ -252,7 +252,11 @@ def pinLink(request, path):
 
         # If available points are negative, set them to zero
         total_points = total_points + max(allocated, 0)
-        
+    context = {
+        'links': [link_obj],
+        'points': list(points_list),
+        "seo":seo
+     }
     if request.method == 'POST':
         form = Pinlinks(request.POST)
         if form.is_valid():
@@ -280,6 +284,11 @@ def pinLink(request, path):
             # Update user points and link points per day
             # 1997 - 997
             lessPoint = points - allocated +1
+            if request.user.points < lessPoint:
+                context['message'] = "Please enter the valid point"
+                context['form'] = Pinlinks(max_points=total_points,min_points= allocated)
+                return render(request, "user_profile/pin.html", context)
+                pass
             request.user.points = request.user.points - lessPoint
             request.user.save()
             link_obj.pointsperday = points_per_day
@@ -288,16 +297,7 @@ def pinLink(request, path):
             return redirect('profile')  # Redirect to a success page or another URL after pinning
 
     else:
-
-        form = Pinlinks(max_points=total_points,min_points= allocated)
-
-    context = {
-        'links': [link_obj],
-        'form': form,  
-        'points': list(points_list),
-        "seo":seo
-     }
-
+        context['form'] = Pinlinks(max_points=total_points,min_points= allocated)
 
     return render(request, "user_profile/pin.html", context)
 

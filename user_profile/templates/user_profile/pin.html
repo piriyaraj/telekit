@@ -10,6 +10,9 @@
             </div>
             
             <div class='pinner'>
+                {% if message %}
+                <div class="errormessage">{{message}}</div>
+                {% endif %}
                 <div class="hint-message">Pin Group/Channel at the top</div>
                 <form method="post">
                     {% csrf_token %}

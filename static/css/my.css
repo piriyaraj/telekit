@@ -555,3 +555,13 @@
                             border-radius: 25%;
                             padding: 3px;
                         }
+                        
+                        .errormessage {
+                            background-color: #461212;
+                            color: white;
+                            padding: 5px;
+                            margin: 5px;
+                            width: fit-content;
+                            border: 1px solid white;
+                            border-radius: 5px;
+                        }
