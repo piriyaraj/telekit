@@ -297,7 +297,7 @@ def pinLink(request, path):
             return redirect('profile')  # Redirect to a success page or another URL after pinning
 
     else:
-        context['form'] = Pinlinks(max_points=total_points,min_points= allocated)
+        context['form'] = Pinlinks(max_points=total_points, min_points= max(allocated, 0))
 
     return render(request, "user_profile/pin.html", context)
 
