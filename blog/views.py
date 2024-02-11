@@ -702,27 +702,27 @@ def refresh_link(request,path):
             hours_since_update = time_difference.total_seconds() / 3600
             # print(hours_since_update)
             
-            if(hours_since_update>=24):
-                groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(linkObj[0].link)
-                linkObj[0].name = groupName
-                linkObj[0].imgUrl = groupLogo
-                linkObj[0].noOfMembers = groupDescri
-                linkObj[0].noOfMembers = groupCount
-                linkObj[0].save()
-                data = {
-                'name':linkObj[0].name,
-                'description':linkObj[0].description,
-                'count':linkObj[0].noOfMembers,
-                'img_url':linkObj[0].image_file.url,
-                'message':'Updated',
-            }
-                return JsonResponse(data)
-            else:
-                data = {
-                'name':linkObj[0].name,
-                'description':linkObj[0].description,
-                'count':linkObj[0].noOfMembers,
-                'img_url':linkObj[0].image_file.url,
-                'message':f'Update failed. Please note that you can only update the link once every 24 hours. Try again later. wait {24 - round(hours_since_update)} hours',
-                }
-                return JsonResponse(data)
+
+            groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(linkObj[0].link)
+            linkObj[0].name = groupName
+            linkObj[0].imgUrl = groupLogo
+            linkObj[0].noOfMembers = groupDescri
+            linkObj[0].noOfMembers = groupCount
+            linkObj[0].save()
+            data = {
+            'name':linkObj[0].name,
+            'description':linkObj[0].description,
+            'count':linkObj[0].noOfMembers,
+            'img_url':linkObj[0].image_file.url,
+            'message':'Updated',
+        }
+            return JsonResponse(data)
+            # else:
+            #     data = {
+            #     'name':linkObj[0].name,
+            #     'description':linkObj[0].description,
+            #     'count':linkObj[0].noOfMembers,
+            #     'img_url':linkObj[0].image_file.url,
+            #     'message':f'Update failed. Please note that you can only update the link once every 24 hours. Try again later. wait {24 - round(hours_since_update)} hours',
+            #     }
+            #     return JsonResponse(data)
