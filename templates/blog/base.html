@@ -93,10 +93,9 @@
         const response = await fetch(`/refresh/${linkId}`);
     
         if (!response.ok) {
-            alert("Error: " + response.status);
             // Change the button text and color back to original after an error
-            button.innerText = "Update";
-            button.style.backgroundColor = "#0088cc";
+            button.innerText = "Error";
+            button.style.backgroundColor = "#461212";
             return;
         }
     
