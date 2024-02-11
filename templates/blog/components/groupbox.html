@@ -1,8 +1,8 @@
 {% load static %}
 {% if link.pointsperday %}
-<div class="maindiv" style="background-color: #0088ff17;">
+<div class="maindiv" id='{{link.linkId}}' style="background-color: #0088ff17;">
 {% else %}
-<div class="maindiv">
+<div class="maindiv" id='{{link.linkId}}'>
 {% endif %}
     <div>
         <a style="color: #5a5a5a" target="_blank" href="/join/{{link.linkId}}"
@@ -13,10 +13,21 @@
                     alt="{{link.name}} telegram Group link">
             </span>
         </a>
+        <div class="refresh-line">
+        <span>
         <a style="color: #5a5a5a;font-family: fantasy;" target="_blank" href="/join/{{link.linkId}}"
             title="{{link.name}} telegram {{link.type}} invite link">
             <h2>{{link.name}}</h2>
         </a>
+    </span>
+    {% if request.path == '/profile/' %}
+        <span>
+        <button id="refreshButton" data-link-id="{{link.linkId}}" onclick="refreshData(this)">
+            Update
+          </button>
+        </span>
+    {% endif %}
+    </div>
     </div>
     <div class="block2">
         <div class="post-basic-info">
@@ -42,8 +53,8 @@
                 {% else %}
                 {{"members : "}}
                 {% endif %}
-
-                {{link.noOfMembers}}</span>
+                <span id='member-count'>
+                {{link.noOfMembers}}</span></span>
             <p class="descri" style="margin-bottom: 0px">{{link.description}}</p>
             <div style="margin-bottom: 5px;">
                 {% comment %} {{link.tag.all is " "}} {% endcomment %}

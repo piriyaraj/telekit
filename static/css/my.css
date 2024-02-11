@@ -565,3 +565,26 @@
                             border: 1px solid white;
                             border-radius: 5px;
                         }
+                        
+                        .refresh-line {
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                        
+                        .refresh-line button {
+                            height: 55px;
+                            background-color: #0088cc;
+                            border: 1px;
+                            border-radius: 10px;
+                            color: white;
+                        }
+                        
+                        .refresh-line button:hover {
+                            background-color: #0077b3;
+                            /* darker shade of button color for hover effect */
+                        }
+                        
+                        .refresh-line button:active {
+                            background-color: #006699;
+                            /* even darker shade for click effect */
+                        }

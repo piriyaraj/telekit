@@ -26,6 +26,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import secrets
+from django.contrib.auth.decorators import login_required
 
 year = '2024'
 
@@ -687,3 +688,41 @@ def mail_test(request):
         return HttpResponse('Email sent successfully!')
     except Exception as e:
         return HttpResponse(f'Email sent Failed!: {e}')
+
+@login_required(login_url="login")
+def refresh_link(request,path):
+    linkObj = Link.objects.filter(Q(linkId=path))
+    if(len(linkObj)>0):
+            current_time = datetime.datetime.now()
+            modified_time_naive = linkObj[0].modified.replace(tzinfo=None)
+            # Calculate the time difference
+            time_difference = current_time - modified_time_naive
+
+            # Extract the hours from the time difference
+            hours_since_update = time_difference.total_seconds() / 3600
+            # print(hours_since_update)
+            
+            if(hours_since_update>=24):
+                groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(linkObj[0].link)
+                linkObj[0].name = groupName
+                linkObj[0].imgUrl = groupLogo
+                linkObj[0].noOfMembers = groupDescri
+                linkObj[0].noOfMembers = groupCount
+                linkObj[0].save()
+                data = {
+                'name':linkObj[0].name,
+                'description':linkObj[0].description,
+                'count':linkObj[0].noOfMembers,
+                'img_url':linkObj[0].image_file.url,
+                'message':'Updated',
+            }
+                return JsonResponse(data)
+            else:
+                data = {
+                'name':linkObj[0].name,
+                'description':linkObj[0].description,
+                'count':linkObj[0].noOfMembers,
+                'img_url':linkObj[0].image_file.url,
+                'message':f'Update failed. Please note that you can only update the link once every 24 hours. Try again later. wait {24 - round(hours_since_update)} hours',
+                }
+                return JsonResponse(data)

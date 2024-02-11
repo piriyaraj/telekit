@@ -82,7 +82,42 @@
 <!--//End-wrap-->
 <script src="{% static 'js/bottom.js' %}"></script>
 
-
+<script>
+    async function refreshData(button) {
+        const linkId = button.dataset.linkId; // Fetch the linkId from the button's dataset
+    
+        // Change the button text and color to "Updating..." and grey during the fetch operation
+        button.innerText = "Updating...";
+        button.style.backgroundColor = "#808080";
+    
+        const response = await fetch(`/refresh/${linkId}`);
+    
+        if (!response.ok) {
+            alert("Error: " + response.status);
+            // Change the button text and color back to original after an error
+            button.innerText = "Update";
+            button.style.backgroundColor = "#0088cc";
+            return;
+        }
+    
+        const data = await response.json();
+        var div = document.getElementById(linkId);
+    
+        // Get the h2 child of the div
+        var h2 = div.querySelector("h2");
+        var member_count = div.querySelector("#member-count");
+        var descri = div.querySelector(".descri");
+        h2.innerText = data.name;
+        member_count.innerText = data.count;
+        descri.innerText = data.description;
+        alert(data.message);
+    
+        // Change the button text and color to "Updated" and green after successful fetch operation
+        button.innerText = "Updated";
+        button.style.backgroundColor = "#008000";
+    }
+    
+</script>
 
 </body>
 </html>
