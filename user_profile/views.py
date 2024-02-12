@@ -249,9 +249,9 @@ def pinLink(request, path):
         # Calculate the available points based on the duration and points_per_day
         days = duration.total_seconds()/86400
         allocated = pin_link_obj.points - (pin_link_obj.points_per_day * days)
-
+        allocated = max(allocated, 0)
         # If available points are negative, set them to zero
-        total_points = total_points + max(allocated, 0)
+        total_points = total_points + allocated
     context = {
         'links': [link_obj],
         'points': list(points_list),
