@@ -44,8 +44,10 @@
 
                     // Get values from the inputs
                     var days = parseInt(daysInput.value);
-                    var points = parseInt(pointsInput.value);
-            
+                    // console.log({{old_points}});
+                    var points = parseInt(pointsInput.value)+parseInt({{old_points}});
+                    // console.log(points);
+                    // console.log(availablePointsPerDay);
                     // Perform the calculation
                     var pointsPerDay = days > 0 ? points / days : 0;
             

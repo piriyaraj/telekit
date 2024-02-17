@@ -238,11 +238,12 @@ def pinLink(request, path):
     else:
         points_list = Link.objects.filter(Q(pointsperday__gt=0) & Q(category__name="Adult/18+/Hot")).order_by('-pointsperday').values_list('pointsperday', flat=True)
     total_points = request.user.points
-
+    available_points = 0
     context = {
         'links': [link_obj],
         'points': list(points_list),
-        "seo":seo
+        "seo":seo,
+        "old_points":available_points,
     }
 
     if pin_link_obj:
@@ -251,44 +252,52 @@ def pinLink(request, path):
         # Calculate the duration since the link was pinned
         duration = pin_link_obj[0].added + timedelta(days=pin_link_obj[0].days) - timenow
         duration_td = timedelta(seconds=duration.total_seconds())
-
-        days = duration_td.days
-        hours, remainder = divmod(duration_td.seconds, 3600)
-        minutes, _ = divmod(remainder, 60)
-        context['message'] = f"Please pin the link after the current pin expires. Expires in {days} days, {hours} hours, and {minutes} minutes."
-        return render(request, "user_profile/pin.html", context)
+        if duration.total_seconds()>0:
+            days = duration_td.days
+            hours, remainder = divmod(duration_td.seconds, 3600)
+            minutes, _ = divmod(remainder, 60)
+            available_points = int(duration.total_seconds()/(60*60*24)*pin_link_obj[0].points_per_day)
+            # print("total_points:",pin_link_obj[0].points)
+            # print("Available points:",available_points)
+            # print("Rounded Available points:",int(available_points))
+            context['old_points'] = available_points
+            # context['message'] = f"Please pin the link after the current pin expires. Expires in {days} days, {hours} hours, and {minutes} minutes."
+            # return render(request, "user_profile/pin.html", context)
     if request.method == 'POST':
         form = Pinlinks(request.POST)
         if form.is_valid():
             days = form.cleaned_data['days']
             points = form.cleaned_data['points']
-
-            # Calculate points per day
-            points_per_day = int(points) / int(days)
+            required_points = int(points)
 
             # Create a new LinkPin record
-            # if pin_link_obj:
-            #     pin_link_obj.days = int(days)
-            #     pin_link_obj.points = points
-            #     pin_link_obj.points_per_day = points_per_day
-            #     pin_link_obj.save()
-            # else:
+            
 
 
 
-            if request.user.points < int(points):
+            if request.user.points < int(required_points):
                 context['message'] = "Please enter the valid point"
                 context['form'] = Pinlinks(max_points=total_points,min_points= 1)
                 return render(request, "user_profile/pin.html", context)
-                pass
-            link_pin = Linkpin.objects.create(
-                points=points,
-                days=int(days),
-                points_per_day=points_per_day,
-                user=request.user,
-                linkId=path
-            )
-            request.user.points = request.user.points - int(points)
+            points = int(points)+available_points
+            # Calculate points per day
+            points_per_day = int(points) / int(days)
+            # print("New Points:",points)
+            if pin_link_obj:
+                pin_link_obj = pin_link_obj[0]
+                pin_link_obj.days = int(days)
+                pin_link_obj.points = points
+                pin_link_obj.points_per_day = points_per_day
+                pin_link_obj.save()
+            else:
+                link_pin = Linkpin.objects.create(
+                    points=points,
+                    days=int(days),
+                    points_per_day=points_per_day,
+                    user=request.user,
+                    linkId=path
+                )
+            request.user.points = request.user.points - int(required_points)
             request.user.save()
             link_obj.pointsperday = points_per_day
             link_obj.save()
