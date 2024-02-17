@@ -1,4 +1,5 @@
 from django.db.models import Q
+from datetime import timedelta
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
@@ -237,26 +238,25 @@ def pinLink(request, path):
     else:
         points_list = Link.objects.filter(Q(pointsperday__gt=0) & Q(category__name="Adult/18+/Hot")).order_by('-pointsperday').values_list('pointsperday', flat=True)
     total_points = request.user.points
-    
-    allocated = 1
-    if pin_link_obj:
-        pin_link_obj = pin_link_obj[0]
-    # Assuming pin_link_obj is a LinkPin instance
-        timenow = timezone.now()
 
-        # Calculate the duration since the link was pinned
-        duration = timenow - pin_link_obj.added
-        # Calculate the available points based on the duration and points_per_day
-        days = duration.total_seconds()/86400
-        allocated = pin_link_obj.points - (pin_link_obj.points_per_day * days)
-        allocated = max(allocated, 0)
-        # If available points are negative, set them to zero
-        total_points = total_points + allocated
     context = {
         'links': [link_obj],
         'points': list(points_list),
         "seo":seo
-     }
+    }
+
+    if pin_link_obj:
+        timenow = timezone.now()
+
+        # Calculate the duration since the link was pinned
+        duration = pin_link_obj[0].added + timedelta(days=pin_link_obj[0].days) - timenow
+        duration_td = timedelta(seconds=duration.total_seconds())
+
+        days = duration_td.days
+        hours, remainder = divmod(duration_td.seconds, 3600)
+        minutes, _ = divmod(remainder, 60)
+        context['message'] = f"Please pin the link after the current pin expires. Expires in {days} days, {hours} hours, and {minutes} minutes."
+        return render(request, "user_profile/pin.html", context)
     if request.method == 'POST':
         form = Pinlinks(request.POST)
         if form.is_valid():
@@ -267,29 +267,28 @@ def pinLink(request, path):
             points_per_day = int(points) / int(days)
 
             # Create a new LinkPin record
-            if pin_link_obj:
-                pin_link_obj.days = int(days)
-                pin_link_obj.points = points
-                pin_link_obj.points_per_day = points_per_day
-                pin_link_obj.save()
-            else:
-                link_pin = Linkpin.objects.create(
-                    points=points,
-                    days=int(days),
-                    points_per_day=points_per_day,
-                    user=request.user,
-                    linkId=path
-                )
+            # if pin_link_obj:
+            #     pin_link_obj.days = int(days)
+            #     pin_link_obj.points = points
+            #     pin_link_obj.points_per_day = points_per_day
+            #     pin_link_obj.save()
+            # else:
 
-            # Update user points and link points per day
-            # 1997 - 997
-            lessPoint = points - allocated +1
-            if request.user.points < lessPoint:
+
+
+            if request.user.points < int(points):
                 context['message'] = "Please enter the valid point"
-                context['form'] = Pinlinks(max_points=total_points,min_points= allocated)
+                context['form'] = Pinlinks(max_points=total_points,min_points= 1)
                 return render(request, "user_profile/pin.html", context)
                 pass
-            request.user.points = request.user.points - lessPoint
+            link_pin = Linkpin.objects.create(
+                points=points,
+                days=int(days),
+                points_per_day=points_per_day,
+                user=request.user,
+                linkId=path
+            )
+            request.user.points = request.user.points - int(points)
             request.user.save()
             link_obj.pointsperday = points_per_day
             link_obj.save()
@@ -297,7 +296,7 @@ def pinLink(request, path):
             return redirect('profile')  # Redirect to a success page or another URL after pinning
 
     else:
-        context['form'] = Pinlinks(max_points=total_points, min_points= max(allocated, 0))
+        context['form'] = Pinlinks(max_points=total_points, min_points=1)
 
     return render(request, "user_profile/pin.html", context)
 

@@ -108,7 +108,7 @@ class Pinlinks(forms.Form):
         self.max_points = max_points
         min_points = kwargs.pop('min_points', None)
         super(Pinlinks, self).__init__(*args, **kwargs)
-        print(max_points)
+        # print(min_points)
         # Set max_value dynamically
         if max_points is not None:
             self.fields['points'].widget.attrs['max'] = max_points
