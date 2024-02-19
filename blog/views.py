@@ -1,5 +1,6 @@
 # views.py
 import datetime
+from django.utils import timezone
 from os import link
 import random
 from re import L
@@ -687,8 +688,8 @@ def mail_test(request):
 def refresh_link(request,path):
     linkObj = Link.objects.filter(Q(linkId=path))
     if(len(linkObj)>0):
-            current_time = datetime.datetime.now()
-            modified_time_naive = linkObj[0].modified.replace(tzinfo=None)
+            current_time = timezone.now()
+            modified_time_naive = linkObj[0].modified
             # Calculate the time difference
             time_difference = current_time - modified_time_naive
 
@@ -728,12 +729,4 @@ def refresh_link(request,path):
                 'message':'Updated',
             }
             return JsonResponse(data)
-            # else:
-            #     data = {
-            #     'name':linkObj[0].name,
-            #     'description':linkObj[0].description,
-            #     'count':linkObj[0].noOfMembers,
-            #     'img_url':linkObj[0].image_file.url,
-            #     'message':f'Update failed. Please note that you can only update the link once every 24 hours. Try again later. wait {24 - round(hours_since_update)} hours',
-            #     }
-            #     return JsonResponse(data)
+
