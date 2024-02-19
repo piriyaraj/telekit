@@ -340,8 +340,17 @@ def DiscordNotification(Msg):
     discord.post(content=Msg)
     
 def addgroup(request):
+    seo = {
+    'title': f"Submit Your Active Telegram Group & Channel Links on Telekit",
+    "description": "Submit your active Telegram group and channel links for Adults, movies, dating, education, and viral updates. Share your Telegram groups and channels on Telekit.",
+    "robots":"index, follow"
+    }
+    context={
+      'seo':seo,
+    }
     if request.method == 'GET':
-        return render(request,'blog/addgroup.html',{'mail':settings.GROUP_ADD_MAIL_VERIFICATION})
+        context['mail'] = settings.GROUP_ADD_MAIL_VERIFICATION
+        return render(request,'blog/addgroup.html',context)
     try:
         groupLink=request.POST['glink']
         categoryId=Category.objects.get(id=request.POST['category'])
