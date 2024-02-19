@@ -1,19 +1,13 @@
 # views.py
-from ast import keyword
 import datetime
-from email import message
-from multiprocessing import context
 from os import link
 import random
 from re import L
-import re
-from unicodedata import category
 from unittest import result
-from wsgiref.util import request_uri
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.db.models import Q
-from blog.models import Category, Company, Country, Language, Link, Tag
+from blog.models import Category, Country, Language, Link, Tag
 from telekit import settings
 # from extract.models import Notification
 from . import tools
@@ -27,7 +21,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import secrets
 from django.contrib.auth.decorators import login_required
-import math
 
 year = '2024'
 
@@ -701,14 +694,14 @@ def refresh_link(request,path):
 
             # Extract the hours from the time difference
             hours_since_update = time_difference.total_seconds() / 3600
-            updated_before = math.ceil(hours_since_update)
+            updated_before = int(hours_since_update)
             if(updated_before<=24):
                 data = {
                     'name':linkObj[0].name,
                     'description':linkObj[0].description,
                     'count':linkObj[0].noOfMembers,
                     'img_url':linkObj[0].image_file.url,
-                    'message':f'Wait {updated_before} hours',
+                    'message':f'Wait {24-updated_before} hours',
                 }
                 return JsonResponse(data)
             groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(linkObj[0].link)
