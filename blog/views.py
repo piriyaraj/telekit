@@ -706,6 +706,7 @@ def refresh_link(request,path):
                 }
                 return JsonResponse(data)
             groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(linkObj[0].link)
+            groupCount=int(str(groupCount).replace(" ",""))
             if (groupLogo == 0):
                 data = {
                     'name':"Link removed",
