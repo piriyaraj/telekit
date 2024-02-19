@@ -63,7 +63,7 @@ def login_user(request):
     seo = {
         'title': f'Log into Telekit.link.',
         "description": f"Securely log into Telekit.link for seamless access to your account. Experience hassle-free authentication and enjoy the features of Telekit with confidence. Your gateway to a personalized and secure online experience.",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
     }
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -230,7 +230,7 @@ def pinLink(request, path):
     seo = {
         'title': f'Pin {link_obj.name} on Telekit.link',
         'description': f'Pin {link_obj.name} on Telekit.link to get more members to your {link_obj.type}',
-        'robots': 'noindex, nofollow',
+        'robots': 'index, follow',
     }
     if link_obj.category.name != "Adult/18+/Hot":
         points_list = Link.objects.filter(Q(pointsperday__gt=0) & ~Q(category__name="Adult/18+/Hot")).order_by('-pointsperday').values_list('pointsperday', flat=True)
