@@ -13,24 +13,30 @@
                     alt="{{link.name}} telegram Group link">
             </span>
         </a>
+        <div>
         <div class="refresh-line">
-        <span>
-        <a style="color: #5a5a5a;font-family: fantasy;" target="_blank" href="/join/{{link.linkId}}"
-            title="{{link.name}} telegram {{link.type}} invite link">
-            <h2>{{link.name}}</h2>
-        </a>
-        </span>
-        {% if user.is_superuser %}
-            <span>{{link.pointsperday}}</span>
-        {% endif %}
+            <span>
+                <a style="color: #5a5a5a;font-family: fantasy;" target="_blank" href="/join/{{link.linkId}}"
+                    title="{{link.name}} telegram {{link.type}} invite link">
+                    <h2>{{link.name}}</h2>
+                </a>
+            </span>
+            {% if user.is_superuser %}
+                <span>{{link.pointsperday}}</span>
+            {% endif %}
+            <span>
+                <button id="refreshButton" data-link-id="{{link.linkId}}" onclick="refreshData(this)">
+                    Update
+                  </button>
+                </span>
+        </div>
+        <div class="post-basic-info">
+            <span>| Created : {{ link.added|date:"d/m/Y : i a" }} | </span>
+            <span>| Modified: {{link.modified|date:"d/m/Y : i a"}} | </span>
+        </div>
+    </br>
     
-    {% comment %} {% if request.path == '/profile/' %} {% endcomment %}
-        <span>
-        <button id="refreshButton" data-link-id="{{link.linkId}}" onclick="refreshData(this)">
-            Update
-          </button>
-        </span>
-    {% comment %} {% endif %} {% endcomment %}
+
     </div>
     </div>
     <div class="block2">

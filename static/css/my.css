@@ -588,3 +588,13 @@
                             background-color: #006699;
                             /* even darker shade for click effect */
                         }
+                        
+                        .date {
+                            /* font-size: 12px; */
+                        }
+                        
+                        .post-basic-info span {
+                            white-space: nowrap;
+                            display: inline-block;
+                            /* Use 'block' for different lines */
+                        }
