@@ -19,7 +19,11 @@
             title="{{link.name}} telegram {{link.type}} invite link">
             <h2>{{link.name}}</h2>
         </a>
-    </span>
+        </span>
+        {% if user.is_superuser %}
+            <span>{{link.pointsperday}}</span>
+        {% endif %}
+    
     {% comment %} {% if request.path == '/profile/' %} {% endcomment %}
         <span>
         <button id="refreshButton" data-link-id="{{link.linkId}}" onclick="refreshData(this)">
