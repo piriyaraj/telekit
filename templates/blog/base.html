@@ -85,13 +85,19 @@
 <script>
     async function refreshData(button) {
         const linkId = button.dataset.linkId; // Fetch the linkId from the button's dataset
-    
+        button.disabled = true;
+        button.style.transition = "background-color 1s ease";
         // Change the button text and color to "Updating..." and grey during the fetch operation
-        button.innerText = "Updating...";
+        let i = 0;
+        const updatingInterval = setInterval(() => {
+            button.innerText = "Updating" + ".".repeat(i++ % 4);
+        }, 300);
         button.style.backgroundColor = "#808080";
     
         const response = await fetch(`/refresh/${linkId}`);
-    
+        
+        clearInterval(updatingInterval);
+        
         if (!response.ok) {
             // Change the button text and color back to original after an error
             button.innerText = "Error";
@@ -110,7 +116,7 @@
         member_count.innerText = data.count;
         descri.innerText = data.description;
         // Change the button text and color to "Updated" and green after successful fetch operation
-        button.innerText = "Updated";
+        button.innerText = data.message;
         button.style.backgroundColor = "#008000";
     }
     
