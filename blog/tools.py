@@ -59,7 +59,7 @@ def check(url):  # return groupName,groupCount,groupLogo,groupDescri,groupType
     return groupName, groupCount, groupLogo, groupDescri, groupType,groupId
 
 def is_adult_keyword(keyword):
-    ADULT_KEYWORDS = ['adult', 'explicit', '18+', 'nsfw', 'mature', 'XXX','sex', 'sexy','porn','child','onlyfans','masturbating']
+    ADULT_KEYWORDS = ['bokep','adult', 'explicit', '18+', 'nsfw', 'mature', 'XXX','sex', 'sexy','porn','child','onlyfans','masturbating']
     for keyword in ADULT_KEYWORDS:
         if re.search(rf'\b{re.escape(keyword)}\b', keyword, flags=re.IGNORECASE):
             return True

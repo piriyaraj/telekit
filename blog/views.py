@@ -281,6 +281,8 @@ def tag(request,path):
     except:
         return redirect("index")
     postLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot")& Q(tag__slug=path)).order_by("-pointsperday","-modified")
+    if not postLink:
+        return redirect("index")
     if(request.GET.get('page')):
         linka=pagination(request,postLink)
         context={
