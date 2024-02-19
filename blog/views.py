@@ -712,6 +712,16 @@ def refresh_link(request,path):
                 }
                 return JsonResponse(data)
             groupName, groupCount, groupLogo, groupDescri, groupType,linkId=tools.check(linkObj[0].link)
+            if (groupLogo == 0):
+                data = {
+                    'name':"Link removed",
+                    'description':"Link removed",
+                    'count':"Link removed",
+                    'img_url':linkObj[0].image_file.url,
+                    'message':'Removed: Invalid link',
+                }
+                linkObj[0].delete()
+                return JsonResponse(data)
             linkObj[0].name = groupName
             linkObj[0].imgUrl = groupLogo
             linkObj[0].noOfMembers = groupDescri

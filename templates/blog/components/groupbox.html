@@ -20,13 +20,13 @@
             <h2>{{link.name}}</h2>
         </a>
     </span>
-    {% if request.path == '/profile/' %}
+    {% comment %} {% if request.path == '/profile/' %} {% endcomment %}
         <span>
         <button id="refreshButton" data-link-id="{{link.linkId}}" onclick="refreshData(this)">
             Update
           </button>
         </span>
-    {% endif %}
+    {% comment %} {% endif %} {% endcomment %}
     </div>
     </div>
     <div class="block2">
