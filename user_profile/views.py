@@ -273,9 +273,9 @@ def pinLink(request, path):
 
 
 
-            if request.user.points < int(required_points):
-                context['message'] = "Please enter the valid point"
-                context['form'] = Pinlinks(max_points=total_points,min_points= 1)
+            if request.user.points < int(required_points) or int(required_points) <5:
+                context['message'] = "Please enter the valid points"
+                context['form'] = Pinlinks(max_points=total_points,min_points= 5)
                 return render(request, "user_profile/pin.html", context)
             points = int(points)+available_points
             # Calculate points per day
@@ -303,7 +303,7 @@ def pinLink(request, path):
             return redirect('profile')  # Redirect to a success page or another URL after pinning
 
     else:
-        context['form'] = Pinlinks(max_points=total_points, min_points=1)
+        context['form'] = Pinlinks(max_points=total_points, min_points=5)
 
     return render(request, "user_profile/pin.html", context)
 
