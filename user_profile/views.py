@@ -250,19 +250,17 @@ def pinLink(request, path):
         timenow = timezone.now()
 
         # Calculate the duration since the link was pinned
-        duration = pin_link_obj[0].added + timedelta(days=pin_link_obj[0].days) - timenow
-        duration_td = timedelta(seconds=duration.total_seconds())
-        if duration.total_seconds()>0:
-            days = duration_td.days
-            hours, remainder = divmod(duration_td.seconds, 3600)
-            minutes, _ = divmod(remainder, 60)
-            available_points = int(duration.total_seconds()/(60*60*24)*pin_link_obj[0].points_per_day)
-            # print("total_points:",pin_link_obj[0].points)
-            # print("Available points:",available_points)
-            # print("Rounded Available points:",int(available_points))
+        duration = pin_link_obj[0].modified - timenow
+        # print("added:",pin_link_obj[0].modified)
+        # print("Now:",timenow)
+        duration = duration.total_seconds() + pin_link_obj[0].days*(60*60*24)
+        if duration>0:
+            duration = duration/(60*60*24)
+            # print("days: ", duration)
+            # print("points: ", duration*pin_link_obj[0].points_per_day)
+            available_points = int(duration*pin_link_obj[0].points_per_day)
             context['old_points'] = available_points
-            # context['message'] = f"Please pin the link after the current pin expires. Expires in {days} days, {hours} hours, and {minutes} minutes."
-            # return render(request, "user_profile/pin.html", context)
+
     if request.method == 'POST':
         form = Pinlinks(request.POST)
         if form.is_valid():
