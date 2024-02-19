@@ -718,7 +718,7 @@ def refresh_link(request,path):
                 return JsonResponse(data)
             linkObj[0].name = groupName
             linkObj[0].imgUrl = groupLogo
-            linkObj[0].noOfMembers = groupDescri
+            linkObj[0].description = groupDescri
             linkObj[0].noOfMembers = groupCount
             linkObj[0].save()
             data = {
