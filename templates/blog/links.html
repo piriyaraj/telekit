@@ -110,7 +110,17 @@
                                 <a href=" {{post.link}} " target="_blank" class="btn"
                                     rel="nofollow">Join {{post.type}}</a>
                                 {% else %}
-                                <a href="/landing?link={{post.link}} " class="btn" rel="nofollow">Join {{post.type}}</a>
+                                <a id="myLink" href="/landing?link={{post.link}}" class="btn" rel="nofollow">Join {{post.type}}</a>
+                                <script>
+                                window.onload = function() {
+                                    var urls = [
+                                        '/landing?link={{post.link}}',  // replace with your first page URL
+                                        'https:telelinking.link/landing?link={{post.link}}'   // replace with your second page URL
+                                    ];
+                                    var randomUrl = urls[Math.floor(Math.random() * urls.length)];
+                                    document.getElementById('myLink').href = randomUrl;
+                                }
+                            </script>
                                 {% endif %}
                                 <a class="btn"
                                     href="whatsapp://send?text=Follow this link to Join my Telegram group :{{ request.get_host }}{{ request.path}} %0A %0AFind more Telegram Channels and Group at: {{ request.get_host }} "
