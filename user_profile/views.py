@@ -230,7 +230,7 @@ def pinLink(request, path):
     seo = {
         'title': f'Pin {link_obj.name} on Telekit.link',
         'description': f'Pin {link_obj.name} on Telekit.link to get more members to your {link_obj.type}',
-        'robots': 'index, follow',
+        'robots': 'noindex, nofollow',
     }
     if link_obj.category.name != "Adult/18+/Hot":
         points_list = Link.objects.filter(Q(pointsperday__gt=0) & ~Q(category__name="Adult/18+/Hot")).order_by('-pointsperday').values_list('pointsperday', flat=True)
