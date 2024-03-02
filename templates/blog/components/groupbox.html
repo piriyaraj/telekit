@@ -109,7 +109,7 @@
     </div>
     <br/>
     {% if request.user.is_superuser  %}
-    <button class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ link.linkId }}" onclick="change18plus(this);">Change 18+</button>
+    <button class="serbtn add-to-profile change18" data-linkid="{{ link.linkId }}" onclick="change18plus(this);">Change 18+</button>
 </br></br>
     {% endif %}
     {% if  request.user.is_authenticated%}

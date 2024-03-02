@@ -70,14 +70,17 @@ function change18plus(linkElement) {
 
   // Get the link ID from the data attribute
   var linkId = $(linkElement).data("linkid");
-
+  linkElement.style.backgroundColor = '#aaaaa0'; // Change to your clicked color
+  linkElement.textContent = 'Clicked'; 
   // AJAX request to add the link to the user's profile
   $.ajax({
     type: "GET",
     url: "/changecategory/" + linkId,
     success: function (response) {
       // Handle the response, e.g., show a success message
-      alert(response.message);
+      // alert(response.message);
+      linkElement.style.backgroundColor = '#00af00'; // Change to your clicked color
+      linkElement.textContent = 'Changed'; 
     },
     error: function (error) {
       // Handle the error, e.g., show an error message
