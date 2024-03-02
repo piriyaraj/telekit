@@ -29,3 +29,14 @@ class Spin(models.Model):
             self.notified_data = timezone.now()
             # Add logic to send notification to the user
             # For example, you might use Django signals or a task queue like Celery for asynchronous notification
+
+
+class ReferralCount(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    count = models.IntegerField(default=0)
+    added=models.DateTimeField(auto_now_add=True)
+    modified=models.DateTimeField(auto_now=True)
+    
+class ReferralVisit(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ip = models.GenericIPAddressField()

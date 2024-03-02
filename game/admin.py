@@ -15,3 +15,17 @@ class SpinAdmin(admin.ModelAdmin):
     user_points.short_description = 'User Points'
 
 admin.site.register(Spin, SpinAdmin)
+
+from django.contrib import admin
+from .models import ReferralCount, ReferralVisit
+
+@admin.register(ReferralCount)
+class ReferralCountAdmin(admin.ModelAdmin):
+    list_display = ('user', 'count', 'added', 'modified')
+    list_filter = ('added', 'modified')
+    search_fields = ('user__username',)
+
+@admin.register(ReferralVisit)
+class ReferralVisitAdmin(admin.ModelAdmin):
+    list_display = ('user', 'ip')
+    search_fields = ('user__username',)

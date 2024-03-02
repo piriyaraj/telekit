@@ -1,0 +1,109 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<div class="content">
+    <div class="wrap">
+      <div id="main" role="main">
+      </br>
+      {% include 'user_profile/dashboard.html' %}
+      {% include 'components/referral_tips.html' %}
+        <!-- Add your existing content here -->
+        <div id ='position' class="bonus-title"></div>
+        <h2>Referral visitors Count Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Users</th>
+                    <th>Visitors count</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for referral in referral_count %}
+                {% if user == referral.user%}
+                  <tr id="current">
+                {% else %}
+                  <tr >
+                {% endif %}
+                <td>{{ forloop.counter }}</td>
+                <td>{{ referral.user.username }}</td>
+                <td>{{ referral.count }}</td>
+            </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    <main >
+      <div class="hint-message" >You have</div>
+      <div class="count-down-container">
+        <div class="count-down-box">
+          <div class="count-down">
+            <h1 id="hours">00</h1>
+            <p>Hours</p>
+          </div>
+        </div>
+        <div class="count-down-box">
+          <div class="count-down">
+            <h1 id="minutes">00</h1>
+            <p>Minutes</p>
+          </div>
+        </div>
+        <div class="count-down-box">
+          <div class="count-down">
+            <h1 id="seconds">00</h1>
+            <p>Seconds</p>
+          </div>
+        </div>
+      </div>
+      <div class="hint-message" >To win 1000 points! Hurry up share more</div>
+    </main>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var currentPosition = document.getElementById("position");
+    var currentRow = document.getElementById("current");
+
+    if (currentRow) {
+      var forloopCountValue = currentRow.querySelector("td:first-child").textContent;
+      currentPosition.textContent = "Your current position: " + forloopCountValue;
+    } else {
+      currentPosition.textContent = "No current row found.";
+    }
+  });
+  const remHours = document.getElementById("hours");
+const remMinutes = document.getElementById("minutes");
+const remSeconds = document.getElementById("seconds");
+
+const formatTime = (time) => (time < 10 ? `0${time}` : time);
+
+const currentUTCDate = new Date();
+currentUTCDate.setUTCHours(23, 59, 59, 999); // Set time to end of day in UTC
+
+const targetTime = currentUTCDate.getTime();
+
+const countdown = () => {
+  const currentDate = new Date();
+
+  const totalSeconds = Math.max(Math.floor((targetTime - currentDate.getTime()) / 1000), 0);
+
+  const hours = Math.floor(totalSeconds / 3600) % 24;
+  const mins = Math.floor(totalSeconds / 60) % 60;
+  const seconds = Math.floor(totalSeconds) % 60;
+
+  remHours.innerHTML = formatTime(hours);
+  remMinutes.innerHTML = formatTime(mins);
+  remSeconds.innerHTML = formatTime(seconds);
+
+  if (totalSeconds <= 0) {
+    // Refresh the page when the countdown finishes
+    location.reload();
+  }
+};
+
+countdown();
+setInterval(countdown, 1000);
+
+
+</script>
+
+  {% endblock %}

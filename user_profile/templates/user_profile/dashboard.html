@@ -1,11 +1,24 @@
 {% load static %}
 <div class="dashboard">
-    <div> <img src="{% static 'images/profile.png' %}" width='160px' /></div>
-    <div>
-        <h2>{{user.username}}</h2>
-        <div> Balance Points: <span class='points'>{{user.points}}</span> </div>
-    </div>
-    <div>
-        <a href="/spin-earn-points" title="Earn Free points"><button class="serbtn add-to-profile">Earn Free points</button></a>
-    </div>
+  <div>
+    <img src="{% static 'images/profile.png' %}" width="160px" />
+    <div>Referral Link</div>
+    <a
+      href="https://{{ request.get_host }}/ref/telekit{{user.id}}"
+      target="_blank"
+      >https://{{ request.get_host }}/ref/telekit{{user.id}}</a
+    >
+  </div>
+  <div>
+    <h2>{{user.username}}</h2>
+    <div>Balance Points: <span class="points">{{user.points}}</span></div>
+  </div>
+  <div>
+    <a href="/spin-earn-points" title="Earn Free points"
+      ><button class="serbtn add-to-profile">Spin & Earn Points</button></a
+    >
+    <a href="/referral" title="Earn Free points"
+      ><button class="serbtn add-to-profile">Share & Earn Points</button></a
+    >
+  </div>
 </div>

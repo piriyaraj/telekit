@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
-from .models import Spin
+from .models import Spin, ReferralCount, ReferralVisit
 from django.utils import timezone
 from django.shortcuts import redirect, render
+from user_profile.models import User
 @login_required(login_url='login')
 def spinner(request):
     user = request.user
@@ -77,3 +78,42 @@ def claim_bonus(request):
         return JsonResponse({'status': True, 'message': 'Congratulations! You got 100 points'})
     else:
         return JsonResponse({'status': False, 'message': 'You need to complete 10 spins within one day.'})
+
+@login_required(login_url='login')
+def referral(request):
+    seo = {
+        'title': f'Earn points by sharing your referral',
+        'description': 'Get free points and pin your link on telekit',
+        'robots': 'noindex, nofollow',
+    }
+    context ={
+        "referral_count": ReferralCount.objects.all().order_by("-count"),
+        "seo": seo,
+    }
+    return render(request,'game/referral.html',context)
+
+def referral_handler(request,referral_code):
+    referral_code = int(referral_code.replace("telekit",''))
+    user = User.objects.get(id=referral_code)
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    is_exist = ReferralVisit.objects.filter(user=user,ip = ip)
+    
+    if is_exist:
+        return redirect('index')
+    
+    ReferralVisit.objects.create(user=user,ip=ip)
+    
+    referral = ReferralCount.objects.filter(user=user)
+    
+    if referral:
+        referral = referral[0]
+        referral.count += 1
+        referral.save()
+        return redirect('index')
+    
+    ReferralCount.objects.create(user=user,count = 1)
+    return redirect('index')
