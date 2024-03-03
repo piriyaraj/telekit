@@ -45,18 +45,18 @@
 </style>
 
 <div class="bonus">
-  <div class="bonus-title">Daily Referral Points( Under development)</div>
   <div class="bonus-title">Get 1000 Points every day!</div>
 
   <div>Steps to Earn Points:</div></br>
+  <span>Step 01: <input id="myInput" style="width: fit-content;" value="https://{{ request.get_host }}/ref/telekit{{user.id}}" /></span>
+  <button style="width: fit-content; margin: 5px;" value="test" class="serbtn" onclick="copytext(this)">Click to Copy</button><br/>
   <ul>
-    <li>Step 01: Share your unique Referral link with friends and contacts.</li>
-    <li>Step 02: Encourage them to visit the shared link.</li>
-    <li>
-      Step 03: Earn 1000 points if your shared link attracts the most visitors!
-    </li>
-  </ul>
-
+    <li>Step 02: Share your Referral link (Eg: Telegram, WhatsApp).</li>
+    <li>Step 03: Get more visitors and gain first place.</li>
+    <li>Step 04: Earn 1000 points. </li>
+  </ul></br>
+  Please note that views from the same person clicking the link multiple times will not be counted again.
+  
   <div>
     <div id="resetMessage"></div>
   </div>
