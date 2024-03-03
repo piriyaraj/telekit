@@ -2682,3 +2682,18 @@ canvas .fixed {
     white-space: nowrap;
     display: inline-block;
 }
+
+.filter {
+    width: 100%;
+    border: 1px solid #006699;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.filter * {
+    margin: 10px;
+}
+
+.filter h2 {
+    text-align: center;
+}
