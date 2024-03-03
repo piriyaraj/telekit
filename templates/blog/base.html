@@ -27,7 +27,6 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
 
         <script src="{% static 'js/my.js' %}"></script>
-        <script src="{% static 'js/htmx.min.js' %}"></script>
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script type="text/javascript">
 
@@ -116,6 +115,43 @@
         // Change the button text and color to "Updated" and green after successful fetch operation
         button.innerText = data.message;
         button.style.backgroundColor = "#008000";
+    }
+    function loadMore(button) {
+        // Disable the button and change its color
+        button.disabled = true;
+        button.style.backgroundColor = 'grey'; // Change this to your preferred color
+    
+        // Initialize loading text
+        let loadingText = ['loading.', 'loading..', 'loading...', 'loading..', 'loading.'];
+        let i = 0;
+    
+        // Start a setInterval to change the button text
+        let loadingInterval = setInterval(() => {
+            button.textContent = loadingText[i % loadingText.length];
+            i++;
+        }, 500); // Change text every 500ms
+    
+        console.log(button.dataset.nextpage);
+        var url = '?page=' + button.dataset.nextpage;
+        if(button.dataset.keyword != undefined){
+            url = url + "&" + button.dataset.keyword;
+        }
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                // Stop changing text and reset button when data is received
+                clearInterval(loadingInterval);
+                button.textContent = 'Load More';
+                button.style.backgroundColor = ''; // Reset button color
+                button.disabled = false;
+    
+                document.getElementById('groupresult').insertAdjacentHTML('beforeend', data);
+            });
+        button.dataset.nextpage = parseInt(button.dataset.nextpage) + 1;
+
+        if(parseInt(button.dataset.nextpage) == parseInt(button.dataset.totalpage)+1) {
+            button.style.display = 'none';
+        }
     }
     
 </script>

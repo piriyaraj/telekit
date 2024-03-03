@@ -2,32 +2,3 @@
 {% for link in links %}
     {% include "components/groupbox.html" %}
 {% endfor %}
-
-{% if links.has_next %}
-    {% if links.next_page_number == 2 %}
-        <p>summa</p>
-    {% endif %}
-<div style="margin-top: 10px"> 
-    
-    <a 
-        {% if keyword|length %}
-            hx-get="?page={{ links.next_page_number }}&{{keyword}}"
-        {% else %}
-             hx-get="?page={{ links.next_page_number }}"
-        {% endif %}
-        hx-trigger="click"
-        hx-target="#groupresult"
-        hx-swap="beforeend"
-        hx-swap-oob="true"
-    class="addbtn" name="load_more" id="load_more" style="cursor: pointer; display: inline;">load More</a>
-    {% if not adsshow %}
-        {% include "ads/hori_respon.html" %}
-    {% endif %}
-</div>
-{% else %}
-<p style="display: inline;">No more invite links</p>
-</div>
-<script>
-    $("#load_more").hide();
-</script>
-{% endif %}
