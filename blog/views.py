@@ -496,6 +496,12 @@ def addgroup(request):
         return render(request,"groupaddresult.html",context)
     except Exception as e:
         DiscordNotification(f"Link Adding error: {e}")
+        message={
+                "alertmsgbgcolor": '#f44336',
+                "message":" Try again: Unable to add link!"
+            }
+            # print("   [-] This link is not acceptable!")
+        return render(request,"groupaddresult.html",message)
 
 
 def verify(request):
