@@ -327,10 +327,10 @@
     <div class="wrap">
       <div id="main" role="main">
       </br>
-      {% include 'user_profile/dashboard.html' %}
+      
       {% include 'components/bonus.html' %}
         <!-- Add your existing content here -->
-        {% if spin %}
+      {% if spin %}
         <div id="wrapper">
           <div id="wheel">
             <div id="inner-wheel">
@@ -351,27 +351,27 @@
   
           <div id="txt"></div>
         </div>
-        {% else %}
-    <main >
-        <div class="hint-message" >Wait</div>
-        <div class="count-down-container">
-          <div class="count-down-box">
-            <div class="count-down">
-              <h1 id="minutes">00</h1>
-              <p>Minutes</p>
+      {% else %}
+        <main >
+            <div class="hint-message" >Wait</div>
+            <div class="count-down-container">
+              <div class="count-down-box">
+                <div class="count-down">
+                  <h1 id="minutes">00</h1>
+                  <p>Minutes</p>
+                </div>
+              </div>
+              <div class="count-down-box">
+                <div class="count-down">
+                  <h1 id="seconds">00</h1>
+                  <p>Seconds</p>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="count-down-box">
-            <div class="count-down">
-              <h1 id="seconds">00</h1>
-              <p>Seconds</p>
-            </div>
-          </div>
-        </div>
-        <div class="hint-message" >For the next spin.</div>
-      </main>
-        {% endif %} 
-        
+            <div class="hint-message" >For the next spin.</div>
+        </main>
+      {% endif %} 
+      {% include 'user_profile/dashboard.html' %}
       </div>
     </div>
   </div>
