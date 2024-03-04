@@ -1,15 +1,53 @@
+<style>
+    .filter h2 {
+        margin: 0; /* Remove default margin */
+    }
+    
+    .filter label {
+        margin-right: 10px; /* Add some spacing between elements */
+    }
+    
+    .filter select, .filter input[type="checkbox"] {
+        margin-right: 10px; /* Add some spacing between elements */
+    }
+    
+    .filter select {
+        flex: 1; /* Allow select element to grow and occupy remaining space */
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    
+    .filter input[type="checkbox"] {
+        margin-right: 5px;
+        margin:5px;
+    }
+    
+</style>
 <div class="filter">
-    <h2> Filter Telegram group links </h2>
-    <label for="group_members_count">Members count(High to low)</label>
+    <h2>Filter Telegram Links</h2>
+    <label for="group_members_count">Members count (High to low)</label>
     <input type="checkbox" id="group_members_filter" onclick="toggleFilter('group_members_filter')" {% if request.COOKIES.group_members_filter == 'true' %} checked {% endif %}>
-    {% comment %} <label for="exclude_pinned">Exclude Pinned:</label>
-    <input type="checkbox" id="exclude_pinned" onclick="toggleFilter('exclude_pinned')" {% if request.COOKIES.exclude_pinned == 'true' %} checked {% endif %}> {% endcomment %}
+    <label for="link_type">Link Type:</label>
+    <select id="link_type" onchange="toggleLinkType()">
+        <option value="None" {% if request.COOKIES.link_type == 'None' %} selected {% endif %}>All</option>
+        <option value="Group" {% if request.COOKIES.link_type == 'Group' %} selected {% endif %}>Group</option>
+        <option value="Channel" {% if request.COOKIES.link_type == 'Channel' %} selected {% endif %}>Channel</option>
+    </select>
 </div>
+
 <script>
     function toggleFilter(filterName) {
         var isChecked = document.getElementById(filterName).checked;
-        var maxAgeSeconds = 10 * 60; // 30 minutes in seconds
+        var maxAgeSeconds = 10 * 60; // 10 minutes in seconds
         document.cookie = filterName + "=" + isChecked + ";max-age=" + maxAgeSeconds + ";path=/";
         location.reload(); // Reload the page to apply the new filter
     }
-    </script>
+
+    function toggleLinkType() {
+        var linkType = document.getElementById("link_type").value;
+        var maxAgeSeconds = 10 * 60; // 10 minutes in seconds
+        document.cookie = "link_type=" + linkType + ";max-age=" + maxAgeSeconds + ";path=/";
+        location.reload(); // Reload the page to apply the new filter
+    }
+</script>

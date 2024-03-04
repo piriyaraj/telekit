@@ -62,10 +62,11 @@ def pagination(request, obj):
         print("================================ count order",group_members_filter)
         obj = obj.order_by("-noOfMembers")
 
-    exclude_pinned = request.COOKIES.get('exclude_pinned')
-    if exclude_pinned == 'true':
-        print("================= exclude pinned")
-        obj = obj.order_by("-modified")
+    link_type = request.COOKIES.get('link_type',"None")
+    print("================================",link_type)
+    if link_type != "None":
+        print("============================================",link_type)
+        obj = obj.filter(type=link_type)
 
     paginator = Paginator(obj, 6)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
