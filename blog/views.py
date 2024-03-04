@@ -59,13 +59,10 @@ def send_email(subject, body, to_email):
 def pagination(request, obj):
     group_members_filter = request.COOKIES.get('group_members_filter')
     if group_members_filter == 'true':
-        print("================================ count order",group_members_filter)
         obj = obj.order_by("-noOfMembers")
 
     link_type = request.COOKIES.get('link_type',"None")
-    print("================================",link_type)
     if link_type != "None":
-        print("============================================",link_type)
         obj = obj.filter(type=link_type)
 
     paginator = Paginator(obj, 6)  # Show 25 contacts per page.
