@@ -17,6 +17,7 @@ urlpatterns = [
 
     # Serve static files with cache control
     # path('static/<path:path>', cache_control(max_age=31536000, must_revalidate=True)(serve), {'document_root': settings.STATICFILES_DIRS[0]}),
-    path('static/<path:path>', cache_control(no_cache=True, must_revalidate=True)(serve), {'document_root': settings.STATICFILES_DIRS[0]}),
+    path('static/<path:path>', cache_control(max_age=31536000)(serve), {'document_root': settings.STATICFILES_DIRS[0]}),
+    # path('static/<path:path>', cache_control(no_cache=True, must_revalidate=True)(serve), {'document_root': settings.STATICFILES_DIRS[0]}),
     # max_age is set to 31536000 seconds (1 year)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
