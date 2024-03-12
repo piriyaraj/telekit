@@ -54,13 +54,23 @@
         <option value="None" {% if request.COOKIES.language_type == 'None' %} selected {% endif %}>All language</option>
         {% include "components/language.html" %}
         </select>
+        <button class="btn btn-primary" onclick="clearCache()"> Clear filter</button>
 </div>
 </div>
 <script>
+    function clearCache() {
+        var cookieNames = ["group_members_filter", "link_type", "category_type", "country_type", "language_type"];
+        
+        cookieNames.forEach(function(cookieName) {
+            document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        });
+        
+        window.location.reload();
+    }
     function toggleLinkType(id) {
         var linkType = document.getElementById(id).value;
-        var maxAgeSeconds = 10 * 60; // 10 minutes in seconds
+        var maxAgeSeconds = 30 * 60; // 30 minutes in seconds
         document.cookie = id+"=" + linkType + ";max-age=" + maxAgeSeconds + ";path=/";
-        window.location.href = "/" // Reload the page to apply the new filter
+        window.location.href = "/"
     }
 </script>
