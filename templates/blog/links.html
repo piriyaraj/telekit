@@ -161,7 +161,7 @@
                     {% if not adsshow %}
                         {% include "ads/hori_respon.html" %}
                     {% endif %}
-                    <h2 style="padding: 22px;font-size: large;color: darkgreen;">Related telegram groups and channels for {{post.country.name}}, {{post.language.name}}, and {{post.category.name}}</h2>
+                    {% comment %} <h2 style="padding: 22px;font-size: large;color: darkgreen;">Related telegram groups and channels for {{post.country.name}}, {{post.language.name}}, and {{post.category.name}}</h2>
                     <div id="groupresult">
                         {% include "loadgroup.html" %}
                     </div>
@@ -172,7 +172,7 @@
                         data-keyword="{{keyword}}"
                         {% endif %}
                         >Load More</button>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
                 </div>
             </div>
         </div>

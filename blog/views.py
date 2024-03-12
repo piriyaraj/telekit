@@ -73,29 +73,29 @@ def pagination(request, obj):
 
 def links(request, path, message={}):
     try:
-        postLink = Link.objects.filter(linkId=path)[0]
-    except:
+        postLink = Link.objects.get(linkId=path)
+    except Exception as e:
         return redirect("index")
-    if (not postLink.published):
-        return redirect("index")
-    country = postLink.country
-    language = postLink.language
-    category = postLink.category
-    relatedLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),
-                                      country=country, language=language, category=category).order_by("-pointsperday", "-id")
-    relatedLink = relatedLink.exclude(id=postLink.id)
+    # if (not postLink.published):
+    #     return redirect("index")
+    # country = postLink.country
+    # language = postLink.language
+    # category = postLink.category
+    # relatedLink = Link.objects.filter(Q(published=True) & ~Q(category__name="Adult/18+/Hot"),
+    #                                   country=country, language=language, category=category).order_by("-pointsperday", "-id")
+    # relatedLink = relatedLink.exclude(id=postLink.id)
     showAds = postLink.category.name == "Adult/18+/Hot"
 
-    if (request.GET.get('page')):
-        linka = pagination(request, relatedLink)
-        context = {
-            'links': linka,
-        }
-        if (showAds):
-            context["adsshow"] = True
-        return render(request, "loadmore.html", context)
+    # if (request.GET.get('page')):
+    #     linka = pagination(request, relatedLink)
+    #     context = {
+    #         'links': linka,
+    #     }
+    #     if (showAds):
+    #         context["adsshow"] = True
+    #     return render(request, "loadmore.html", context)
 
-    linka = pagination(request, relatedLink)
+    # linka = pagination(request, relatedLink)
     seo = {
         'title': str(date.today().year) + " " + postLink.name+" Telegram "+postLink.type+" link",
         "description": "Join active "+postLink.name+" Telegram "+postLink.type+" with ease. Discover what makes this "+postLink.type+" unique and engage with fellow members. Check out our blog for the latest invite link and start exploring today!",
@@ -105,7 +105,7 @@ def links(request, path, message={}):
     }
     context = {
         "post": postLink,
-        "links": linka,
+        # "links": linka,
         'seo': seo,
         "article": f'''
         <div>
@@ -129,8 +129,8 @@ def links(request, path, message={}):
 '''
 
     }
-    if (showAds):
-        context["adsshow"] = True
+
+    context["adsshow"] = showAds
     context.update(message)
     return render(request, "links.html", context)
 
