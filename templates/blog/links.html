@@ -12,7 +12,8 @@
                 {% include "ads/hori_respon.html" %}
             {% endif %}
             <div style="margin-bottom: 2px;text-align: center">
-                {% include "search.html" %}
+                {% comment %} {% include "search.html" %} {% endcomment %}
+                {% include 'blog/components/filter.html' %}
             </div>
             {% if not adsshow %}
                 {% include "ads/hori_respon.html" %}

@@ -55,16 +55,31 @@ def send_email(subject, body, to_email):
     except Exception as e:
         print(f"Error sending email: {str(e)}")
 
-
-def pagination(request, obj):
-    group_members_filter = request.COOKIES.get('group_members_filter')
-    if group_members_filter == 'true':
-        obj = obj.order_by("-noOfMembers")
+def filter(request,obj):
+    group_members_filter = request.COOKIES.get('group_members_filter',"None")
+    if group_members_filter != "None":
+        obj = obj.order_by(group_members_filter)
 
     link_type = request.COOKIES.get('link_type',"None")
     if link_type != "None":
         obj = obj.filter(type=link_type)
 
+    category_type = request.COOKIES.get('category_type',"None")
+    if category_type != "None":
+        obj = obj.filter(category = category_type)
+        
+    country_type = request.COOKIES.get('country_type',"None")
+    if country_type != "None":
+        obj = obj.filter(country = country_type)
+        
+    language_type = request.COOKIES.get('language_type',"None")
+    if language_type != "None":
+        obj = obj.filter(language = language_type)
+    
+    return obj
+
+def pagination(request, obj):
+    obj = filter(request,obj)
     paginator = Paginator(obj, 6)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
     linka = paginator.get_page(page_number)

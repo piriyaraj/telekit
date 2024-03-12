@@ -25,29 +25,42 @@
     
 </style>
 <div class="filter">
-    <h2>Filter Telegram Links</h2>
-    <label for="group_members_count">Members count (High to low)</label>
-    <input type="checkbox" id="group_members_filter" onclick="toggleFilter('group_members_filter')" {% if request.COOKIES.group_members_filter == 'true' %} checked {% endif %}>
-    <label for="link_type">Link Type:</label>
-    <select id="link_type" onchange="toggleLinkType()">
-        <option value="None" {% if request.COOKIES.link_type == 'None' %} selected {% endif %}>All</option>
-        <option value="Group" {% if request.COOKIES.link_type == 'Group' %} selected {% endif %}>Group</option>
-        <option value="Channel" {% if request.COOKIES.link_type == 'Channel' %} selected {% endif %}>Channel</option>
-    </select>
+    <h2>Filter Telegram Links</h2>    
+    <div style="margin-bottom: 10px;text-align: center;">
+        <select class="selectbtn" id="group_members_filter" onchange="toggleLinkType('group_members_filter')">
+            <option disabled selected>Sort by Members count</option>
+            <option value="-noOfMembers" {% if request.COOKIES.group_members_filter == '-noOfMembers' %} selected {% endif %}>High to Low</option>
+            <option value="noOfMembers" {% if request.COOKIES.group_members_filter == 'noOfMembers' %} selected {% endif %}>Low to High</option>
+        </select>
+        <select class="selectbtn" id="link_type" onchange="toggleLinkType('link_type')">
+            <option disabled selected>Select Link type</option>
+            <option value="None" {% if request.COOKIES.link_type == 'None' %} selected {% endif %}>All link type</option>
+            <option value="Group" {% if request.COOKIES.link_type == 'Group' %} selected {% endif %}>Group</option>
+            <option value="Channel" {% if request.COOKIES.link_type == 'Channel' %} selected {% endif %}>Channel</option>
+        </select>
+        <select class="selectbtn" name="category" id="category_type" onchange="toggleLinkType('category_type')">
+        <option disabled selected>Select Group Category</option>
+        <option value="None" {% if request.COOKIES.category_type == 'None' %} selected {% endif %}>All category</option>
+        {% include "components/category.html" %}
+        </select>
+  
+        <select class="selectbtn" name="country" id="country_type" onchange="toggleLinkType('country_type')">
+        <option disabled selected>Select Group Country</option>
+        <option value="None" {% if request.COOKIES.country_type == 'None' %} selected {% endif %}>All country</option>
+        {% include "components/country.html" %}
+        </select>
+        <select class="selectbtn" name="language" id="language_type" onchange="toggleLinkType('language_type')">
+        <option disabled selected>Select Group Language</option>
+        <option value="None" {% if request.COOKIES.language_type == 'None' %} selected {% endif %}>All language</option>
+        {% include "components/language.html" %}
+        </select>
 </div>
-
+</div>
 <script>
-    function toggleFilter(filterName) {
-        var isChecked = document.getElementById(filterName).checked;
+    function toggleLinkType(id) {
+        var linkType = document.getElementById(id).value;
         var maxAgeSeconds = 10 * 60; // 10 minutes in seconds
-        document.cookie = filterName + "=" + isChecked + ";max-age=" + maxAgeSeconds + ";path=/";
-        location.reload(); // Reload the page to apply the new filter
-    }
-
-    function toggleLinkType() {
-        var linkType = document.getElementById("link_type").value;
-        var maxAgeSeconds = 10 * 60; // 10 minutes in seconds
-        document.cookie = "link_type=" + linkType + ";max-age=" + maxAgeSeconds + ";path=/";
-        location.reload(); // Reload the page to apply the new filter
+        document.cookie = id+"=" + linkType + ";max-age=" + maxAgeSeconds + ";path=/";
+        window.location.href = "/" // Reload the page to apply the new filter
     }
 </script>
