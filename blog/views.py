@@ -58,8 +58,10 @@ def send_email(subject, body, to_email):
 def filter(request,obj):
     group_members_filter = request.COOKIES.get('group_members_filter',"None")
     if group_members_filter != "None":
-        obj = obj.order_by(group_members_filter)
-
+        obj = obj.order_by(group_members_filter, "-modified")
+    else:
+        obj = obj.order_by("-pointsperday", "-modified")
+        
     link_type = request.COOKIES.get('link_type',"None")
     if link_type != "None":
         obj = obj.filter(type=link_type)
@@ -67,7 +69,9 @@ def filter(request,obj):
     category_type = request.COOKIES.get('category_type',"None")
     if category_type != "None":
         obj = obj.filter(category = category_type)
-        
+    if category_type != '1':
+        obj = obj.filter(~Q(category__name="Adult/18+/Hot"))
+
     country_type = request.COOKIES.get('country_type',"None")
     if country_type != "None":
         obj = obj.filter(country = country_type)
@@ -151,8 +155,7 @@ def links(request, path, message={}):
 
 
 def index(request):
-    link = Link.objects.filter(Q(published=True) & ~Q(
-        category__name="Adult/18+/Hot")).order_by("-pointsperday", "-modified")
+    link = Link.objects.all()
     if (request.GET.get('page')):
         linka = pagination(request, link)
         context = {
@@ -164,11 +167,13 @@ def index(request):
         "description": "Search & Join active telegram group links for Adults, movies, dating, education, and viral updates. Find unlimited telegram groups and channel links on Telekit.",
         "robots": "index, follow"
     }
+    
     linka = pagination(request, link)
 
     context = {
         'links': linka,
         'seo': seo,
+        'adsshow': request.COOKIES.get('category_type',"None") == '1',
     }
     return render(request, "index.html", context)
 
