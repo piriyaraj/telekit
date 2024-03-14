@@ -66,10 +66,11 @@ def filter(request,obj):
     if link_type != "None":
         obj = obj.filter(type=link_type)
 
+    print(request.path)
     category_type = request.COOKIES.get('category_type',"None")
     if category_type != "None":
         obj = obj.filter(category = category_type)
-    if category_type != '1':
+    if category_type != '1' and request.path != "/category/adult-18+-hot":
         obj = obj.filter(~Q(category__name="Adult/18+/Hot"))
 
     country_type = request.COOKIES.get('country_type',"None")
