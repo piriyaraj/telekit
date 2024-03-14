@@ -11,6 +11,7 @@
             {% comment %} <div style="margin-bottom: 10px;text-align: center">
                 {% include "search.html" %}
             </div> {% endcomment %}
+            {% include 'blog/components/filter.html' %}
             {% if not adsshow %}
                 {% include "ads/hori_respon.html" %}
             {% endif %}
@@ -25,7 +26,7 @@
                     {% endif %}
                 </div></div></div>
                 <div class="col-sm-9">
-                    {% include 'blog/components/filter.html' %}
+                    
 
                     <div id="groupresult">
                         {% include "loadgroup.html" %}
