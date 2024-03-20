@@ -818,15 +818,11 @@ def update_rating(request):
         if(link_id[0]==" "):
             link_id = link_id.replace(" ","+")
         rating = request.GET.get('rating')
-        print("Link Id: " + link_id)
-        print("Rating: " + rating)
         
         # Check if both link_id and rating are provided
         if link_id and rating:
             # Logic to update the rating in your database
-            print("test 3")
             new_rating,number_rating = update_link_rating(link_id, rating)
-            print("Updated new_rating: " + str(new_rating))
             if new_rating is not None:
                 # Return the new rating as a JSON response
                 return JsonResponse({'new_rating': float(new_rating),'no_of_rating': number_rating}) 
@@ -844,7 +840,6 @@ def update_link_rating(link_id, rating):
     try:
         # Retrieve the link object from the database
         link = Link.objects.get(linkId=link_id)
-        print("test 1")
         
         # Update the rating fields
         current_rating = link.rating
@@ -856,7 +851,6 @@ def update_link_rating(link_id, rating):
         link.rating = new_rating
         link.number_of_ratings += 1
         link.save()
-        print("test 2")
 
         # Return the new rating
         return new_rating,current_num_ratings+1
