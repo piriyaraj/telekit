@@ -49,6 +49,7 @@ class Linkpin(models.Model):
                 return "Removed"
                 print("Removed Link:",self.linkId)
             except Link.DoesNotExist:
+                self.delete()
                 # Handle the case where the Links object with the specified linkId does not exist
                 pass
         return False
