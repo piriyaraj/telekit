@@ -124,6 +124,8 @@ class Link(models.Model):
     published=models.BooleanField(default=True)
     mail = models.EmailField(max_length=100,default=None,blank=True,null=True)
     pointsperday = models.FloatField(default=0)
+    rating = models.FloatField(default=0)  # Overall rating
+    number_of_ratings = models.IntegerField(default=0)  # Number of ratings
     
     def get_absolute_url(self):
         return reverse("links", args=[self.linkId])

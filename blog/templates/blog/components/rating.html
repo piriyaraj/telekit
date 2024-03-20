@@ -1,0 +1,149 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<style>
+  /* Custom styles */
+  .rating-box {
+    position: relative;
+    background: #fff;
+    padding: 25px 50px 35px;
+    border-radius: 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    font-family: 'Poppins', sans-serif;
+  }
+  .rating-box header {
+    font-size: 22px;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .stars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .stars i {
+    color: #e6e6e6;
+    font-size: 35px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .stars i.active {
+    color: #ff9c1a;
+  }
+</style>
+</head>
+<body>
+
+<div class="rating-box">
+  <header id ="status">How was your experience?</header>
+
+  <div class="stars">
+
+    {% for i in "x"|rjust:"5" %}
+        {% if forloop.counter <= post.rating %}
+            <i class="fa-solid fa-star active"></i>
+        {% else %}
+            <i class="fa-solid fa-star"></i>
+        {% endif %}
+    {% endfor %}
+</div>
+<div id="ratingstat">{{post.rating|floatformat:"1"}}/5 (No of ratings: {{post.number_of_ratings}})</div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".stars i");
+    
+        // Check if link_id cookie is present
+        const link_id_cookie = getCookie("{{ post.linkId }}");
+        if (link_id_cookie) {
+            // Disable rating if link_id cookie is present
+            document.getElementById("status").innerHTML = "Thank you for rating!";
+            stars.forEach(star => star.style.pointerEvents = "none");
+        }
+        else{
+            document.getElementById("status").innerHTML = "Rate this group!";
+        }
+    
+        stars.forEach((star, index1) => {
+            star.addEventListener("click", () => {
+                if (link_id_cookie) {
+                    console.log('Rating already submitted.');
+                    return;
+                }
+                
+                stars.forEach((star, index2) => {
+                    index1 >= index2
+                        ? star.classList.add("active")
+                        : star.classList.remove("active");
+                });
+                
+                const rating = index1 + 1;
+                // Retrieve link_id from the URL or other source
+                const link_id = getLinkId();
+                if (link_id) {
+                    // Call backend to update record
+                    updateRating(link_id, rating);
+                } else {
+                    console.error('Link ID not found.');
+                }
+            });
+        });
+    
+        // Function to retrieve link_id
+        function getLinkId() {
+            // Logic to retrieve link_id from URL or other source
+            // Replace this with your actual logic
+            // For demonstration, let's assume we have a global variable
+            return "{{ post.linkId }}";
+        }
+    
+        // Function to update rating
+        function updateRating(link_id, rating) {
+            stars.forEach(star => star.style.pointerEvents = "none");
+            // Dummy AJAX call for demonstration
+            // Replace this with actual AJAX call to your backend
+            // Here, we are just updating the frontend without backend interaction
+            console.log("In updateRating");
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "/update-rating?link_id=" + link_id + "&rating=" + rating, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        const newRating = response.new_rating; // Assuming the JSON response has a key named 'new_rating'
+                        stars.forEach((star, index) => {
+                            if (index < newRating) {
+                                star.classList.add("active");
+                            } else {
+                                star.classList.remove("active");
+                            }
+                        });
+                        const ratestat = document.getElementById("ratingstat");
+                        ratestat.innerText = parseFloat(response.new_rating).toFixed(1) + "/5 (No of ratings: " + response.no_of_rating + ")";
+                        console.log("New rating:", newRating);
+                        
+                        document.getElementById("status").innerHTML = "Thank you for rating!";
+                        // Set cookie to prevent resubmitting rating
+                        document.cookie = "{{ post.linkId }}=true; expires=Thu, 18 Dec 2043 12:00:00 UTC; path=/";
+                    } else {
+                        console.error("Error:", xhr.statusText);
+                    }
+                }
+            };
+            xhr.send();
+        }
+    
+        // Function to get cookie value
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    });
+    
+</script>

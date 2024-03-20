@@ -6,14 +6,14 @@ from blog.models import Category, Company, Country, Language, Link, Tag
 # Register your models here.
 @admin.register(Link)
 class LinkAdmin(admin.ModelAdmin):
-    list_display = ('name', 'link','pointsperday', 'country', 'category', 'language', 'noOfMembers', 'published')
+    list_display = ('name', 'link','pointsperday', 'country', 'category', 'language', 'noOfMembers', 'rating', 'number_of_ratings')
     list_filter = ('country', 'category', 'language', 'published')
     search_fields = ('name', 'link', 'description')
     readonly_fields = ('added', 'modified')
 
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name', 'link','pointsperday', 'country', 'category', 'language','mail')
+            'fields': ('name', 'link','pointsperday', 'country', 'category', 'language','mail','rating', 'number_of_ratings')
         }),
         ('Additional Information', {
             'fields': ('tag', 'noOfMembers', 'description', 'company', 'type', 'linkId', 'imgUrl', 'image_file')

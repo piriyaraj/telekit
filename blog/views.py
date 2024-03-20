@@ -809,3 +809,57 @@ def refresh_link(request, path):
             'message': 'Updated',
         }
         return JsonResponse(data)
+
+
+def update_rating(request):
+    if request.method == 'GET':
+        # Retrieve the link_id from the request query parameters
+        link_id = request.GET.get('link_id')
+        if(link_id[0]==" "):
+            link_id = link_id.replace(" ","+")
+        rating = request.GET.get('rating')
+        print("Link Id: " + link_id)
+        print("Rating: " + rating)
+        
+        # Check if both link_id and rating are provided
+        if link_id and rating:
+            # Logic to update the rating in your database
+            print("test 3")
+            new_rating,number_rating = update_link_rating(link_id, rating)
+            print("Updated new_rating: " + str(new_rating))
+            if new_rating is not None:
+                # Return the new rating as a JSON response
+                return JsonResponse({'new_rating': float(new_rating),'no_of_rating': number_rating}) 
+            else:
+                # Handle the case where the link with the given ID does not exist
+                return JsonResponse({'error': 'Link does not exist'}, status=404)
+        else:
+            # Return an error response if link_id or rating is missing
+            return JsonResponse({'error': 'Link ID or rating is missing'}, status=400)
+    else:
+        # Return an error response if the request method is not GET
+        return JsonResponse({'error': 'Invalid request method'}, status=400)
+    
+def update_link_rating(link_id, rating):
+    try:
+        # Retrieve the link object from the database
+        link = Link.objects.get(linkId=link_id)
+        print("test 1")
+        
+        # Update the rating fields
+        current_rating = link.rating
+        current_num_ratings = link.number_of_ratings
+        # Calculate the new rating based on the current rating and the new rating value
+        new_rating = ((current_rating * current_num_ratings) + float(rating)) / (current_num_ratings + 1)
+        
+        # Update the link object with the new rating and increment the number of ratings
+        link.rating = new_rating
+        link.number_of_ratings += 1
+        link.save()
+        print("test 2")
+
+        # Return the new rating
+        return new_rating,current_num_ratings+1
+    except Link.DoesNotExist:
+        # Handle the case where the link with the given ID does not exist
+        return None

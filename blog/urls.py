@@ -30,6 +30,7 @@ urlpatterns = [
     path('verify/', views.verify, name='verify'),
     path('refresh/<str:path>', views.refresh_link, name='refresh_link'),
     path('mail_test/', views.mail_test, name='mail_test'),
+    path('update-rating/', views.update_rating, name='update_rating'),
 ]   
 
 sitemapUrls=[
