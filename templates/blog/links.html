@@ -90,7 +90,7 @@
                             <div>{% include 'blog/components/rating.html' %}
                             <div>
 
-                                {% include "components/affliate.html" %}
+                                {% comment %} {% include "components/affliate.html" %} {% endcomment %}
                                 <br/>
                                 {% if request.user.is_superuser  %}
                                 <button class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ post.linkId }}" onclick="change18plus(this);">Change 18+</button>
