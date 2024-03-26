@@ -56,12 +56,19 @@ def send_email(subject, body, to_email):
         print(f"Error sending email: {str(e)}")
 
 def filter(request,obj):
+    obj = obj.order_by("-pointsperday", "-modified")
     group_members_filter = request.COOKIES.get('group_members_filter',"None")
-    if group_members_filter != "None":
-        obj = obj.order_by(group_members_filter, "-modified")
-    else:
-        obj = obj.order_by("-pointsperday", "-modified")
-        
+    group_rating_filter = request.COOKIES.get('group_rating_filter',"None")
+    
+    if group_members_filter != "None" and group_rating_filter != "None":
+        obj = obj.order_by(group_members_filter,group_rating_filter,"-pointsperday", "-modified")
+
+    elif group_members_filter != "None":
+        obj = obj.order_by(group_members_filter,"-pointsperday", "-modified")
+
+    elif group_rating_filter != "None":
+        obj = obj.order_by(group_rating_filter,"-pointsperday", "-modified")
+
     link_type = request.COOKIES.get('link_type',"None")
     if link_type != "None":
         obj = obj.filter(type=link_type)

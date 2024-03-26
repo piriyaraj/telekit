@@ -32,6 +32,11 @@
             <option value="-noOfMembers" {% if request.COOKIES.group_members_filter == '-noOfMembers' %} selected {% endif %}>High to Low</option>
             <option value="noOfMembers" {% if request.COOKIES.group_members_filter == 'noOfMembers' %} selected {% endif %}>Low to High</option>
         </select>
+        <select class="selectbtn" id="group_rating_filter" onchange="toggleLinkType('group_rating_filter')">
+            <option disabled selected>Sort by Rating</option>
+            <option value="-rating" {% if request.COOKIES.group_rating_filter == '-rating' %} selected {% endif %}>High to Low</option>
+            <option value="rating" {% if request.COOKIES.group_rating_filter == 'rating' %} selected {% endif %}>Low to High</option>
+        </select>
         <select class="selectbtn" id="link_type" onchange="toggleLinkType('link_type')">
             <option disabled selected>Select Link type</option>
             <option value="None" {% if request.COOKIES.link_type == 'None' %} selected {% endif %}>All link type</option>
@@ -59,7 +64,7 @@
 </div>
 <script>
     function clearCache() {
-        var cookieNames = ["group_members_filter", "link_type", "category_type", "country_type", "language_type"];
+        var cookieNames = ["group_members_filter", "link_type", "category_type", "country_type", "language_type","group_rating_filter"];
         
         cookieNames.forEach(function(cookieName) {
             document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
