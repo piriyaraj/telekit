@@ -1,73 +1,57 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block content %}
 <!---start-content---->
 
 <div class="content">
     <div class="wrap">
         <div id="main" role="main">
-    
-            {% if not adsshow %}
-                {% include "ads/hori_respon.html" %}
-            {% endif %}
+
+            {% if not adsshow %} {% include "ads/hori_respon.html" %} {% endif %}
             <div style="margin-bottom: 2px;text-align: center">
-                {% comment %} {% include "search.html" %} {% endcomment %}
-                {% include 'blog/components/filter.html' %}
+                {% comment %} {% include "search.html" %} {% endcomment %} {% include 'blog/components/filter.html' %}
             </div>
-            {% if not adsshow %}
-                {% include "ads/hori_respon.html" %}
-            {% endif %}
+            {% if not adsshow %} {% include "ads/hori_respon.html" %} {% endif %}
             <div class='row'>
                 <div class='col-sm-3' style="padding-top:10px">
-                    {% if request.path == '/' %}
-                        {% include 'teleintro.html'%}
-                    {% else %}
-                        {% include 'sidebar.html' %}
-                    {% endif %}
-                </div></div></div>
-                <h2>Active 2024 {{post.name}}
-                {% if post.country.name != "Common" %}
-                {{post.country.name}}
-                {% endif %}
-                {% if post.language.name != "Common" %}
-                {{post.language.name}} 
-                {% endif %}
-                Telegram {{post.type}} link</h2>
-                <p><strong>Top {{post.name}} Groups Links 2024</strong> are one of the most helpful community services available to Telegram users. Thousands of groups are formed for various goals. People share helpful information in these communities, therefore you may wish to join the most <strong>active and Top {{post.name}} <a href="/" title="Active telegram group links" style="color:#0088cc;">Telegram group link</a> 2024</strong>. This is due to the fact that a single message can be transmitted and received by hundreds of people at the same time. In this article, we've listed some of the <strong>top {{post.name}} telegram group links</strong> 2024 that you should join.</p>
-                <div class="col-sm-9">
-                    <div class="contact-info" style="margin-top:30px ;">
+                    {% if request.path == '/' %} {% include 'teleintro.html'%} {% else %} {% include 'sidebar.html' %} {% endif %}
+                </div>
+            </div>
+        </div>
+        <h2>Active 2024 {{post.name}} {% if post.country.name != "Common" %} {{post.country.name}} {% endif %} {% if post.language.name != "Common" %} {{post.language.name}} {% endif %} Telegram {{post.type}} link</h2>
+        <p><strong>Top {{post.name}} Groups Links 2024</strong> are one of the most helpful community services available to Telegram users. Thousands of groups are formed for various goals. People share helpful information in these communities, therefore
+            you may wish to join the most <strong>active and Top {{post.name}} <a href="/" title="Active telegram group links" style="color:#0088cc;">Telegram group link</a> 2024</strong>. This is due to the fact that a single message can be transmitted
+            and received by hundreds of people at the same time. In this article, we've listed some of the <strong>top {{post.name}} telegram group links</strong> 2024 that you should join.</p>
+        <div class="col-sm-9">
+            <div class="contact-info" style="margin-top:30px ;">
 
-                        <div style="margin-top: 30px; margin-bottom: 30px">
+                <div style="margin-top: 30px; margin-bottom: 30px">
 
-                        </div>
+                </div>
 
-                        <div style="text-align: center">
+                <div style="text-align: center">
 
-                            <img class="proimg" src="{{post.image_file.url}}" onerror="imgError(this);" title="{{post.name}} telegram group and channel join link" class="image"
-                                    alt="{{post.name}} telegram Group link">
-                            <div>
-                                <h2 style="font-size: 22px;word-wrap: normal">{{post.name}}</h2>
-                            </div>
-                            <div>
-                                <span><img src="{% static 'images/category.png' %}" alt="Telekit Category" class="icon"><a
+                    <img class="proimg" src="{{post.image_file.url}}" onerror="imgError(this);" title="{{post.name}} telegram group and channel join link" class="image" alt="{{post.name}} telegram Group link">
+                    <div>
+                        <h2 style="font-size: 22px;word-wrap: normal">{{post.name}}</h2>
+                    </div>
+                    <div>
+                        <span><img src="{% static 'images/category.png' %}" alt="Telekit Category" class="icon"><a
                                         href="/category/{{post.category.slug}}"
                                         title="{{post.category.name}} Telegram {{post.type}} invite link">{{post.category.name}} </a></span>
-                                <span><img src="{% static 'images/country.png' %}" alt="Telekit country" class="icon"><a
+                        <span><img src="{% static 'images/country.png' %}" alt="Telekit country" class="icon"><a
                                         href="/country/{{post.country.slug}}" title="{{post.country.name}} telegram {{post.type}} link">
                                         {{post.country.name}} </a></span>
-                                <span><img src="{% static 'images/language.png' %}" alt="Telekit language" class="icon"><a
+                        <span><img src="{% static 'images/language.png' %}" alt="Telekit language" class="icon"><a
                                         href="/language/{{post.language.slug}}"
                                         title="{{post.language.name}} Telegram {{post.type}} join links"> {{post.language.name}} </a></span>
-                            </div>
+                    </div>
 
-                            <div style="height: 30px">
-                                <img src="{% static 'images/date.png' %}" class="icon" alt="{{post.name}} added date"><span class="cate">
+                    <div style="height: 30px">
+                        <img src="{% static 'images/date.png' %}" class="icon" alt="{{post.name}} added date"><span class="cate">
                                     {{post.added}} <span>
                             </div>
                             
                             <span style="padding-right:20px;">Category: {{post.type}}</span>
-                            <span>
+                        <span>
                                 {%if post.type == "Channel"%}
                                 {{"Subscribers : "}}
                                 {% else %}
@@ -76,81 +60,59 @@
 
                                 {{post.noOfMembers}}
                             </span>
-                            
-                            <pre class="predesc">{{post.description}}</pre>
+
+                        <pre class="predesc">{{post.description}}</pre>
 
 
 
-                            <div style="margin-bottom: 20px">
-                                {% for tag in post.tag.all %}
-                                <a class="innertag" href="/tag/{{tag.slug}}"
-                                    title=" {{tag.name}} telegram {{link.type}} invite link"> {{tag.name}} </a>
-                                {% endfor %}
-                            </div>
-                            <div>{% include 'blog/components/rating.html' %}
+                        <div style="margin-bottom: 20px">
+                            {% for tag in post.tag.all %}
+                            <a class="innertag" href="/tag/{{tag.slug}}" title=" {{tag.name}} telegram {{link.type}} invite link"> {{tag.name}} </a> {% endfor %}
+                        </div>
+                        <div>{% include 'blog/components/rating.html' %}
                             <div>
 
                                 {% comment %} {% include "components/affliate.html" %} {% endcomment %}
-                                <br/>
-                                {% if request.user.is_superuser  %}
+                                <br/> {% if request.user.is_superuser %}
                                 <button class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ post.linkId }}" onclick="change18plus(this);">Change 18+</button>
-                            </br></br>
-                                {% endif %}
-                                {% if  request.user.is_authenticated%}
-                                    {% if post in request.user.links.all %}
-                                        <a href="#" class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ post.linkId }}" onclick="removeToProfile(this);">Remove from profile</a>
-                                    {% else%}
-                                        <a href="#" class="serbtn add-to-profile" style="background-color: #0088cc;" data-linkid="{{ post.linkId }}" onclick="addToProfile(this);">Add to profile</a>
-                                    {% endif %}
-                                {% endif %}
+                                </br>
+                                </br>
+                                {% endif %} {% if request.user.is_authenticated%} {% if post in request.user.links.all %}
+                                <a href="#" class="serbtn add-to-profile" style="background-color: #461212;" data-linkid="{{ post.linkId }}" onclick="removeToProfile(this);">Remove from profile</a> {% else%}
+                                <a href="#" class="serbtn add-to-profile" style="background-color: #0088cc;" data-linkid="{{ post.linkId }}" onclick="addToProfile(this);">Add to profile</a> {% endif %} {% endif %}
                                 <a href="/pin/{{post.linkId}}" class="serbtn add-to-profile" style="background-color: #0088cc;">Pin in 1st place</a>
-                            <br/>
-                            <br/>
-                            <br/>
-                                {% if not adsshow %}
-                                <a href=" {{post.link}} " target="_blank" class="btn"
-                                    rel="nofollow">Join {{post.type}}</a>
-                                {% else %}
+                                <br/>
+                                <br/>
+                                <br/> {% if not adsshow %}
+                                <a href=" {{post.link}} " target="_blank" class="btn" rel="nofollow">Join {{post.type}}</a> {% else %}
                                 <a id="myLink" href="#" class="btn" rel="nofollow">Join {{post.type}}</a>
                                 <script>
-                                window.onload = function() {
-                                    var urls = [
-                                        '/landing?link={{post.link}}',  // replace with your first page URL
-                                        'https://telelinking.link/landing?link={{post.link}}'   // replace with your second page URL
-                                    ];
-                                    var randomUrl = urls[Math.floor(Math.random() * urls.length)];
-                                    document.getElementById('myLink').href = randomUrl;
-                                }
-                            </script>
+                                    window.onload = function() {
+                                        var urls = [
+                                            '/landing?link={{post.link}}', // replace with your first page URL
+                                            'https://telelinking.link/landing?link={{post.link}}', // replace with your second page URL
+                                            'https://walinking.link/landing?link={{post.link}}' // replace with your second page URL
+                                        ];
+                                        var randomUrl = urls[Math.floor(Math.random() * urls.length)];
+                                        document.getElementById('myLink').href = randomUrl;
+                                    }
+                                </script>
                                 {% endif %}
-                                <a class="btn"
-                                    href="whatsapp://send?text=Follow this link to Join my Telegram group :{{ request.get_host }}{{ request.path}} %0A %0AFind more Telegram Channels and Group at: {{ request.get_host }} "
-                                    data-action="share/whatsapp/share" rel="nofollow">Share {{post.type}}</a>
+                                <a class="btn" href="whatsapp://send?text=Follow this link to Join my Telegram group :{{ request.get_host }}{{ request.path}} %0A %0AFind more Telegram Channels and Group at: {{ request.get_host }} " data-action="share/whatsapp/share" rel="nofollow">Share {{post.type}}</a>
                             </div>
-                            {% if not adsshow %}
-                                {% include "ads/multplex.html" %}
-                            {% endif %}
+                            {% if not adsshow %} {% include "ads/multplex.html" %} {% endif %}
                             <div style="padding-top: 15px">
 
-                                <a href="https://t.me/share?url=https://telekit.link/join/{{ post.linkId }}&text=Follow this link to Join {{post.name}} Telegram {{post.type}}."
-                                    data-action="share/telegram/share" target="_blank">
-                                    <img src="{% static 'images/telegram.png' %}" width="32" height="32"
-                                        alt="Share on Telegram" title="Share on Telegram"
-                                        rel="nofollow"></a>
-                                <a href="https://www.facebook.com/sharer/sharer.php?u=https://telekit.link/join/{{ post.linkId }}&text=Follow this link to Join {{post.name}} Telegram {{post.type}}."
-                                    data-action="share/facebook/share" target="_blank">
-                                    <img src="{% static 'images/facebook.jpg' %}" width="32" height="32"
-                                        alt="Share on Facebook" title="Share on Facebook"
-                                        rel="nofollow"></a>
+                                <a href="https://t.me/share?url=https://telekit.link/join/{{ post.linkId }}&text=Follow this link to Join {{post.name}} Telegram {{post.type}}." data-action="share/telegram/share" target="_blank">
+                                    <img src="{% static 'images/telegram.png' %}" width="32" height="32" alt="Share on Telegram" title="Share on Telegram" rel="nofollow"></a>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=https://telekit.link/join/{{ post.linkId }}&text=Follow this link to Join {{post.name}} Telegram {{post.type}}." data-action="share/facebook/share" target="_blank">
+                                    <img src="{% static 'images/facebook.jpg' %}" width="32" height="32" alt="Share on Facebook" title="Share on Facebook" rel="nofollow"></a>
 
-                                <a href="whatsapp://send?text=Follow this link to Join {{post.name}} Telegram {{post.type}} : {{ request.get_host }}{{ request.path }} %0A %0AFind more Telegram https://telekit.link/join/{{ post.linkId }} at: {{ request.get_host }} "
-                                    data-action="share/whatsapp/share" rel="nofollow">
-                                    <img src="{% static 'images/whatsapp.png' %}" width="32" height="32" alt="Share on Whatsapp"
-                                        title="Share on Whatsapp" rel="nofollow"></a>
-                                <a href="https://twitter.com/intent/tweet?text=Follow this link to Join {{post.name}} Telegram {{post.type}}:&amp;url={{ request.get_host }}{{ request.path }}"
-                                    target="_blank" rel="nofollow">
-                                    <img src="{% static 'images/twitter.jpg' %}" width="32" height="32" alt="Share on Twitter"
-                                        title="Share on Twitter"></a>
+                                <a href="whatsapp://send?text=Follow this link to Join {{post.name}} Telegram {{post.type}} : {{ request.get_host }}{{ request.path }} %0A %0AFind more Telegram https://telekit.link/join/{{ post.linkId }} at: {{ request.get_host }} " data-action="share/whatsapp/share"
+                                    rel="nofollow">
+                                    <img src="{% static 'images/whatsapp.png' %}" width="32" height="32" alt="Share on Whatsapp" title="Share on Whatsapp" rel="nofollow"></a>
+                                <a href="https://twitter.com/intent/tweet?text=Follow this link to Join {{post.name}} Telegram {{post.type}}:&amp;url={{ request.get_host }}{{ request.path }}" target="_blank" rel="nofollow">
+                                    <img src="{% static 'images/twitter.jpg' %}" width="32" height="32" alt="Share on Twitter" title="Share on Twitter"></a>
                             </div>
                             <br>
                         </div>
@@ -159,21 +121,14 @@
                         <div style="margin-top: 30px; margin-bottom: 30px">
                         </div>
                     </div>
-                    {% if not adsshow %}
-                        {% include "ads/hori_respon.html" %}
-                    {% endif %}
-                    {% comment %} <h2 style="padding: 22px;font-size: large;color: darkgreen;">Related telegram groups and channels for {{post.country.name}}, {{post.language.name}}, and {{post.category.name}}</h2>
+                    {% if not adsshow %} {% include "ads/hori_respon.html" %} {% endif %} {% comment %}
+                    <h2 style="padding: 22px;font-size: large;color: darkgreen;">Related telegram groups and channels for {{post.country.name}}, {{post.language.name}}, and {{post.category.name}}</h2>
                     <div id="groupresult">
                         {% include "loadgroup.html" %}
                     </div>
                     {% if links.has_next %}
-                        <button class="addbtn" data-nextpage="{{ links.next_page_number }}" onclick="loadMore(this)" style="cursor: pointer; display: inline;width: -webkit-fill-available;"
-                        data-totalpage="{{ links.paginator.num_pages }}"
-                        {% if keyword|length %}
-                        data-keyword="{{keyword}}"
-                        {% endif %}
-                        >Load More</button>
-                    {% endif %} {% endcomment %}
+                    <button class="addbtn" data-nextpage="{{ links.next_page_number }}" onclick="loadMore(this)" style="cursor: pointer; display: inline;width: -webkit-fill-available;" data-totalpage="{{ links.paginator.num_pages }}" {% if keyword|length %} data-keyword="{{keyword}}"
+                        {% endif %}>Load More</button> {% endif %} {% endcomment %}
                 </div>
             </div>
         </div>
